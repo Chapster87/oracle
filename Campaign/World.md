@@ -41,4 +41,6 @@
 
 (What are the central themes you want to explore in your campaign? Examples: exploration, political intrigue, survival, the clash between nature and civilization, etc.)
 
-## Custom World Considerations
+## A Note on Deities
+
+In this campaign, real-world deities from various mythologies may appear as part of the world's rich tapestry. These gods are integrated sparingly and appropriately to add flavor and depth, often reinterpreted through the lens of this fantasy world. Their myths and domains may be adapted to fit the campaign's lore, creating interesting parallels and cultural influences. For example, a god of the underworld might be worshipped by certain cultures, or ancient heroes might draw inspiration from legendary figures. This approach is used to enhance immersion and provide unique storytelling opportunities, but always in service of the campaign's themes and narrative.
