@@ -5,7 +5,7 @@
       "steps": [
         "Read the most recent episode file from the 'Campaign/Episodes/' directory.",
         "Summarize the key events from the notes.",
-        "Format the summary using the 'Story Log Entry Template' from the '.clinerules/dm-assistant.md' file.",
+        "Format the summary using the 'Story Log Entry Template'.",
         "Prepend the formatted summary to the 'Campaign/StoryLog.md' file, ensuring the new entry is at the top.",
         "Identify any locations or characters mentioned in the summary.",
         "For each location, append a summary of the key events to the 'Role in Campaign' section of the corresponding location file.",
@@ -26,7 +26,7 @@
       "steps": [
         "Determine the next episode number by checking the existing files in the 'Campaign/Episodes/' directory.",
         "Create a new file named 'E[Next Number].md' in the 'Campaign/Episodes/' directory.",
-        "Populate the new file with the 'Episode Template' from the '.clinerules/dm-assistant.md' file, filling in the episode number and the current date."
+        "Populate the new file with the 'Episode Template', filling in the episode number and the current date."
       ]
     },
     "create-location": {
@@ -36,8 +36,8 @@
         "If the location is a dungeon, create a new file named '[Location Name].md' in the 'Campaign/Locations/Dungeons/' directory.",
         "If the location is a region, create a new file named '[Location Name].md' in the 'Campaign/Locations/Regions/' directory.",
         "Otherwise, create a new file named '[Location Name].md' in the 'Campaign/Locations/Settlements/' directory.",
-        "Populate the new file using the 'Location Template' from '.clinerules/dm-assistant.md'.",
-        "Fill in the name and type, and then generate the rest of the content based on the instructions.",
+        "Populate the new file using the 'Location Template'.",
+        "Fill in the name and type, and then generate the rest of the content.",
         "Ask the user if they would like to generate an ASCII map for the location.",
         "If the user agrees, generate a map and add it to the 'Map' section of the location file."
       ]
@@ -47,7 +47,7 @@
       "steps": [
         "Ask the user for the NPC's name, race, class, and alignment.",
         "Create a new file named '[NPC Name].md' in the 'Campaign/Characters/' directory.",
-        "Populate the new file using the 'NPC Template' from '.clinerules/dm-assistant.md'.",
+        "Populate the new file using the 'NPC Template'.",
         "Fill in the provided details and generate the rest of the content."
       ]
     },
@@ -73,7 +73,7 @@
         "If the location is a dungeon, create a new file named '[Location Name].md' in the 'Campaign/Locations/Dungeons/' directory.",
         "If the location is a region, create a new file named '[Location Name].md' in the 'Campaign/Locations/Regions/' directory.",
         "Otherwise, create a new file named '[Location Name].md' in the 'Campaign/Locations/Settlements/' directory.",
-        "Populate the file using the 'Location Template', generating all content based on the user's key details and the instructions in '.clinerules/dm-assistant.md'.",
+        "Populate the file using the 'Location Template', generating all content based on the user's key details.",
         "Ask the user if they would like to generate an ASCII map for the location.",
         "If the user agrees, generate a map and add it to the 'Map' section of the location file."
       ]
@@ -104,8 +104,8 @@
       "steps": [
         "Ask the user for the name and type of the religion (e.g., deity, faith, pantheon).",
         "Create a new file named '[Religion Name].md' in the 'Campaign/Religions/' directory.",
-        "Populate the new file using the 'Religion Template' from '.clinerules/dm-assistant.md'.",
-        "Fill in the name and type, and then generate the rest of the content based on the instructions."
+        "Populate the new file using the 'Religion Template'.",
+        "Fill in the name and type, and then generate the rest of the content."
       ]
     },
     "generate-religion": {
@@ -115,7 +115,7 @@
         "Generate a name for the religion.",
         "Determine the type of religion (deity, faith, or pantheon) based on the key details.",
         "Create a new file named '[Religion Name].md' in the 'Campaign/Religions/' directory.",
-        "Populate the file using the 'Religion Template', generating all content based on the user's key details and the instructions in '.clinerules/dm-assistant.md'."
+        "Populate the file using the 'Religion Template', generating all content based on the user's key details."
       ]
     },
     "plan-arc": {
@@ -123,7 +123,7 @@
       "steps": [
         "Ask the user for the name of the story arc (or provide notes to generate one), target player level range, session time estimates (default 3-4 hours unless specified), optional notes file, and desired session count.",
         "Create a new file in 'Campaign/Planning/' prefixed with 'Arc-' and named after the arc (e.g., 'Arc-Fallen Paladin.md').",
-        "Populate the new file using the 'Story Arc Template' from '.clinerules/dm-assistant.md'.",
+        "Populate the new file using the 'Story Arc Template'.",
         "Fill in the provided details and generate a session-by-session breakdown."
       ]
     },
@@ -136,7 +136,7 @@
         "For each major resource, determine its type (NPC, Location, Faction, etc.).",
         "Check if a file for the resource already exists.",
         "If the file does not exist, create a new file in the appropriate directory.",
-        "Populate the new file using the corresponding template from '.clinerules/dm-assistant.md' (e.g., 'NPC Template' for an NPC).",
+        "Populate the new file using the corresponding template (e.g., 'NPC Template' for an NPC).",
         "Fill in the name and any other details available from the planning document.",
         "Update the planning document to convert the [[Resource Name]] to a standard markdown link."
       ]
