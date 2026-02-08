@@ -3,6 +3,7 @@
 - **Species:**
 - **Class(es):**
 - **Alignment:**
+- **Level:**
 
 ## Backstory
 
