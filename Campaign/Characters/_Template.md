@@ -15,9 +15,11 @@
 
 (Their current situation and how they might interact with the party.)
 
+<!--
 ## Secrets
 
 - (A secret that could be discovered.)
+-->
 
 ## Associated Locations
 

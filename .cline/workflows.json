@@ -140,6 +140,16 @@
         "Fill in the name and any other details available from the planning document.",
         "Update the planning document to convert the [[Resource Name]] to a standard markdown link."
       ]
+    },
+    "generate-share": {
+      "description": "Generates a player-safe, copy-pastable markdown version of a file.",
+      "steps": [
+        "Ask the user for the path to the markdown file they want to share.",
+        "Read the content of the specified file.",
+        "Remove all HTML-style comment blocks (from '<!--' to '-->').",
+        "Find all markdown links formatted as '[text](link)' and replace them with just the bolded text '**text**'.",
+        "Present the resulting text to the user, ready to be copied and pasted."
+      ]
     }
   }
 }
