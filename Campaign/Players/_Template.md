@@ -5,6 +5,10 @@
 - **Alignment:**
 - **Level:**
 
+## Background
+
+(Copy/paste background blurb from DnD Beyond)
+
 ## Backstory
 
 (A detailed backstory for the character.)
