@@ -7,6 +7,9 @@
 
 ## Background
 
+- **Homeland:** [Region Name](../Locations/Regions/Region%20Name.md)
+- **Hometown:** [Settlement Name](../Locations/Settlements/Settlement%20Name.md)
+
 (Copy/paste background blurb from DnD Beyond)
 
 ## Backstory

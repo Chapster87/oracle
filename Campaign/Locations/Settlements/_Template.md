@@ -1,6 +1,7 @@
 # [Location Name]
 
 - **Type:** (e.g., City, Town, Dungeon, Forest)
+- **Region:** [Region Name](../Regions/Region%20Name.md)
 - **Tags:** (e.g., #location, #coastal, #trade-hub)
 
 ## Overview
@@ -10,6 +11,10 @@
 ## History
 
 (1-2 paragraphs on the location's history and significance.)
+
+## Inhabitants
+
+(A description of the primary species and cultures that inhabit the settlement.)
 
 ## Points of Interest
 

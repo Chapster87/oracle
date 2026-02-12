@@ -44,7 +44,7 @@ When updating these instructions, evaluate whether the change is truly global an
 
 - **Character Names:** Names should be unique and follow species-appropriate conventions. Avoid generic fantasy names that don't reflect cultural or species background. Research real-world naming patterns for inspiration (e.g., Norse-inspired for dwarves, Celtic-inspired for elves, Arabic-inspired for desert cultures). Mix naming styles to create memorable, distinctive characters.
 - **Faction Names:** Create interesting, evocative names that avoid predictable patterns like [Color] [Object] (e.g., avoid "The Crimson Coin" or "The Silver Hand"). Instead, use descriptive terms that evoke the faction's nature, history, or mystique (e.g., "The Iron Covenant," "The Dawnwardens," "The Scarlet Veil"). Names should feel organic to the world's lore and suggest the faction's character without being obvious.
-- **Location Names:** Use varied naming styles that reflect the location's history, culture, or geography. Avoid overusing similar patterns within the same region.
+- **Location Names:** Use varied naming styles that reflect the location's history, culture, or geography. Avoid overusing similar patterns within the same region. Avoid starting location names with "The" to prevent redundancy (e.g., use "Boreal Reach" instead of "The Boreal Reach").
 - **Religion & Deity Names:** Names should be evocative and reflect the deity's domain or personality. Avoid generic names; draw inspiration from real-world mythologies (e.g., Norse, Greek, Egyptian) but adapt them to fit the world's lore. Ensure uniqueness and avoid conflicts with existing campaign content.
 - **Uniqueness Check:** Before finalizing names, ensure they don't conflict with existing campaign content and contribute to the world's distinct identity.
 
@@ -58,6 +58,7 @@ When updating these instructions, evaluate whether the change is truly global an
   - Proactively link to relevant locations, characters, items, and rules to create a deeply interconnected knowledge base.
 - **Templates:**
   - When creating a new piece of content (e.g., a location, NPC, or magic item), structure it using a consistent template. This makes the information predictable and easy to parse. See the `Content Templates` section below for examples.
+- **World File Maintenance:** After creating or significantly altering a location, faction, or major historical event, proactively suggest an update to the `Campaign/World.md` file to reflect these changes. This ensures the central world document remains current and serves as a reliable single source of truth for the campaign's lore.
 
 ## Faction Integration
 

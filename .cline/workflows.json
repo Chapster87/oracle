@@ -142,13 +142,14 @@
       ]
     },
     "generate-share": {
-      "description": "Generates a player-safe, copy-pastable markdown version of a file.",
+      "description": "Generates a player-safe, copy-pastable markdown file version of a file.",
       "steps": [
         "Ask the user for the path to the markdown file they want to share.",
         "Read the content of the specified file.",
-        "Remove all HTML-style comment blocks (from '<!--' to '-->').",
-        "Find all markdown links formatted as '[text](link)' and replace them with just the bolded text '**text**'.",
-        "Present the resulting text to the user, ready to be copied and pasted."
+        "Create a new file with the same name as the original, but with '-Share' appended to the name.",
+        "In the new file, remove all markdown links formatted as '[text](link)' and replace them with just the text 'text'.",
+        "In the new file, remove any lines that contain only placeholder text in parentheses, such as '(A summary of key story points...)' or '(Copy/paste background blurb...)'.",
+        "Inform the user that the new file has been created."
       ]
     }
   }
