@@ -7,11 +7,14 @@
 
 ## Background
 
+- **Homeland:** [Obsidian Marches](../Locations/Regions/Obsidian%20Marches.md)
+- **Hometown:** [Lilrelond](../Locations/Settlements/Lilrelond.md)
+
 (Copy/paste background blurb from DnD Beyond)
 
 ## Backstory
 
-Dal Cuinin is the youngest son of **[King Yaelrion](../Characters/King%20Yaelrion.md)**, the ruler of **[Lilrelond](../Locations/Settlements/Lilrelond.md)**, an elvish kingdom in the far north. He has 9 brothers and a younger sister. He became disillusioned with his kingdom’s xenophobic and evil ways, where outsiders are killed on sight and his father plots to rule the known world. While his brothers, including the formidable **[Torvin](../Characters/Torvin.md)**, thirsted for war, Dal saw only tyranny.
+Dal Cuinin is the youngest son of **[King Yaelrion](../Characters/King%20Yaelrion.md)**, the ruler of **[Lilrelond](../Locations/Settlements/Lilrelond.md)**, an elvish kingdom in the far northeast. He has 9 brothers and a younger sister. He became disillusioned with his kingdom’s xenophobic and evil ways, where outsiders are killed on sight and his father plots to rule the known world. While his brothers, including the formidable **[Torvin](../Characters/Torvin.md)**, thirsted for war, Dal saw only tyranny.
 
 Realizing the elves of Lilrelond shared his family’s bloodlust, he chose self-exile over a hopeless civil war. He entrusted his plan to his true love, **[Elandra](../Characters/Elandra.md)**, hoping she would flee with him. However, she betrayed him, leading his older brother Torvin to their meeting point. In the ensuing confrontation, Dal was forced to kill the heir to the throne before he could escape the kingdom.
 

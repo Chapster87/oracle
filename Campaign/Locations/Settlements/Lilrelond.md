@@ -1,6 +1,7 @@
 # Lilrelond
 
 - **Type:** City
+- **Region:** [Obsidian Marches](../Regions/Obsidian%20Marches.md)
 - **Tags:** #location, #capital, #elven, #militaristic, #xenophobic
 
 ## Overview
@@ -10,6 +11,10 @@ Lilrelond is the formidable capital of the northern elven kingdom of the same na
 ## History
 
 Founded by Yaelrion's ancestors, Lilrelond was established as a bastion against the perceived corruption and weakness of the outside world. For centuries, the city has remained isolated, honing its military prowess and fostering a culture of supremacy. Under King Yaelrion's rule, this isolation has intensified into aggressive xenophobia. The King dreams of a world united under his banner, purged of lesser races, and his bloodthirsty sons, including the late **[Torvin](../Characters/Torvin.md)**, have eagerly embraced this vision. The city's entire society is geared towards this eventual conquest, with every citizen expected to contribute to the strength of the kingdom, willingly or not.
+
+## Inhabitants
+
+Lilrelond is populated exclusively by high elves who subscribe to a rigid, militaristic, and supremacist ideology. Society is strictly hierarchical, with bloodlines and military rank determining one's status. Any non-elf discovered within the city walls is treated as a spy and enemy of the state, typically resulting in immediate execution.
 
 ## Points of Interest
 
