@@ -11,11 +11,15 @@ Whisperwind Forest is an ancient, sprawling woodland, known for its towering, mo
 
 The forest has long been considered sacred by the reclusive communities of Firbolgs who call it home. They are the guardians of its ancient secrets, and their history is deeply intertwined with the woods. Legends speak of a dark power imprisoned beneath the forest floor, a power that the Firbolgs have guarded for generations.
 
+## Inhabitants
+
+The forest is the ancestral home of several reclusive Firbolg clans who act as its guardians. They live in hidden communities and are deeply connected to the woods, rarely interacting with the outside world. Since the arrival of the blight, the forest has also become home to twisted, corrupted creatures—once-natural animals and plants now warped into aggressive monstrosities.
+
 ## Points of Interest
 
-- **The Firbolg Encampment:** A hidden community of Firbolgs, nestled deep within the forest. They are wary of outsiders, but they may be willing to help those who prove their worth.
-- **The Blighted Grove:** The epicenter of the forest's corruption. Here, the trees are twisted and skeletal, the air is thick with a foul miasma, and the ground is littered with the bones of dead animals.
-- **The Druid's Rest:** The ruins of a long-forgotten druidic circle, where the players can find clues about the Heart of Shadows and its connection to the blight.
+- **Firbolg Encampment:** A hidden community of Firbolgs, nestled deep within the forest. They are wary of outsiders, but they may be willing to help those who prove their worth.
+- **Blighted Grove:** The epicenter of the forest's corruption. Here, the trees are twisted and skeletal, the air is thick with a foul miasma, and the ground is littered with the bones of dead animals.
+- **Druid's Rest:** The ruins of a long-forgotten druidic circle, where the players can find clues about the Heart of Shadows and its connection to the blight.
 
 ## Key NPCs
 

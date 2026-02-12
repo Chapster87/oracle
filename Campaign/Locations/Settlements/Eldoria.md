@@ -1,6 +1,7 @@
 # Eldoria
 
 - **Type:** City
+- **Region:** [Kingdom of Eldoria](../Regions/Kingdom%20of%20Eldoria.md)
 - **Tags:** #location, #city, #trade-hub
 
 ## Overview
@@ -10,6 +11,10 @@ Eldoria is a bustling, cosmopolitan city, strategically located at the crossroad
 ## History
 
 Founded centuries ago as a humble trading post, Eldoria grew into a vital hub for commerce and diplomacy. Its strategic importance has made it a frequent battleground for competing factions, most notably the noble Dawnwardens and the enigmatic Scarlet Veil. The city has been rebuilt and fortified numerous times, with each layer of its history buried beneath the new. A fragile peace treaty, signed in the aftermath of a bloody turf war, has kept the city from open conflict for the last decade, but tensions remain high.
+
+## Inhabitants
+
+Eldoria is a true melting pot of cultures. While humans form the majority of the population, it is common to see individuals of all races on its streets, including a significant number of elves, dwarves, and halflings. The constant influx of travelers and traders makes the city a vibrant, if sometimes volatile, mix of languages, customs, and beliefs.
 
 ## Points of Interest
 
