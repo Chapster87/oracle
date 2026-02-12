@@ -11,6 +11,10 @@
 
 (1-2 paragraphs on the location's history and significance.)
 
+## Inhabitants
+
+(A description of the primary species and cultures that inhabit the region.)
+
 ## Points of Interest
 
 - **[Point of Interest 1]:** (Description)
