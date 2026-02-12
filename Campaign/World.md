@@ -16,7 +16,13 @@
 
 ## Geography & Climate
 
-(A description of the major continents, oceans, mountain ranges, and climates. This will influence cultures, trade routes, and potential adventure locations.)
+The known world is broadly defined by three major regions (for now):
+
+- **[Boreal Reach](./Locations/Regions/Boreal%20Reach.md) (Northwest):** A vast frontier of taiga and tundra, marked by immense pine forests and the snow-capped Frostfang Peaks. Its long, severe winters have kept it sparsely populated by hardy folk who value self-reliance. It is a land of stark, natural beauty and hidden magic.
+
+- **[Obsidian Marches](./Locations/Regions/Obsidian%20Marches.md) (Northeast):** A formidable and unwelcoming region of jagged, black volcanic peaks. The land is harsh and unforgiving, under the iron-fisted control of the isolationist elven kingdom of [Lilrelond](./Locations/Settlements/Lilrelond.md).
+
+- **[Kingdom of Eldoria](./Locations/Regions/Kingdom%20of%20Eldoria.md) (Central):** A prosperous, temperate region of rolling hills and fertile river valleys. Its central location has made it a continental crossroads for trade and culture, centered on the bustling metropolis of [Eldoria](./Locations/Settlements/Eldoria.md).
 
 ## Magic in the World
 
@@ -26,11 +32,11 @@
 
 ## Factions & Politics
 
-(An overview of the major political powers, kingdoms, and factions in the world. How do they interact with each other? This is a great place to link to files in your `Campaign/Factions/` directory.)
+The political landscape is dominated by a few key powers. In the northeast, the isolationist elven kingdom of **[Lilrelond](./Locations/Settlements/Lilrelond.md)** holds absolute authority over the **[Obsidian Marches](./Locations/Regions/Obsidian%20Marches.md)**, viewing all outsiders as threats. In contrast, the centrally located **[Kingdom of Eldoria](./Locations/Regions/Kingdom%20of%20Eldoria.md)** is a cosmopolitan hub of trade, though its capital city is a battleground for the noble **[Dawnwardens](./Factions/Dawnwardens.md)** and the enigmatic **[Scarlet Veil](./Factions/Scarlet%20Veil.md)**. To the northwest, the **[Boreal Reach](./Locations/Regions/Boreal%20Reach.md)** remains largely independent, its scattered settlements valuing self-governance over the authority of distant rulers.
 
 ## Peoples & Cultures
 
-(A look at the various races and cultures of the world. Which are common, and which are rare? How do they get along? Are there any unique cultural traditions or conflicts?)
+The world is home to a variety of cultures shaped by their environments. The **[Boreal Reach](./Locations/Regions/Boreal%20Reach.md)** is inhabited by hardy, self-reliant humans who have adapted to a life of harsh winters and communal survival. The **[Obsidian Marches](./Locations/Regions/Obsidian%20Marches.md)** are the exclusive domain of a militaristic and xenophobic high elven society, who see themselves as superior to all other races. The **[Kingdom of Eldoria](./Locations/Regions/Kingdom%20of%20Eldoria.md)** is a melting pot, where humans, elves, dwarves, and other races mingle in the pursuit of commerce and opportunity, creating a vibrant but often tense social fabric.
 
 ## Calendar & Time
 
@@ -39,7 +45,9 @@
 
 ## Major Themes
 
-(What are the central themes you want to explore in your campaign? Examples: exploration, political intrigue, survival, the clash between nature and civilization, etc.)
+- **Political Intrigue:** The clash of factions in Eldoria, the expansionist ambitions of Lilrelond, and the struggle for influence create a world ripe with conspiracy and shifting alliances.
+- **Survival:** For the people of the Boreal Reach, life is a constant struggle against the elements, fostering a culture of resilience and community.
+- **Isolationism vs. Cosmopolitanism:** The world is defined by the stark contrast between societies that welcome outsiders, like Eldoria, and those that violently reject them, like Lilrelond. This ideological conflict is a major source of tension.
 
 ## A Note on Deities
 
