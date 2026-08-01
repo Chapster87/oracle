@@ -16,6 +16,14 @@ Standard triage labels are used to manage issue lifecycles. See `docs/agents/tri
 
 Uses a single-context layout with `CONTEXT.md` and ADRs. See `docs/agents/domain.md`.
 
+### Supabase Access (MCP)
+
+Direct access to the campaign database is provided via the `Oracle-DB` MCP server. This is the **primary** method for agents to interact with live data:
+
+- **Tools**: Use `get_records`, `create_record`, `update_record`, etc., for all CRUD operations on Characters, Locations, Factions, and other entities.
+- **Verification**: Use `check_migrations` to ensure the schema is up to date before making changes.
+- **Implementation**: The bridge is located at `src/server/mcp/oracle-db.ts` and uses a service-role client to bypass RLS for administrative tasks.
+
 **Project Management Rules:**
 
 - This repository is **sub-issue enabled**.
