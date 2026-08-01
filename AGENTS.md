@@ -16,6 +16,13 @@ Standard triage labels are used to manage issue lifecycles. See `docs/agents/tri
 
 Uses a single-context layout with `CONTEXT.md` and ADRs. See `docs/agents/domain.md`.
 
+**Project Management Rules:**
+
+- This repository is **sub-issue enabled**.
+- Agent actions and Wayfinder sessions MUST heavily utilize GitHub native sub-issue and blocking tags (`--parent`, `--add-sub-issue`, `--add-blocked-by`, `--add-blocking`).
+- Sub-issues are the preferred method for task decomposition.
+- Always manage the frontier by wiring blocking relationships between tickets.
+
 ### Persona
 
 Defines the agent's role as a DM Assistant, tone, and content generation rules. See `docs/agents/persona.md`.
