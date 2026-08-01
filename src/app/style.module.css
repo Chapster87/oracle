@@ -1,0 +1,233 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  background: white;
+  color: #020817;
+  font-family: sans-serif;
+}
+
+.sidebar {
+  width: 256px;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+.sidebarHeader {
+  padding: 16px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.iconWrapper {
+  padding: 8px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dmIcon {
+  background-color: #991b1b;
+}
+
+.playerIcon {
+  background-color: #1e40af;
+}
+
+.logoTitle {
+  font-weight: bold;
+  margin: 0;
+  fontsize: 18px;
+}
+
+.logoSubtitle {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 16px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.navItem:hover {
+  background-color: #f1f5f9;
+}
+
+.navItemContent {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dmTools {
+  margin-top: auto;
+  padding: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.dmToolsTitle {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  color: #64748b;
+  margin: 0 0 12px 0;
+}
+
+.dmActionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px;
+  background-color: #991b1b;
+  color: white;
+  border-radius: 4px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.sidebarFooter {
+  padding: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.roleDisplay {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.switchButton {
+  font-size: 10px;
+  padding: 4px 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+}
+
+.main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 16px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.contentSection {
+  padding: 24px;
+  flex-grow: 1;
+  background-color: #f8fafc;
+}
+
+.card {
+  background: white;
+  padding: 32px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  height: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.infoCard {
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+}
+
+.dmNoteCard {
+  padding: 20px;
+  border: 1px solid #991b1b;
+  border-radius: 8px;
+  background-color: #fff5f5;
+}
+
+.dmNoteTitle {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #991b1b;
+  margin: 0 0 8px 0;
+}
+
+.floatingBarContainer {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+.floatingBar {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.separator {
+  width: 1px;
+  height: 16px;
+  background-color: #e2e8f0;
+}
+
+.variantLink {
+  font-size: 12px;
+  color: #2563eb;
+  background: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+}

@@ -1,0 +1,64 @@
+@import "./variables.css";
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Prototype utilities */
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.items-center {
+  align-items: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.p-4 {
+  padding: 16px;
+}
+.gap-4 {
+  gap: 16px;
+}
+.h-full {
+  height: 100%;
+}
+.w-full {
+  width: 100%;
+}
+.min-h-screen {
+  min-height: 100vh;
+}
+.border-b {
+  border-bottom: 1px solid var(--border);
+}
+.border-r {
+  border-right: 1px solid var(--border);
+}
+.bg-card {
+  background: var(--card);
+}
+.text-muted {
+  color: var(--muted-foreground);
+}
+.font-bold {
+  font-weight: bold;
+}

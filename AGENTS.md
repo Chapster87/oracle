@@ -26,3 +26,11 @@ Uses a single-context layout with `CONTEXT.md` and ADRs. See `docs/agents/domain
 ### Persona
 
 Defines the agent's role as a DM Assistant, tone, and content generation rules. See `docs/agents/persona.md`.
+
+## Coding Standards & Patterns
+
+To maintain a consistent and scalable codebase, agents must follow these rules:
+
+- **Component Architecture**: Follow the modular patterns in `docs/agents/rules/agent-rules.md`.
+- **Styling**: Adhere to the CSS Modules and 8px grid system in `docs/agents/rules/component-styling.md`.
+- **Organization**: Group feature files according to the local-first structure in `docs/agents/rules/folder-organization.md`.
