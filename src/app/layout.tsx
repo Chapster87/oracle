@@ -1,4 +1,5 @@
 import React from "react";
+import "./globals.css";
 
 export const metadata = {
   title: "Oracle DM Assistant",
@@ -15,9 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body style={{ margin: 0, padding: 0, background: "white" }}>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
