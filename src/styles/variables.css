@@ -1,11 +1,36 @@
 :root {
-  --primary: #2563eb;
-  --primary-foreground: #ffffff;
-  --background: #ffffff;
+  --color-blue: #1e40af;
+  --color-gold: #ffb81c;
+  --color-red: #c60c30;
+  --color-green: #00b140;
+
+  /* Randoms - @todo: redefine */
+  --color-green-100: #dcfce7;
+  --color-green-800: #166534;
+  --color-red-100: #fee2e2;
+  --color-red-50: #fff5f5;
+  --color-yellow-100: #fef3c7;
+  --color-yellow-800: #92400e;
+
+  --color-white: #ffffff;
+  --color-grey-100: #f8f9fa;
+  --color-grey-200: #e9ecef;
+  --color-grey-300: #dee2e6;
+  --color-grey-400: #ced4da;
+  --color-grey-500: #adb5bd;
+  --color-grey-600: #6c757d;
+  --color-grey-700: #495057;
+  --color-grey-800: #343a40;
+  --color-grey-900: #222222;
+  --color-black: #000000;
+
+  --primary: var(--color-blue);
+  --primary-foreground: var(--color-white);
+  --background: var(--color-white);
   --foreground: #020817;
-  --card: #ffffff;
+  --card: var(--color-white);
   --card-foreground: #020817;
-  --popover: #ffffff;
+  --popover: var(--color-white);
   --popover-foreground: #020817;
   --muted: #f1f5f9;
   --muted-foreground: #64748b;
@@ -15,28 +40,19 @@
   --destructive-foreground: #f8fafc;
   --border: #e2e8f0;
   --input: #e2e8f0;
-  --ring: #2563eb;
   --radius: 8px;
+
+  --color-success: #198754;
+  --color-warning: var(--color-gold);
+  --color-danger: var(--color-red);
+  --color-info: var(--color-blue);
 
   /* Role specific colors */
   --dm-accent: #991b1b;
-  --player-accent: #1e40af;
-}
+  --player-accent: var(--color-blue);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #020817;
-    --foreground: #f8fafc;
-    --card: #020817;
-    --card-foreground: #f8fafc;
-    --popover: #020817;
-    --popover-foreground: #f8fafc;
-    --muted: #1e293b;
-    --muted-foreground: #94a3b8;
-    --accent: #1e293b;
-    --accent-foreground: #f8fafc;
-    --border: #1e293b;
-    --input: #1e293b;
-    --ring: #1d4ed8;
-  }
+  --background-overlay: rgba(255, 255, 255, 0.4);
+
+  --box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }

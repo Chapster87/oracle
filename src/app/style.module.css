@@ -1,22 +1,22 @@
 .container {
   display: flex;
   min-height: 100vh;
-  background: white;
-  color: #020817;
+  background: var(--background);
+  color: var(--foreground);
   font-family: sans-serif;
 }
 
 .sidebar {
   width: 256px;
-  border-right: 1px solid #e2e8f0;
+  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  background: white;
+  background: var(--background);
 }
 
 .sidebarHeader {
   padding: 16px;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   gap: 16px;
@@ -31,11 +31,11 @@
 }
 
 .dmIcon {
-  background-color: #991b1b;
+  background-color: var(--dm-accent);
 }
 
 .playerIcon {
-  background-color: #1e40af;
+  background-color: var(--player-accent);
 }
 
 .logoTitle {
@@ -46,7 +46,7 @@
 
 .logoSubtitle {
   font-size: 12px;
-  color: #64748b;
+  color: var(--muted-foreground);
   margin: 0;
 }
 
@@ -67,7 +67,12 @@
 }
 
 .navItem:hover {
-  background-color: #f1f5f9;
+  background-color: var(--muted);
+}
+
+.activeNavItem {
+  background-color: var(--muted);
+  font-weight: bold;
 }
 
 .navItemContent {
@@ -79,7 +84,7 @@
 .dmTools {
   margin-top: auto;
   padding: 16px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--border);
 }
 
 .dmToolsTitle {
@@ -87,7 +92,7 @@
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 12px;
-  color: #64748b;
+  color: var(--muted-foreground);
   margin: 0 0 12px 0;
 }
 
@@ -98,17 +103,15 @@
   gap: 8px;
   width: 100%;
   padding: 10px;
-  background-color: #991b1b;
-  color: white;
+  background-color: var(--dm-accent);
+  color: var(--color-white);
   border-radius: 4px;
   border: none;
-  font-weight: bold;
-  cursor: pointer;
 }
 
 .sidebarFooter {
   padding: 16px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--border);
 }
 
 .roleDisplay {
@@ -126,9 +129,10 @@
 .switchButton {
   font-size: 10px;
   padding: 4px 8px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border);
   border-radius: 4px;
-  background: white;
+  background: var(--background);
+  color: var(--foreground);
   cursor: pointer;
 }
 
@@ -140,17 +144,17 @@
 
 .header {
   padding: 16px;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: white;
+  background: var(--background);
 }
 
 .badge {
   padding: 4px 8px;
   border-radius: 4px;
-  color: white;
+  color: var(--color-white);
   font-size: 12px;
   font-weight: bold;
 }
@@ -158,14 +162,14 @@
 .contentSection {
   padding: 24px;
   flex-grow: 1;
-  background-color: #f8fafc;
+  background-color: var(--muted);
 }
 
 .card {
-  background: white;
+  background: var(--card);
   padding: 32px;
   border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border);
   height: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -178,22 +182,22 @@
 
 .infoCard {
   padding: 20px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border);
   border-radius: 8px;
-  background: white;
+  background: var(--card);
 }
 
 .dmNoteCard {
   padding: 20px;
-  border: 1px solid #991b1b;
+  border: 1px solid var(--dm-accent);
   border-radius: 8px;
-  background-color: #fff5f5;
+  background-color: var(--color-red-50);
 }
 
 .dmNoteTitle {
   font-weight: bold;
   margin-bottom: 8px;
-  color: #991b1b;
+  color: var(--dm-accent);
   margin: 0 0 8px 0;
 }
 
@@ -206,8 +210,8 @@
 }
 
 .floatingBar {
-  background: white;
-  border: 1px solid #e2e8f0;
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 9999px;
   padding: 12px 24px;
   display: flex;
@@ -219,12 +223,12 @@
 .separator {
   width: 1px;
   height: 16px;
-  background-color: #e2e8f0;
+  background-color: var(--border);
 }
 
 .variantLink {
   font-size: 12px;
-  color: #2563eb;
+  color: var(--color-blue);
   background: none;
   border: none;
   font-weight: bold;

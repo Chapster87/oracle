@@ -1,14 +1,15 @@
-"use client";
+"use client"
 
-import React, { useState, useMemo } from "react";
-import { Search, Tag, Globe, Lock, EyeOff } from "lucide-react";
-import clsx from "clsx";
-import { WorldLore } from "../../types";
-import s from "./KnowledgeBase.module.css";
+import React, { useState, useMemo } from "react"
+import { Search, Tag, Globe, Lock, EyeOff } from "lucide-react"
+import clsx from "clsx"
+import { WorldLore } from "@/types"
+import s from "./style.module.css"
+import Button from "@components/button"
 
 interface KnowledgeBaseProps {
-  entries: WorldLore[];
-  isDM: boolean;
+  entries: WorldLore[]
+  isDM: boolean
 }
 
 /**
@@ -18,21 +19,21 @@ interface KnowledgeBaseProps {
  * @param isDM - Whether the current user has DM privileges.
  */
 export default function KnowledgeBase({ entries, isDM }: KnowledgeBaseProps) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
   const categories = useMemo(() => {
     const cats = entries.reduce(
       (acc, entry) => {
-        const cat = entry.category || "Uncategorized";
-        acc[cat] = (acc[cat] || 0) + 1;
-        return acc;
+        const cat = entry.category || "Uncategorized"
+        acc[cat] = (acc[cat] || 0) + 1
+        return acc
       },
-      {} as Record<string, number>,
-    );
+      {} as Record<string, number>
+    )
 
-    return Object.entries(cats).sort((a, b) => a[0].localeCompare(b[0]));
-  }, [entries]);
+    return Object.entries(cats).sort((a, b) => a[0].localeCompare(b[0]))
+  }, [entries])
 
   const filteredEntries = useMemo(() => {
     return entries.filter((entry) => {
@@ -40,16 +41,16 @@ export default function KnowledgeBase({ entries, isDM }: KnowledgeBaseProps) {
         entry.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         entry.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
         entry.tags?.some((tag) =>
-          tag.toLowerCase().includes(searchTerm.toLowerCase()),
-        );
+          tag.toLowerCase().includes(searchTerm.toLowerCase())
+        )
 
       const matchesCategory =
         !selectedCategory ||
-        (entry.category || "Uncategorized") === selectedCategory;
+        (entry.category || "Uncategorized") === selectedCategory
 
-      return matchesSearch && matchesCategory;
-    });
-  }, [entries, searchTerm, selectedCategory]);
+      return matchesSearch && matchesCategory
+    })
+  }, [entries, searchTerm, selectedCategory])
 
   return (
     <div className={s.container}>
@@ -67,28 +68,26 @@ export default function KnowledgeBase({ entries, isDM }: KnowledgeBaseProps) {
         </div>
 
         <div className={s.categoryList}>
-          <button
-            className={clsx(
-              s.categoryItem,
-              !selectedCategory && s.categoryItemActive,
-            )}
+          <Button
+            variant="ghost"
+            className={s.categoryItem}
             onClick={() => setSelectedCategory(null)}
+            active={selectedCategory === null}
           >
             <span>All Entries</span>
             <span className={s.count}>{entries.length}</span>
-          </button>
+          </Button>
           {categories.map(([cat, count]) => (
-            <button
+            <Button
               key={cat}
-              className={clsx(
-                s.categoryItem,
-                selectedCategory === cat && s.categoryItemActive,
-              )}
+              variant="ghost"
+              className={s.categoryItem}
               onClick={() => setSelectedCategory(cat)}
+              active={selectedCategory === cat}
             >
               <span>{cat}</span>
               <span className={s.count}>{count}</span>
-            </button>
+            </Button>
           ))}
         </div>
       </aside>
@@ -153,5 +152,5 @@ export default function KnowledgeBase({ entries, isDM }: KnowledgeBaseProps) {
         )}
       </main>
     </div>
-  );
+  )
 }
