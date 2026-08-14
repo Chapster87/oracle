@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    border-color: var(--primary);
+  }
+}
+
+.cardTitle {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0 0 8px 0;
+}
+
+.description {
+  color: var(--muted-foreground);
+  font-size: 14px;
+  margin: 0;
+}

@@ -23,12 +23,12 @@
 }
 
 .primary {
-  background-color: var(--color-primary);
+  background-color: var(--primary);
   color: var(--color-white);
 
   &:hover {
-    background-color: var(--color-green);
-    color: var(--color-white);
+    background-color: var(--primary);
+    filter: brightness(0.9);
   }
 }
 
