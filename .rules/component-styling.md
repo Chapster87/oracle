@@ -80,7 +80,7 @@ These are as follows:
 
 ## Form and Modal Standards
 
-- Use the global `Modal` component for all overlays and dialogs.
+- Use the global `Dialog` wrapper (`src/components/dialog`) for all overlays and dialogs.
 - Form fields should use established components from `src/components/fields` (e.g., `CheckboxField`, `SlugField`).
 - Modals should follow the `schema-modal` pattern:
   - Container class `.modalForm` with `flex-direction: column` and `gap: 16px`.
