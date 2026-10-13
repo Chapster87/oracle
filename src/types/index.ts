@@ -92,3 +92,13 @@ export interface EntityDetailData {
   related: RelatedEntity[]
   region: EntityLink | null
 }
+
+/** Lightweight row rendered by the browse/directory landing pages. */
+export interface EntitySummary {
+  id: string
+  name: string
+  type: EntityType
+  visibility: Visibility
+  subtitle: string
+  tags: string[]
+}

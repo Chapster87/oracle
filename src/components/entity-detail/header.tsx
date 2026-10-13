@@ -2,13 +2,8 @@ import React from "react"
 import clsx from "clsx"
 import { EyeOff, Globe, Lock, User } from "lucide-react"
 
-import type {
-  Character,
-  EntityDetailData,
-  Faction,
-  Location,
-  Visibility,
-} from "@/types"
+import type { Character, EntityDetailData, Visibility } from "@/types"
+import { entitySubtitle } from "@/utils/entity"
 
 import s from "./style.module.css"
 
@@ -21,27 +16,13 @@ const VISIBILITY: Record<
   secret: { label: "Secret", icon: EyeOff, className: s.visibilitySecret },
 }
 
-function getSubtitle(data: EntityDetailData): string {
-  if (data.type === "characters") {
-    const character = data.entity as Character
-    return [character.species, character.class].filter(Boolean).join(" • ")
-  }
-
-  if (data.type === "locations") {
-    const location = data.entity as Location
-    return [location.type, location.sub_type].filter(Boolean).join(" • ")
-  }
-
-  return (data.entity as Faction).alignment ?? ""
-}
-
 /**
  * The public identity band at the top of the detail view: name, type-specific
  * sub-header, visibility/tag badges, and a character status indicator.
  */
 export default function EntityHeader({ data }: { data: EntityDetailData }) {
   const { entity, type } = data
-  const subtitle = getSubtitle(data)
+  const subtitle = entitySubtitle(type, entity)
   const visibility = VISIBILITY[entity.visibility]
   const VisibilityIcon = visibility.icon
   const isDeceased = type === "characters" && (entity as Character).is_deceased
@@ -69,7 +50,7 @@ export default function EntityHeader({ data }: { data: EntityDetailData }) {
               <span
                 className={clsx(
                   s.badge,
-                  isDeceased ? s.deceasedBadge : s.aliveBadge,
+                  isDeceased ? s.deceasedBadge : s.aliveBadge
                 )}
               >
                 {isDeceased ? "Deceased" : "Alive"}

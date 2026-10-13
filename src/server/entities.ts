@@ -2,11 +2,13 @@ import { createClient } from "@supabase/supabase-js"
 import type {
   Entity,
   EntityDetailData,
+  EntitySummary,
   EntityType,
   Location,
   RelatedEntity,
   Visibility,
 } from "@/types"
+import { entitySubtitle } from "@/utils/entity"
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -200,4 +202,43 @@ export async function getEntity(
     related,
     region,
   }
+}
+
+/**
+ * Lists every entity of a type that is visible to the viewer, for the browse
+ * landing pages. Applies the same visibility rule as {@link getEntity}.
+ *
+ * @param type   The entity table to load from.
+ * @param role   The current user's role.
+ * @param userId The current user's id.
+ */
+export async function getEntities(
+  type: EntityType,
+  role: string,
+  userId: string
+): Promise<EntitySummary[]> {
+  if (!ENTITY_TYPES.includes(type)) return []
+
+  const { data, error } = await supabase
+    .from(type)
+    .select("*")
+    .order("name", { ascending: true })
+
+  if (error || !data) return []
+
+  const isDM = role === "DM"
+
+  return (data as Entity[])
+    .filter(
+      (entity) =>
+        isDM || entity.visibility === "public" || entity.owner_id === userId
+    )
+    .map((entity) => ({
+      id: entity.id,
+      name: entity.name,
+      type,
+      visibility: entity.visibility,
+      subtitle: entitySubtitle(type, entity),
+      tags: entity.tags ?? [],
+    }))
 }

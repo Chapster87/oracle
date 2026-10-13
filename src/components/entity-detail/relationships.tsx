@@ -3,7 +3,8 @@ import Link from "next/link"
 
 import type { EntityDetailData, RelatedEntity } from "@/types"
 
-import { entityPath, isLinkableEntity } from "./entity-path"
+import { entityPath, isLinkableEntity } from "@/utils/entity"
+
 import s from "./style.module.css"
 
 const TYPE_LABELS: Record<RelatedEntity["type"], string> = {

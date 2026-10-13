@@ -7,6 +7,8 @@ import {
   Shield,
   User,
   Map as MapIcon,
+  MapPin,
+  Flag,
   BookOpen,
   Users,
   Settings,
@@ -69,8 +71,20 @@ export default function RootLayout({
     },
     {
       name: "Characters",
-      href: "#",
+      href: "/characters",
       icon: Users,
+      color: "var(--color-blue)",
+    },
+    {
+      name: "Locations",
+      href: "/locations",
+      icon: MapPin,
+      color: "var(--color-blue)",
+    },
+    {
+      name: "Factions",
+      href: "/factions",
+      icon: Flag,
       color: "var(--color-blue)",
     },
     {
