@@ -1,8 +1,15 @@
 :root {
-  --color-blue: #1e40af;
   --color-gold: #ffb81c;
-  --color-red: #c60c30;
   --color-green: #00b140;
+  --color-burgundy: #991b1b;
+
+  --color-blue: #00418e;
+  --color-teal-200: #319aaf;
+  --color-teal-100: #65c3cd;
+  --color-grey: #d0d7f0;
+  --color-orange-100: #feb757;
+  --color-orange-200: #fb9235;
+  --color-red: #f02f0e;
 
   /* Randoms - @todo: redefine */
   --color-green-100: #dcfce7;
@@ -48,7 +55,7 @@
   --color-info: var(--color-blue);
 
   /* Role specific colors */
-  --dm-accent: #991b1b;
+  --dm-accent: var(--color-burgundy);
   --player-accent: var(--color-blue);
 
   --background-overlay: rgba(255, 255, 255, 0.4);
