@@ -1,0 +1,282 @@
+/* Entity Detail — Layered Detail view (Research #10) */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ---- Header (public identity) ---- */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.headerMain {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--foreground);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: var(--muted-foreground);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.visibilityPublic {
+  background: var(--color-green-100);
+  color: var(--color-green-800);
+}
+
+.visibilityPrivate {
+  background: var(--color-red-100);
+  color: var(--dm-accent);
+}
+
+.visibilitySecret {
+  background: var(--color-yellow-100);
+  color: var(--color-yellow-800);
+}
+
+.aliveBadge {
+  background: var(--color-green-100);
+  color: var(--color-green-800);
+}
+
+.deceasedBadge {
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+
+.tagBadge {
+  background: var(--muted);
+  color: var(--muted-foreground);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* ---- Content ---- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.infoCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.infoCardTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted-foreground);
+}
+
+.infoCardBody {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--foreground);
+  white-space: pre-wrap;
+}
+
+.empty {
+  color: var(--muted-foreground);
+  font-style: italic;
+}
+
+.list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted-foreground);
+}
+
+.statValue {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.mapPlaceholder {
+  padding: 24px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+
+/* ---- Relationships ---- */
+
+.relationshipList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.relationshipItem {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.relationshipLabel {
+  flex-shrink: 0;
+  width: 160px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted-foreground);
+}
+
+.relationshipValue {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.relationshipLink {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.relationshipLink:hover {
+  text-decoration: underline;
+}
+
+.relationshipType {
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+
+/* ---- Private Log (DM-only) ---- */
+
+.privateLog {
+  padding: 20px;
+  border: 1px solid var(--color-burgundy);
+  border-radius: var(--radius);
+  background: var(--color-red-50);
+}
+
+.privateLogHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: var(--color-burgundy);
+}
+
+.privateLogLabel {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.privateLogBody {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--foreground);
+  white-space: pre-wrap;
+}
+
+@media (max-width: 768px) {
+  .relationshipItem {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .relationshipLabel {
+    width: auto;
+  }
+}
