@@ -37,4 +37,10 @@ Defines the agent's role as a DM Assistant, tone, and content generation rules. 
 
 ## Coding Standards & Patterns
 
-Follow the component architecture, styling, and folder organization standards in `.rules/`.
+Follow the global standards in `~/.agents/rules/`:
+
+- **Component architecture**: `~/.agents/rules/agent-rules.md`
+- **Styling**: `~/.agents/rules/component-styling.md`
+- **Folder organization**: `~/.agents/rules/folder-organization.md`
+
+Project-specific UI patterns (Radix wrappers, Button, Dialog) live in `docs/ui-components.md`.
