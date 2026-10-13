@@ -3,46 +3,31 @@
 import React from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/tabs"
 
-import type {
-  Character,
-  EntityDetailData,
-  EntityType,
-  Faction,
-  Location,
-} from "@/types"
+import type { EntityDetailData } from "@/types"
+import { ENTITY_META } from "@/utils/entity"
 
-import CharacterLayout from "./layouts/character"
-import FactionLayout from "./layouts/faction"
-import LocationLayout from "./layouts/location"
 import EntityHeader from "./header"
+import { LAYOUTS } from "./layouts"
 import PrivateLog from "./private-log"
 import Relationships from "./relationships"
 import s from "./style.module.css"
 
-/** Registry mapping each entity type to its specialized content layout. */
-const LAYOUTS: Record<
-  EntityType,
-  React.ComponentType<{ data: EntityDetailData }>
-> = {
-  characters: CharacterLayout,
-  locations: LocationLayout,
-  factions: FactionLayout,
-}
-
-/** Renders the type-specific secret payload inside the Private Log treatment. */
+/**
+ * Renders the type-specific secret payload inside the Private Log treatment.
+ * Uses the type's `secretField` when it has one, otherwise `metadata.dm_notes`.
+ */
 function DmNotes({ data }: { data: EntityDetailData }) {
-  if (data.type === "characters") {
-    return <PrivateLog>{(data.entity as Character).secrets}</PrivateLog>
-  }
+  const secretField = ENTITY_META[data.type].secretField
+  const record = data.entity as Record<string, any>
+  const notes = secretField ? record[secretField] : record.metadata?.dm_notes
 
-  if (data.type === "locations") {
-    const rumors = (data.entity as Location).rumors_lore ?? []
+  if (Array.isArray(notes)) {
     return (
       <PrivateLog>
-        {rumors.length > 0 ? (
+        {notes.length > 0 ? (
           <ul className={s.list}>
-            {rumors.map((rumor, index) => (
-              <li key={index}>{rumor}</li>
+            {notes.map((note, index) => (
+              <li key={index}>{note}</li>
             ))}
           </ul>
         ) : null}
@@ -50,7 +35,7 @@ function DmNotes({ data }: { data: EntityDetailData }) {
     )
   }
 
-  return <PrivateLog>{(data.entity as Faction).metadata?.dm_notes}</PrivateLog>
+  return <PrivateLog>{notes}</PrivateLog>
 }
 
 interface EntityDetailProps {

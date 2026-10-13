@@ -1,4 +1,3 @@
-import { createClient } from "@supabase/supabase-js"
 import type {
   Entity,
   EntityDetailData,
@@ -8,21 +7,18 @@ import type {
   RelatedEntity,
   Visibility,
 } from "@/types"
-import { entitySubtitle } from "@/utils/entity"
+import {
+  ENTITY_META,
+  ENTITY_TYPES,
+  entitySubtitle,
+  isEntityType,
+} from "@/utils/entity"
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-
-const supabase = createClient(supabaseUrl, supabaseServiceKey)
-
-/** Entity tables that have a public detail route. */
-const ENTITY_TYPES: EntityType[] = ["characters", "locations", "factions"]
+import { supabaseAdmin as supabase } from "./supabase"
 
 /** Tables consulted when resolving a related entity id back to a name. */
 const RESOLVABLE_TABLES: (EntityType | "world_lore")[] = [
-  "characters",
-  "locations",
-  "factions",
+  ...ENTITY_TYPES,
   "world_lore",
 ]
 
@@ -35,16 +31,13 @@ const UUID_RE =
  */
 function stripSecrets(type: EntityType, entity: Entity): Entity {
   const sanitized = { ...entity } as Record<string, any>
+  const secretField = ENTITY_META[type].secretField
 
-  if (type === "characters") {
-    delete sanitized.secrets
+  if (secretField) {
+    delete sanitized[secretField]
   }
 
-  if (type === "locations") {
-    delete sanitized.rumors_lore
-  }
-
-  if (type === "factions" && sanitized.metadata) {
+  if (sanitized.metadata) {
     const { dm_notes: _dmNotes, ...metadata } = sanitized.metadata
     sanitized.metadata = metadata
   }
@@ -168,7 +161,7 @@ export async function getEntity(
   role: string,
   userId: string
 ): Promise<EntityDetailData | null> {
-  if (!ENTITY_TYPES.includes(type)) return null
+  if (!isEntityType(type)) return null
   if (!UUID_RE.test(id)) return null
 
   const { data, error } = await supabase
@@ -217,7 +210,7 @@ export async function getEntities(
   role: string,
   userId: string
 ): Promise<EntitySummary[]> {
-  if (!ENTITY_TYPES.includes(type)) return []
+  if (!isEntityType(type)) return []
 
   const { data, error } = await supabase
     .from(type)

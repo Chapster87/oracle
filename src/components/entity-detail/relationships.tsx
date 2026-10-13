@@ -1,18 +1,11 @@
 import React from "react"
 import Link from "next/link"
 
-import type { EntityDetailData, RelatedEntity } from "@/types"
+import type { EntityDetailData } from "@/types"
 
-import { entityPath, isLinkableEntity } from "@/utils/entity"
+import { entityLabel, entityPath, isLinkableEntity } from "@/utils/entity"
 
 import s from "./style.module.css"
-
-const TYPE_LABELS: Record<RelatedEntity["type"], string> = {
-  characters: "Character",
-  locations: "Location",
-  factions: "Faction",
-  world_lore: "Lore",
-}
 
 /** "member_of" -> "Member Of". */
 function humanizeRelation(relationType: string): string {
@@ -69,7 +62,9 @@ export default function Relationships({ data }: { data: EntityDetailData }) {
               relation.name
             )}
             <span className={s.relationshipType}>
-              {TYPE_LABELS[relation.type]}
+              {isLinkableEntity(relation.type)
+                ? entityLabel(relation.type)
+                : "Lore"}
             </span>
           </span>
         </div>

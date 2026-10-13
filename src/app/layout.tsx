@@ -6,11 +6,14 @@ import { usePathname } from "next/navigation"
 import {
   Shield,
   User,
+  Users,
+  UserRound,
   Map as MapIcon,
   MapPin,
   Flag,
+  Gem,
+  Church,
   BookOpen,
-  Users,
   Settings,
   ChevronRight,
   Plus,
@@ -65,7 +68,7 @@ export default function RootLayout({
     },
     {
       name: "Story Log",
-      href: "#",
+      href: "/story",
       icon: BookOpen,
       color: "var(--color-blue)",
     },
@@ -73,6 +76,12 @@ export default function RootLayout({
       name: "Characters",
       href: "/characters",
       icon: Users,
+      color: "var(--color-blue)",
+    },
+    {
+      name: "Players",
+      href: "/players",
+      icon: UserRound,
       color: "var(--color-blue)",
     },
     {
@@ -85,6 +94,18 @@ export default function RootLayout({
       name: "Factions",
       href: "/factions",
       icon: Flag,
+      color: "var(--color-blue)",
+    },
+    {
+      name: "Items",
+      href: "/items",
+      icon: Gem,
+      color: "var(--color-blue)",
+    },
+    {
+      name: "Religions",
+      href: "/religions",
+      icon: Church,
       color: "var(--color-blue)",
     },
     {

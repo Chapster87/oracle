@@ -67,10 +67,41 @@ export interface Faction extends BaseEntity {
   beliefs?: string | null
 }
 
-/** URL segment / table name for each entity supported by the detail view. */
-export type EntityType = "characters" | "locations" | "factions"
+/** A player character. `class_es` is the (legacy) column name for class. */
+export interface Player extends BaseEntity {
+  species?: string | null
+  class_es?: string | null
+  alignment?: string | null
+  level?: number | null
+  homeland_id?: string | null
+  hometown_id?: string | null
+  background?: string | null
+  backstory?: string | null
+}
 
-export type Entity = Character | Location | Faction
+export interface Item extends BaseEntity {
+  type?: string | null
+  rarity?: string | null
+  description?: string | null
+  history?: string | null
+  role_in_campaign?: string | null
+}
+
+export interface Religion extends BaseEntity {
+  type?: string | null
+  overview?: string | null
+  domains_teachings?: string | null
+  worship_rituals?: string | null
+  clergy_followers?: string | null
+  history_myths?: string | null
+  role_in_campaign?: string | null
+}
+
+/** URL segment / table name for each entity supported by the detail view. */
+export type EntityType =
+  "characters" | "locations" | "factions" | "players" | "items" | "religions"
+
+export type Entity = Character | Location | Faction | Player | Item | Religion
 
 /** A single link between two entities, resolved to a display name. */
 export interface RelatedEntity {
@@ -101,4 +132,12 @@ export interface EntitySummary {
   visibility: Visibility
   subtitle: string
   tags: string[]
+}
+
+/** A campaign Story Log entry (the `campaign_logs` table). */
+export interface StoryLogEntry {
+  id: string
+  name: string
+  content: string | null
+  created_at: string
 }
