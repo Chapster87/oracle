@@ -17,6 +17,11 @@ const demos = [
     href: "/components/dropdown-menu",
     description: "Radix DropdownMenu wrapper demo",
   },
+  {
+    name: "D&D Beyond",
+    href: "/components/dnd-beyond",
+    description: "Link-first integration card (linked + empty states)",
+  },
 ]
 
 export default function ComponentsPage() {

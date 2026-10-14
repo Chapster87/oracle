@@ -1,5 +1,6 @@
 import React from "react"
 import { TabsContent } from "@components/tabs"
+import DndBeyondLink, { dndBeyondUrl } from "@components/dnd-beyond"
 
 import type { EntityDetailData, Location } from "@/types"
 
@@ -35,6 +36,7 @@ export default function LocationLayout({ data }: { data: EntityDetailData }) {
 
       <TabsContent value="details">
         <div className={s.grid}>
+          <DndBeyondLink href={dndBeyondUrl(location)} label="Encounter" />
           <InfoCard title="History">{location.history}</InfoCard>
 
           <InfoCard title="Points of Interest">
