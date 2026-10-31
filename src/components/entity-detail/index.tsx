@@ -63,7 +63,7 @@ export default function EntityDetail({ data, isDM }: EntityDetailProps) {
           {isDM && <TabsTrigger value="dm-notes">DM Notes</TabsTrigger>}
         </TabsList>
 
-        <Layout data={data} />
+        <Layout data={data} isDM={isDM} />
 
         <TabsContent value="relationships">
           <Relationships data={data} />

@@ -1,5 +1,6 @@
 import React from "react"
 import { TabsContent } from "@components/tabs"
+import DndBeyondLink, { dndBeyondUrl } from "@components/dnd-beyond"
 
 import type { EntityDetailData, Player } from "@/types"
 
@@ -10,13 +11,25 @@ import s from "../style.module.css"
  * Player character layout. Kept intentionally simple for now; richer
  * character-sheet tooling is a follow-up.
  */
-export default function PlayerLayout({ data }: { data: EntityDetailData }) {
+export default function PlayerLayout({
+  data,
+  isDM,
+}: {
+  data: EntityDetailData
+  isDM?: boolean
+}) {
   const player = data.entity as Player
+  const sheetUrl = dndBeyondUrl(player)
 
   return (
     <>
       <TabsContent value="overview">
         <div className={s.grid}>
+          {/* A player only sees the link once it exists; the "Connect" prompt
+              is a DM affordance. */}
+          {(sheetUrl || isDM) && (
+            <DndBeyondLink href={sheetUrl} label="Character Sheet" />
+          )}
           <InfoCard title="Background">{player.background}</InfoCard>
           <InfoCard title="Backstory">{player.backstory}</InfoCard>
         </div>

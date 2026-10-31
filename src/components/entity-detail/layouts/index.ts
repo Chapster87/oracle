@@ -12,7 +12,7 @@ import ReligionLayout from "./religion"
 /** Registry mapping each entity type to its specialized content layout. */
 export const LAYOUTS: Record<
   EntityType,
-  React.ComponentType<{ data: EntityDetailData }>
+  React.ComponentType<{ data: EntityDetailData; isDM?: boolean }>
 > = {
   characters: CharacterLayout,
   locations: LocationLayout,
