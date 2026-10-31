@@ -7,11 +7,19 @@ import Checkbox from "@components/checkbox"
 import Field from "@components/field"
 import Heading from "@components/heading"
 import Input from "@components/input"
+import RepeatableTextList from "@components/repeatable-text-list"
 import { Select, SelectItem } from "@components/select"
+import TagInput from "@components/tag-input"
+import Text from "@components/text"
 import Textarea from "@components/textarea"
 
 export default function FormControlsDemoPage() {
   const [checked, setChecked] = useState(false)
+  const [tags, setTags] = useState<string[]>(["Orc", "Undead"])
+  const [aliases, setAliases] = useState<string[]>([
+    "The Shattered Isles",
+    "The Broken Coast",
+  ])
 
   return (
     <div className="flex flex-col gap-4">
@@ -116,6 +124,38 @@ export default function FormControlsDemoPage() {
         </Field>
         <Checkbox label="Standalone checkbox with its own label" />
         <Checkbox label="Disabled checkbox" disabled />
+      </section>
+
+      <section
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+          maxWidth: "480px",
+        }}
+      >
+        <Heading level="h3" display="h6">
+          Composite
+        </Heading>
+        <Text size="sm">
+          TagInput is for unordered, deduplicated short strings.
+          RepeatableTextList is for ordered rows where position matters.
+        </Text>
+        <Field label="Tags" help="Press Enter to add. Duplicates are ignored.">
+          <TagInput
+            value={tags}
+            onChange={setTags}
+            placeholder="Add a tag..."
+          />
+        </Field>
+        <Field label="Aliases" help="Reorder rows with the arrow buttons.">
+          <RepeatableTextList
+            value={aliases}
+            onChange={setAliases}
+            addLabel="Add alias"
+            minRows={1}
+          />
+        </Field>
       </section>
     </div>
   )
