@@ -39,6 +39,11 @@ const demos = [
     href: "/components/typography",
     description: "Heading and Text components with the global scale",
   },
+  {
+    name: "Form Controls",
+    href: "/components/form-controls",
+    description: "Field, Input, Textarea, Select, and Checkbox",
+  },
 ]
 
 export default function ComponentsPage() {
