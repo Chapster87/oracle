@@ -2,9 +2,12 @@ import React from "react"
 import clsx from "clsx"
 import { EyeOff, Globe, Lock, User } from "lucide-react"
 
+import Button from "@components/button"
+
 import type { Character, EntityDetailData, Visibility } from "@/types"
 import { entitySubtitle } from "@/utils/entity"
 
+import DeleteDialog from "./delete-dialog"
 import s from "./style.module.css"
 
 const VISIBILITY: Record<
@@ -20,7 +23,13 @@ const VISIBILITY: Record<
  * The public identity band at the top of the detail view: name, type-specific
  * sub-header, visibility/tag badges, and a character status indicator.
  */
-export default function EntityHeader({ data }: { data: EntityDetailData }) {
+export default function EntityHeader({
+  data,
+  isDM,
+}: {
+  data: EntityDetailData
+  isDM?: boolean
+}) {
   const { entity, type } = data
   const subtitle = entitySubtitle(type, entity)
   const visibility = VISIBILITY[entity.visibility]
@@ -65,6 +74,14 @@ export default function EntityHeader({ data }: { data: EntityDetailData }) {
           </div>
         </div>
       </div>
+
+      {isDM && (
+        <div className={s.headerActions}>
+          <DeleteDialog type={type} id={entity.id} name={entity.name}>
+            <Button variant="ghost">Delete</Button>
+          </DeleteDialog>
+        </div>
+      )}
     </header>
   )
 }

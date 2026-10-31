@@ -53,7 +53,7 @@ export default function EntityDetail({ data, isDM }: EntityDetailProps) {
 
   return (
     <div className={s.container}>
-      <EntityHeader data={data} />
+      <EntityHeader data={data} isDM={isDM} />
 
       <Tabs defaultValue="overview">
         <TabsList>

@@ -1,9 +1,10 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
 
 import { ddbUrlSchema } from "@/schemas/metadata"
-import { updateEntityMetadata } from "@/server/cms/entities"
+import { deleteEntity, updateEntityMetadata } from "@/server/cms/entities"
 import { requireDmSession } from "@/server/session"
 import { isEntityType } from "@/utils/entity"
 
@@ -71,4 +72,34 @@ export async function connectDndBeyondAction(
 
   revalidatePath(`/${type}/${id}`)
   return { ok: true }
+}
+
+/**
+ * Deletes an entity and its relations, then returns to the directory.
+ */
+export async function deleteEntityAction(
+  _prev: ActionResult | null,
+  formData: FormData
+): Promise<ActionResult> {
+  const viewer = requireDmSession()
+
+  const type = String(formData.get("type") ?? "")
+  const id = String(formData.get("id") ?? "")
+
+  if (!isEntityType(type)) {
+    return { ok: false, formError: "Unknown entity type." }
+  }
+
+  try {
+    await deleteEntity(type, id, viewer)
+  } catch (error) {
+    return {
+      ok: false,
+      formError:
+        error instanceof Error ? error.message : "Could not delete the entity.",
+    }
+  }
+
+  revalidatePath(`/${type}`)
+  redirect(`/${type}`)
 }

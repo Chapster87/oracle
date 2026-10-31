@@ -94,6 +94,16 @@
   }
 }
 
+/* Irreversible action, e.g. deleting an entity. */
+.destructive {
+  background-color: var(--destructive);
+  color: var(--destructive-foreground);
+
+  &:hover {
+    filter: brightness(0.92);
+  }
+}
+
 .small {
   padding: 4px 8px;
   font-size: 12px;

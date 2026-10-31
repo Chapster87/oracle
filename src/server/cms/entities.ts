@@ -47,3 +47,27 @@ export async function updateEntityMetadata(
 
   if (updateError) throw updateError
 }
+
+/**
+ * Deletes an entity and everything that points at it: relations, appearances,
+ * the specialized row, and the `entities` registry row. The cleanup runs in one
+ * transaction inside `public.delete_entity(uuid)`.
+ */
+export async function deleteEntity(
+  type: EntityType,
+  id: string,
+  viewer: Session
+): Promise<void> {
+  if (viewer.role !== "DM") {
+    throw new Error("Only a DM may delete an entity")
+  }
+  if (!isEntityType(type)) {
+    throw new Error(`Unknown entity type: ${type}`)
+  }
+
+  const { error } = await supabaseAdmin.rpc("delete_entity", {
+    p_entity_id: id,
+  })
+
+  if (error) throw error
+}

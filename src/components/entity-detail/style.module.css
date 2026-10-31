@@ -22,6 +22,12 @@
   gap: 16px;
 }
 
+.headerActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 .avatar {
   flex-shrink: 0;
   width: 72px;
