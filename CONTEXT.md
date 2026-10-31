@@ -20,6 +20,7 @@ Oracle is a TTRPG (Tabletop Role-Playing Game) campaign management system design
 - **Items**: Magic items, loot, and equipment (`Campaign/Items/`).
 - **Religions**: Deities and belief systems (`Campaign/Religions/`).
 - **Puzzles & Quest Hooks**: Challenges and plot starters for players (`Campaign/Puzzles/`, `Campaign/Quest Hooks/`).
+- **Metadata**: Auxiliary key/value data attached to an entity — for example a D&D Beyond sheet URL. Not a free-form field store: only keys the app recognises are editable, and DM-only keys are filtered out of player payloads.
 
 ### Ruleset
 
