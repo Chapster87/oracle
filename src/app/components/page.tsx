@@ -32,6 +32,11 @@ const demos = [
     href: "/components/breadcrumb",
     description: "Pathname-derived breadcrumb trail",
   },
+  {
+    name: "Typography",
+    href: "/components/typography",
+    description: "Heading and Text components with the global scale",
+  },
 ]
 
 export default function ComponentsPage() {
