@@ -1,6 +1,5 @@
 import React from "react"
 import { TabsContent } from "@components/tabs"
-import DndBeyondLink, { dndBeyondUrl } from "@components/dnd-beyond"
 
 import type { Character, EntityDetailData } from "@/types"
 
@@ -18,10 +17,6 @@ export default function CharacterLayout({ data }: { data: EntityDetailData }) {
     <>
       <TabsContent value="overview">
         <div className={s.grid}>
-          <DndBeyondLink
-            href={dndBeyondUrl(character)}
-            label="Character Sheet"
-          />
           <InfoCard title="Appearance">{character.appearance}</InfoCard>
           <InfoCard title="Personality">{character.personality}</InfoCard>
           <InfoCard title="Role">{character.role}</InfoCard>

@@ -28,7 +28,15 @@ export default function PlayerLayout({
           {/* A player only sees the link once it exists; the "Connect" prompt
               is a DM affordance. */}
           {(sheetUrl || isDM) && (
-            <DndBeyondLink href={sheetUrl} label="Character Sheet" />
+            <DndBeyondLink
+              href={sheetUrl}
+              label="Character Sheet"
+              connect={
+                isDM
+                  ? { type: "players", id: player.id, name: player.name }
+                  : undefined
+              }
+            />
           )}
           <InfoCard title="Background">{player.background}</InfoCard>
           <InfoCard title="Backstory">{player.backstory}</InfoCard>

@@ -30,3 +30,18 @@ export function getSession(roleOverride?: string | string[]): Session {
     userId: role === "PLAYER" ? PROTOTYPE_PLAYER_ID : PROTOTYPE_USER_ID,
   }
 }
+
+/**
+ * Stopgap write gate until real auth lands (#36).
+ *
+ * Reads the prototype session, which is always DM, so this currently always
+ * passes. It exists so the write path has one seam to swap for a verified
+ * `getViewer()` — and so no action ever reads `?role=` or `localStorage`.
+ */
+export function requireDmSession(): Session {
+  const session = getSession()
+  if (session.role !== "DM") {
+    throw new Error("A DM session is required")
+  }
+  return session
+}

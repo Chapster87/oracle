@@ -96,17 +96,10 @@
   margin: 0 0 12px 0;
 }
 
-.dmActionButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+/* Layout-only override; chrome and type come from the global Button. */
+.dmActionButton.dmActionButton {
   width: 100%;
   padding: 10px;
-  background-color: var(--dm-accent);
-  color: var(--color-white);
-  border-radius: 4px;
-  border: none;
 }
 
 .sidebarFooter {
@@ -224,14 +217,4 @@
   width: 1px;
   height: 16px;
   background-color: var(--border);
-}
-
-.variantLink {
-  font-size: 12px;
-  color: var(--color-blue);
-  background: none;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 0;
 }

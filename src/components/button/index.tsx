@@ -4,7 +4,7 @@ import s from "./styles.module.css"
 type ButtonProps = {
   children: React.ReactNode
   onClick?: () => void
-  variant?: "primary" | "secondary" | "ghost" | "outline"
+  variant?: "primary" | "secondary" | "ghost" | "outline" | "dm" | "link"
   size?: "small" | "default" | "large"
   shape?: "standard" | "square" | "circle"
   disabled?: boolean

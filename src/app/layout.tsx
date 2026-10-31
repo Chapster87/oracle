@@ -173,10 +173,10 @@ export default function RootLayout({
             {isDM && (
               <div className={s.dmTools}>
                 <h3 className={s.dmToolsTitle}>DM Tools</h3>
-                <button className={s.dmActionButton}>
+                <Button variant="dm" className={s.dmActionButton}>
                   <Plus size={16} />
                   <span>New Episode</span>
-                </button>
+                </Button>
               </div>
             )}
 
@@ -239,9 +239,9 @@ export default function RootLayout({
                 PROTOTYPE: App Shell UI
               </span>
               <div className={s.separator} />
-              <button onClick={toggleRole} className={s.variantLink}>
+              <Button variant="link" onClick={toggleRole}>
                 Switch to {isDM ? "Player UI" : "DM UI"}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

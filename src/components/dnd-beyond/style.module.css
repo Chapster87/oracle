@@ -24,6 +24,81 @@
   box-shadow: var(--box-shadow);
 }
 
+/* The empty state doubles as the "Connect" dialog trigger for DMs. */
+.emptyButton {
+  width: 100%;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.emptyButton:hover {
+  border-color: var(--color-ddb);
+  box-shadow: var(--box-shadow);
+}
+
+/* A linked card with its "Edit" affordance inside it. */
+.card {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 8px 8px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.card:hover,
+.card:focus-within {
+  border-color: var(--color-ddb);
+  box-shadow: var(--box-shadow);
+}
+
+.linkBody {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+  padding: 8px 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Quiet icon button that picks up the D&D Beyond brand on hover. The doubled
+   class outranks the Button wrapper's `.unstyled` reset. */
+.editButton.editButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  color: var(--muted-foreground);
+  background: transparent;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
+}
+
+.editButton.editButton:hover {
+  color: var(--color-ddb);
+  background: var(--color-red-50);
+}
+
+.editButton.editButton:focus-visible {
+  outline: 2px solid var(--color-ddb);
+  outline-offset: 2px;
+}
+
 .mark {
   display: inline-flex;
   flex-shrink: 0;
