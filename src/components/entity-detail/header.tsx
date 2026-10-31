@@ -2,6 +2,9 @@ import React from "react"
 import clsx from "clsx"
 import { EyeOff, Globe, Lock, User } from "lucide-react"
 
+import Heading from "@components/heading"
+import Text from "@components/text"
+
 import Button from "@components/button"
 
 import type { Character, EntityDetailData, Visibility } from "@/types"
@@ -46,8 +49,10 @@ export default function EntityHeader({
         )}
 
         <div className={s.titleGroup}>
-          <h1 className={s.title}>{entity.name}</h1>
-          {subtitle && <p className={s.subtitle}>{subtitle}</p>}
+          <Heading level="h1" className={s.title}>
+            {entity.name}
+          </Heading>
+          {subtitle && <Text className={s.subtitle}>{subtitle}</Text>}
 
           <div className={s.badges}>
             <span className={clsx(s.badge, visibility.className)}>

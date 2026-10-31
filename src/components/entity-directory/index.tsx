@@ -1,5 +1,7 @@
 import React from "react"
 import Link from "@components/link"
+import Heading from "@components/heading"
+import Text from "@components/text"
 import clsx from "clsx"
 import { EyeOff, Globe, Lock } from "lucide-react"
 
@@ -23,7 +25,7 @@ const VISIBILITY: Record<
  */
 export default function EntityDirectory({ items }: { items: EntitySummary[] }) {
   if (items.length === 0) {
-    return <p className={s.empty}>Nothing to show here yet.</p>
+    return <Text className={s.empty}>Nothing to show here yet.</Text>
   }
 
   return (
@@ -39,14 +41,18 @@ export default function EntityDirectory({ items }: { items: EntitySummary[] }) {
             className={s.card}
           >
             <div className={s.cardHeader}>
-              <h3 className={s.cardTitle}>{item.name}</h3>
+              <Heading level="h3" className={s.cardTitle}>
+                {item.name}
+              </Heading>
               <span className={clsx(s.badge, visibility.className)}>
                 <VisibilityIcon size={10} />
                 {visibility.label}
               </span>
             </div>
 
-            {item.subtitle && <p className={s.subtitle}>{item.subtitle}</p>}
+            {item.subtitle && (
+              <Text className={s.subtitle}>{item.subtitle}</Text>
+            )}
 
             {item.tags.length > 0 && (
               <div className={s.tags}>

@@ -1,5 +1,8 @@
 import React from "react"
 
+import Heading from "@components/heading"
+import Text from "@components/text"
+
 import type { StoryLogEntry } from "@/types"
 
 import s from "./style.module.css"
@@ -23,7 +26,7 @@ function formatDate(iso: string): string {
 /** Tile grid of Story Log entries. Read-only for now. */
 export default function StoryLog({ entries }: { entries: StoryLogEntry[] }) {
   if (entries.length === 0) {
-    return <p className={s.empty}>No story log entries yet.</p>
+    return <Text className={s.empty}>No story log entries yet.</Text>
   }
 
   return (
@@ -31,8 +34,10 @@ export default function StoryLog({ entries }: { entries: StoryLogEntry[] }) {
       {entries.map((entry) => (
         <article key={entry.id} className={s.tile}>
           <span className={s.date}>{formatDate(entry.created_at)}</span>
-          <h3 className={s.title}>{entry.name}</h3>
-          <p className={s.excerpt}>{excerpt(entry.content)}</p>
+          <Heading level="h3" className={s.title}>
+            {entry.name}
+          </Heading>
+          <Text className={s.excerpt}>{excerpt(entry.content)}</Text>
         </article>
       ))}
     </div>

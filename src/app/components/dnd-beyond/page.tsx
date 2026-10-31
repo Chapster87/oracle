@@ -1,14 +1,17 @@
+import Heading from "@components/heading"
 import DndBeyondLink from "@components/dnd-beyond"
 
 export default function DndBeyondDemoPage() {
   return (
     <div className="flex flex-col gap-4">
-      <h2 style={{ fontWeight: "bold", margin: 0, fontSize: "20px" }}>
+      <Heading level="h2" display="h4">
         D&D Beyond
-      </h2>
+      </Heading>
 
       <section style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-        <h3 style={{ fontWeight: 600, margin: 0, fontSize: "14px" }}>Linked</h3>
+        <Heading level="h3" display="h6">
+          Linked
+        </Heading>
         <div style={{ maxWidth: "480px" }}>
           <DndBeyondLink
             href="https://www.dndbeyond.com/characters/12345678"
@@ -18,18 +21,18 @@ export default function DndBeyondDemoPage() {
       </section>
 
       <section style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-        <h3 style={{ fontWeight: 600, margin: 0, fontSize: "14px" }}>
+        <Heading level="h3" display="h6">
           Empty state
-        </h3>
+        </Heading>
         <div style={{ maxWidth: "480px" }}>
           <DndBeyondLink label="Character Sheet" />
         </div>
       </section>
 
       <section style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-        <h3 style={{ fontWeight: 600, margin: 0, fontSize: "14px" }}>
+        <Heading level="h3" display="h6">
           Encounter (linked)
-        </h3>
+        </Heading>
         <div style={{ maxWidth: "480px" }}>
           <DndBeyondLink
             href="https://www.dndbeyond.com/encounters/87654321"

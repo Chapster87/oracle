@@ -1,9 +1,13 @@
+import Heading from "@components/heading"
+import Text from "@components/text"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@components/tabs"
 
 export default function TabsDemoPage() {
   return (
     <div className="flex flex-col gap-4">
-      <h2 style={{ fontWeight: "bold", margin: 0, fontSize: "20px" }}>Tabs</h2>
+      <Heading level="h2" display="h4">
+        Tabs
+      </Heading>
       <Tabs defaultValue="overview">
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
@@ -11,13 +15,13 @@ export default function TabsDemoPage() {
           <TabsTrigger value="secrets">Secrets</TabsTrigger>
         </TabsList>
         <TabsContent value="overview">
-          <p>General information about this entity.</p>
+          <Text>General information about this entity.</Text>
         </TabsContent>
         <TabsContent value="lore">
-          <p>World lore and historical context.</p>
+          <Text>World lore and historical context.</Text>
         </TabsContent>
         <TabsContent value="secrets">
-          <p>DM-only secrets (hidden from players by RBAC).</p>
+          <Text>DM-only secrets (hidden from players by RBAC).</Text>
         </TabsContent>
       </Tabs>
     </div>

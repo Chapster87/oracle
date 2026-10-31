@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "@components/link"
+import Text from "@components/text"
 
 import type { EntityDetailData } from "@/types"
 
@@ -22,7 +23,7 @@ export default function Relationships({ data }: { data: EntityDetailData }) {
   const { related, region } = data
 
   if (!region && related.length === 0) {
-    return <p className={s.empty}>No relationships recorded.</p>
+    return <Text className={s.empty}>No relationships recorded.</Text>
   }
 
   return (

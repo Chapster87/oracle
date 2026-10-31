@@ -1,4 +1,5 @@
 import Button from "@components/button"
+import Heading from "@components/heading"
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -12,9 +13,9 @@ import {
 export default function DropdownMenuDemoPage() {
   return (
     <div className="flex flex-col gap-4">
-      <h2 style={{ fontWeight: "bold", margin: 0, fontSize: "20px" }}>
+      <Heading level="h2" display="h4">
         Dropdown Menu
-      </h2>
+      </Heading>
 
       <div>
         <DropdownMenu>

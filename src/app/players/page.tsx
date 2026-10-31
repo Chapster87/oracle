@@ -1,5 +1,8 @@
 import React from "react"
 
+import Heading from "@components/heading"
+import Text from "@components/text"
+
 import EntityDirectory from "@/components/entity-directory"
 import { getEntities } from "@/server/entities"
 import { getSession } from "@/server/session"
@@ -19,12 +22,10 @@ export default async function PlayersPage({ searchParams }: PageProps) {
   return (
     <div className={s.card}>
       <header style={{ marginBottom: "24px" }}>
-        <h1 style={{ fontSize: "32px", fontWeight: "bold", margin: 0 }}>
-          Players
-        </h1>
-        <p style={{ color: "var(--muted-foreground)", marginTop: "8px" }}>
+        <Heading level="h1">Players</Heading>
+        <Text style={{ color: "var(--muted-foreground)", marginTop: "8px" }}>
           The party — the heroes around the table.
-        </p>
+        </Text>
       </header>
 
       <EntityDirectory items={items} />

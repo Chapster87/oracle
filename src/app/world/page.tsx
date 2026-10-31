@@ -1,4 +1,8 @@
 import React from "react"
+
+import Heading from "@components/heading"
+import Text from "@components/text"
+
 import { getLoreEntries } from "../../server/lore"
 import KnowledgeBase from "./_components/knowledge-base"
 import s from "../style.module.css"
@@ -16,12 +20,10 @@ export default async function WorldPage() {
   return (
     <div className={s.card}>
       <header style={{ marginBottom: "24px" }}>
-        <h1 style={{ fontSize: "32px", fontWeight: "bold", margin: 0 }}>
-          Knowledge Base
-        </h1>
-        <p style={{ color: "var(--muted-foreground)", marginTop: "8px" }}>
+        <Heading level="h1">Knowledge Base</Heading>
+        <Text style={{ color: "var(--muted-foreground)", marginTop: "8px" }}>
           Explore the global lore and secrets of the world.
-        </p>
+        </Text>
       </header>
 
       <KnowledgeBase entries={entries} isDM={CURRENT_ROLE === "DM"} />

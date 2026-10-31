@@ -20,6 +20,8 @@ import {
 } from "lucide-react"
 
 import Button from "@components/button"
+import Heading from "@components/heading"
+import Text from "@components/text"
 
 import s from "./style.module.css"
 
@@ -124,8 +126,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <Shield size={24} style={{ color: "var(--color-white)" }} />
           </div>
           <div>
-            <h1 className={s.logoTitle}>Oracle</h1>
-            <p className={s.logoSubtitle}>Campaign Manager</p>
+            <Heading level="h1" display="h5" className={s.logoTitle}>
+              Oracle
+            </Heading>
+            <Text size="sm" className={s.logoSubtitle}>
+              Campaign Manager
+            </Text>
           </div>
         </div>
 
@@ -151,7 +157,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         {/* DM Specific Actions */}
         {isDM && (
           <div className={s.dmTools}>
-            <h3 className={s.dmToolsTitle}>DM Tools</h3>
+            <Heading level="h3" display="h6" className={s.dmToolsTitle}>
+              DM Tools
+            </Heading>
             <Button variant="dm" className={s.dmActionButton}>
               <Plus size={16} />
               <span>New Episode</span>
@@ -180,9 +188,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       {/* Main Content Area */}
       <main className={s.main}>
         <header className={s.header}>
-          <h2 style={{ fontWeight: "bold", margin: 0, fontSize: "16px" }}>
+          <Heading level="h2" display="h6">
             Active Campaign: The Shattered Isles
-          </h2>
+          </Heading>
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             <span
               className={s.badge}

@@ -6,6 +6,7 @@ import clsx from "clsx"
 import { WorldLore } from "@/types"
 import s from "./style.module.css"
 import Button from "@components/button"
+import Heading from "@components/heading"
 
 interface KnowledgeBaseProps {
   entries: WorldLore[]
@@ -98,7 +99,9 @@ export default function KnowledgeBase({ entries, isDM }: KnowledgeBaseProps) {
           {filteredEntries.map((entry) => (
             <div key={entry.id} className={s.card}>
               <div className={s.cardHeader}>
-                <h4 className={s.cardTitle}>{entry.name}</h4>
+                <Heading level="h4" className={s.cardTitle}>
+                  {entry.name}
+                </Heading>
                 <div className={s.badgeContainer}>
                   {entry.visibility === "public" && (
                     <span className={clsx(s.badge, s.publicBadge)}>

@@ -1,23 +1,26 @@
 "use client"
 
+import Heading from "@components/heading"
 import Link from "@components/link"
 
 export default function LinkDemoPage() {
   return (
     <div className="flex flex-col gap-4">
-      <h2 style={{ fontWeight: "bold", margin: 0, fontSize: "20px" }}>Link</h2>
+      <Heading level="h2" display="h4">
+        Link
+      </Heading>
 
       <section style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-        <h3 style={{ fontWeight: 600, margin: 0, fontSize: "14px" }}>
+        <Heading level="h3" display="h6">
           Text link
-        </h3>
+        </Heading>
         <Link href="/components">Back to the workbench</Link>
       </section>
 
       <section style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-        <h3 style={{ fontWeight: 600, margin: 0, fontSize: "14px" }}>
+        <Heading level="h3" display="h6">
           Button style
-        </h3>
+        </Heading>
         <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
           <Link
             href="#"
@@ -63,7 +66,9 @@ export default function LinkDemoPage() {
       </section>
 
       <section style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-        <h3 style={{ fontWeight: 600, margin: 0, fontSize: "14px" }}>Sizes</h3>
+        <Heading level="h3" display="h6">
+          Sizes
+        </Heading>
         <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
           <Link
             href="#"

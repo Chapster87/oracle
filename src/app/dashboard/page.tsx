@@ -1,17 +1,19 @@
 "use client"
 
 import React from "react"
+
+import Heading from "@components/heading"
+import Text from "@components/text"
+
 import s from "./style.module.css"
 import Link from "@components/link"
 
 export default function CampaignDashboard() {
   return (
     <div className={s.container}>
-      <h2
-        style={{ fontWeight: "bold", fontSize: "24px", marginBottom: "24px" }}
-      >
+      <Heading level="h2" display="h3" style={{ marginBottom: "24px" }}>
         Dashboard
-      </h2>
+      </Heading>
 
       <div className={s.grid}>
         {/* Quest Tracker Widget */}
@@ -90,27 +92,27 @@ export default function CampaignDashboard() {
           </div>
           <div className={s.widgetItem}>
             <strong>Episode 24: The Kraken's Wake</strong>
-            <p
+            <Text
+              size="sm"
               style={{
                 color: "var(--muted-foreground)",
-                fontSize: "14px",
                 marginTop: "4px",
               }}
             >
               The party narrowly escaped the depths...
-            </p>
+            </Text>
           </div>
           <div className={s.widgetItem}>
             <strong>Episode 23: Whispers in the Dark</strong>
-            <p
+            <Text
+              size="sm"
               style={{
                 color: "var(--muted-foreground)",
-                fontSize: "14px",
                 marginTop: "4px",
               }}
             >
               Investigating the tavern rumors...
-            </p>
+            </Text>
           </div>
         </div>
 

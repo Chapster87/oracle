@@ -1,4 +1,5 @@
 import Button from "@components/button"
+import Heading from "@components/heading"
 import {
   Dialog,
   DialogTrigger,
@@ -13,9 +14,9 @@ import {
 export default function DialogDemoPage() {
   return (
     <div className="flex flex-col gap-4">
-      <h2 style={{ fontWeight: "bold", margin: 0, fontSize: "20px" }}>
+      <Heading level="h2" display="h4">
         Dialog
-      </h2>
+      </Heading>
 
       <div>
         <Dialog>

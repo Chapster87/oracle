@@ -1,5 +1,8 @@
 import React from "react"
 
+import Heading from "@components/heading"
+import Text from "@components/text"
+
 import StoryLog from "@/components/story-log"
 import { getSession } from "@/server/session"
 import { getStoryLog } from "@/server/story-log"
@@ -19,12 +22,10 @@ export default async function StoryPage({ searchParams }: PageProps) {
   return (
     <div className={s.card}>
       <header style={{ marginBottom: "24px" }}>
-        <h1 style={{ fontSize: "32px", fontWeight: "bold", margin: 0 }}>
-          Story Log
-        </h1>
-        <p style={{ color: "var(--muted-foreground)", marginTop: "8px" }}>
+        <Heading level="h1">Story Log</Heading>
+        <Text style={{ color: "var(--muted-foreground)", marginTop: "8px" }}>
           The chronicle of the campaign so far.
-        </p>
+        </Text>
       </header>
 
       <StoryLog entries={entries} />

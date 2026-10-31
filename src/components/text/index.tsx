@@ -9,7 +9,7 @@ type TextProps = {
   children?: React.ReactNode
   className?: string
   dangerouslySetInnerHTML?: { __html: string }
-}
+} & React.HTMLAttributes<HTMLElement>
 
 /**
  * Body text with a semantic element (`variant`) and a size step (`size`).

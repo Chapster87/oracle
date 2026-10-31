@@ -1,5 +1,7 @@
 import React from "react"
 
+import Heading from "@components/heading"
+
 import { hasContent } from "./has-content"
 import s from "./style.module.css"
 
@@ -15,7 +17,9 @@ interface InfoCardProps {
 export default function InfoCard({ title, children }: InfoCardProps) {
   return (
     <section className={s.infoCard}>
-      <h3 className={s.infoCardTitle}>{title}</h3>
+      <Heading level="h3" className={s.infoCardTitle}>
+        {title}
+      </Heading>
       <div className={s.infoCardBody}>
         {hasContent(children) ? (
           children

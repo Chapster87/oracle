@@ -1,4 +1,6 @@
+import Heading from "@components/heading"
 import Link from "@components/link"
+import Text from "@components/text"
 import s from "./style.module.css"
 
 const demos = [
@@ -42,17 +44,17 @@ const demos = [
 export default function ComponentsPage() {
   return (
     <div className={s.container}>
-      <h2
-        style={{ fontWeight: "bold", fontSize: "24px", marginBottom: "24px" }}
-      >
+      <Heading level="h2" display="h3" style={{ marginBottom: "24px" }}>
         Component Workbench
-      </h2>
+      </Heading>
 
       <div className={s.grid}>
         {demos.map((demo) => (
           <Link key={demo.name} href={demo.href} className={s.card}>
             <div className={s.cardTitle}>{demo.name}</div>
-            <p className={s.description}>{demo.description}</p>
+            <Text size="sm" className={s.description}>
+              {demo.description}
+            </Text>
           </Link>
         ))}
       </div>

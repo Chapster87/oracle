@@ -1,6 +1,10 @@
 "use client"
 
 import React from "react"
+
+import Heading from "@components/heading"
+import Text from "@components/text"
+
 import s from "./style.module.css"
 
 /**
@@ -15,67 +19,47 @@ export default function HomePage() {
 
   return (
     <div className={s.card}>
-      <h3
-        style={{
-          fontWeight: "bold",
-          fontSize: "24px",
-          marginBottom: "16px",
-          margin: "0 0 16px 0",
-        }}
-      >
+      <Heading level="h3" style={{ margin: "0 0 16px 0" }}>
         Welcome back
-      </h3>
-      <p
+      </Heading>
+      <Text
         style={{
           color: "var(--muted-foreground)",
           marginBottom: "32px",
-          fontSize: "16px",
         }}
       >
         Explore the lore of the Shattered Isles, track your quests, and review
         the journey so far.
-      </p>
+      </Text>
 
       <div className={s.grid}>
         <div className={s.infoCard}>
-          <h4
-            style={{
-              fontWeight: "bold",
-              marginBottom: "8px",
-              margin: "0 0 8px 0",
-            }}
-          >
+          <Heading level="h4" style={{ margin: "0 0 8px 0" }}>
             Latest Story Log
-          </h4>
-          <p
+          </Heading>
+          <Text
+            size="sm"
             style={{
-              fontSize: "14px",
               color: "var(--muted-foreground)",
               margin: 0,
             }}
           >
             Episode 24: The Kraken's Wake
-          </p>
+          </Text>
         </div>
         <div className={s.infoCard}>
-          <h4
-            style={{
-              fontWeight: "bold",
-              marginBottom: "8px",
-              margin: "0 0 8px 0",
-            }}
-          >
+          <Heading level="h4" style={{ margin: "0 0 8px 0" }}>
             Active Quests
-          </h4>
-          <p
+          </Heading>
+          <Text
+            size="sm"
             style={{
-              fontSize: "14px",
               color: "var(--muted-foreground)",
               margin: 0,
             }}
           >
             Find the Sapphire Shard (3/4)
-          </p>
+          </Text>
         </div>
       </div>
     </div>
