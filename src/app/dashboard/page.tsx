@@ -2,7 +2,7 @@
 
 import React from "react"
 import s from "./style.module.css"
-import Link from "next/link"
+import Link from "@components/link"
 
 export default function CampaignDashboard() {
   return (

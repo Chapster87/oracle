@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import Link from "next/link"
+import Link from "@components/link"
 import { usePathname } from "next/navigation"
 import {
   Shield,
@@ -120,9 +120,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       {/* Sidebar Navigation */}
       <aside className={s.sidebar}>
         <div className={s.sidebarHeader}>
-          <div
-            className={`${s.iconWrapper} ${isDM ? s.dmIcon : s.playerIcon}`}
-          >
+          <div className={`${s.iconWrapper} ${isDM ? s.dmIcon : s.playerIcon}`}>
             <Shield size={24} style={{ color: "var(--color-white)" }} />
           </div>
           <div>

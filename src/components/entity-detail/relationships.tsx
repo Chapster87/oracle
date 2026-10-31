@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "next/link"
+import Link from "@components/link"
 
 import type { EntityDetailData } from "@/types"
 

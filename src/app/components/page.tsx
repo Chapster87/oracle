@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "@components/link"
 import s from "./style.module.css"
 
 const demos = [
@@ -21,6 +21,16 @@ const demos = [
     name: "D&D Beyond",
     href: "/components/dnd-beyond",
     description: "Link-first integration card (linked + empty states)",
+  },
+  {
+    name: "Link",
+    href: "/components/link",
+    description: "next/link wrapper with optional button styling",
+  },
+  {
+    name: "Breadcrumb",
+    href: "/components/breadcrumb",
+    description: "Pathname-derived breadcrumb trail",
   },
 ]
 

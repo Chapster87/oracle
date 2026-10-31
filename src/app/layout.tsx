@@ -2,6 +2,8 @@ import React from "react"
 
 import "../styles/globals.css"
 
+import BreakpointIndicator from "@components/breakpoint-indicator"
+
 import AppShell from "./app-shell"
 
 /**
@@ -17,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <BreakpointIndicator />
         <AppShell>{children}</AppShell>
       </body>
     </html>

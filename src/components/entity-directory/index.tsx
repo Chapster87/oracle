@@ -1,5 +1,5 @@
 import React from "react"
-import Link from "next/link"
+import Link from "@components/link"
 import clsx from "clsx"
 import { EyeOff, Globe, Lock } from "lucide-react"
 
@@ -21,11 +21,7 @@ const VISIBILITY: Record<
  * Browse grid for a single entity type: each card links through to that
  * entity's Layered Detail view.
  */
-export default function EntityDirectory({
-  items,
-}: {
-  items: EntitySummary[]
-}) {
+export default function EntityDirectory({ items }: { items: EntitySummary[] }) {
   if (items.length === 0) {
     return <p className={s.empty}>Nothing to show here yet.</p>
   }
