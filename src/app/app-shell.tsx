@@ -21,14 +21,15 @@ import {
 
 import Button from "@components/button"
 import Heading from "@components/heading"
+import { Select, SelectItem } from "@components/select"
 import Text from "@components/text"
 
 import type { Role } from "@/types"
 
 import s from "./style.module.css"
 
-/** Prototype role cycle. ADMIN sees everything a DM does. */
-const ROLE_CYCLE: Role[] = ["DM", "PLAYER", "ADMIN"]
+/** Prototype roles. ADMIN sees everything a DM does. */
+const ROLES: Role[] = ["DM", "PLAYER", "ADMIN"]
 
 /**
  * The interactive app shell: sidebar, role toggle, and main content frame.
@@ -43,17 +44,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const savedRole = localStorage.getItem("oracle_prototype_role")
-    if (savedRole && ROLE_CYCLE.includes(savedRole as Role)) {
+    if (savedRole && ROLES.includes(savedRole as Role)) {
       setRole(savedRole as Role)
     }
   }, [])
 
-  const nextRole =
-    ROLE_CYCLE[(ROLE_CYCLE.indexOf(role) + 1) % ROLE_CYCLE.length]
-
-  const toggleRole = () => {
-    setRole(nextRole)
-    localStorage.setItem("oracle_prototype_role", nextRole)
+  const changeRole = (next: Role) => {
+    setRole(next)
+    localStorage.setItem("oracle_prototype_role", next)
   }
 
   const isDM = role === "DM" || role === "ADMIN"
@@ -183,9 +181,17 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 {role} View
               </span>
             </div>
-            <Button variant="outline" size="small" onClick={toggleRole}>
-              Switch to {nextRole}
-            </Button>
+          </div>
+          <div style={{ marginTop: "8px" }}>
+            <Select
+              value={role}
+              onValueChange={(value) => changeRole(value as Role)}
+              aria-label="Prototype role"
+            >
+              <SelectItem value="DM">DM</SelectItem>
+              <SelectItem value="PLAYER">Player</SelectItem>
+              <SelectItem value="ADMIN">Admin</SelectItem>
+            </Select>
           </div>
         </div>
       </aside>
@@ -226,9 +232,17 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             PROTOTYPE: App Shell UI
           </span>
           <div className={s.separator} />
-          <Button variant="link" onClick={toggleRole}>
-            Switch to {isDM ? "Player UI" : "DM UI"}
-          </Button>
+          <div style={{ width: "160px" }}>
+            <Select
+              value={role}
+              onValueChange={(value) => changeRole(value as Role)}
+              aria-label="Prototype role"
+            >
+              <SelectItem value="DM">DM</SelectItem>
+              <SelectItem value="PLAYER">Player</SelectItem>
+              <SelectItem value="ADMIN">Admin</SelectItem>
+            </Select>
+          </div>
         </div>
       </div>
     </div>
