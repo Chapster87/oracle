@@ -1,6 +1,7 @@
 import React from "react"
 
 import Heading from "@components/heading"
+import Link from "@components/link"
 import Text from "@components/text"
 
 import EntityDirectory from "@/components/entity-directory"
@@ -26,6 +27,11 @@ export default async function ReligionsPage({ searchParams }: PageProps) {
         <Text style={{ color: "var(--muted-foreground)", marginTop: "8px" }}>
           Deities, faiths, and belief systems of the world.
         </Text>
+        <div style={{ marginTop: "16px" }}>
+          <Link href="/religions/new" buttonStyle>
+            New Religion
+          </Link>
+        </div>
       </header>
 
       <EntityDirectory items={items} />

@@ -3,9 +3,17 @@
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
+import { allowedFields, fieldSpecsFor } from "@/forms/registry"
+import { formToPayload } from "@/forms/payload"
 import { ddbUrlSchema } from "@/schemas/metadata"
-import { deleteEntity, updateEntityMetadata } from "@/server/cms/entities"
+import {
+  createEntity,
+  deleteEntity,
+  updateEntity,
+  updateEntityMetadata,
+} from "@/server/cms/entities"
 import { requireDmSession } from "@/server/session"
+import type { WriteResult } from "@/types"
 import { isEntityType } from "@/utils/entity"
 
 export interface ActionResult {
@@ -72,6 +80,59 @@ export async function connectDndBeyondAction(
 
   revalidatePath(`/${type}/${id}`)
   return { ok: true }
+}
+
+/**
+ * Creates an entity from the shared form, then lands on its detail page.
+ */
+export async function createEntityAction(
+  _prev: WriteResult | null,
+  formData: FormData
+): Promise<WriteResult> {
+  const viewer = requireDmSession()
+
+  const type = String(formData.get("type") ?? "")
+  if (!isEntityType(type)) {
+    return { ok: false, code: "validation", formError: "Unknown entity type." }
+  }
+
+  const specs = allowedFields(fieldSpecsFor(type), viewer)
+  const payload = formToPayload(formData, specs)
+
+  const result = await createEntity(type, payload, viewer)
+  if (!result.ok) return result
+
+  revalidatePath(`/${type}`)
+  redirect(`/${type}/${result.id}`)
+}
+
+/**
+ * Updates an entity from the shared form. The form carries the row's
+ * `updated_at` so a concurrent edit is rejected rather than overwritten.
+ */
+export async function updateEntityAction(
+  _prev: WriteResult | null,
+  formData: FormData
+): Promise<WriteResult> {
+  const viewer = requireDmSession()
+
+  const type = String(formData.get("type") ?? "")
+  const id = String(formData.get("id") ?? "")
+
+  if (!isEntityType(type)) {
+    return { ok: false, code: "validation", formError: "Unknown entity type." }
+  }
+
+  const baseUpdatedAt = String(formData.get("base_updated_at") ?? "") || null
+  const specs = allowedFields(fieldSpecsFor(type), viewer)
+  const payload = formToPayload(formData, specs)
+
+  const result = await updateEntity(type, id, payload, baseUpdatedAt, viewer)
+  if (!result.ok) return result
+
+  revalidatePath(`/${type}/${id}`)
+  revalidatePath(`/${type}`)
+  redirect(`/${type}/${id}`)
 }
 
 /**

@@ -160,3 +160,19 @@ export interface StoryLogEntry {
   content: string | null
   created_at: string
 }
+
+export type WriteErrorCode =
+  "validation" | "conflict" | "forbidden" | "not_found" | "constraint"
+
+/**
+ * The result of a write. Expected failures are returned; unexpected ones are
+ * thrown (#24). `fieldErrors` is keyed by the input's `name` attribute.
+ */
+export type WriteResult =
+  | { ok: true; id: string }
+  | {
+      ok: false
+      code: WriteErrorCode
+      fieldErrors?: Record<string, string[]>
+      formError?: string
+    }

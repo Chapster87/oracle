@@ -1,18 +1,197 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-const { rpc } = vi.hoisted(() => ({ rpc: vi.fn() }))
+const { rpc, from } = vi.hoisted(() => ({ rpc: vi.fn(), from: vi.fn() }))
 
 vi.mock("../supabase", () => ({
-  supabaseAdmin: { rpc },
+  supabaseAdmin: { rpc, from },
 }))
 
-import { deleteEntity } from "./entities"
+import type { Viewer } from "../rbac"
 
-describe("deleteEntity", () => {
-  beforeEach(() => {
-    rpc.mockReset()
+import { createEntity, deleteEntity, updateEntity } from "./entities"
+
+const dm: Viewer = { userId: "u-dm", role: "DM" }
+const player: Viewer = { userId: "u-player", role: "PLAYER" }
+
+/** A chainable stand-in for `.select(...).eq(...).maybeSingle()`. */
+function selectChain(result: { data: unknown; error: unknown }) {
+  const chain = {
+    select: () => chain,
+    eq: () => chain,
+    maybeSingle: async () => result,
+  }
+  return chain
+}
+
+beforeEach(() => {
+  rpc.mockReset()
+  from.mockReset()
+})
+
+describe("createEntity", () => {
+  it("rejects a player without touching the database", async () => {
+    const result = await createEntity("characters", { name: "Gideon" }, player)
+
+    expect(result).toMatchObject({ ok: false, code: "forbidden" })
+    expect(rpc).not.toHaveBeenCalled()
   })
 
+  it("rejects an invalid payload before writing", async () => {
+    const result = await createEntity("characters", { species: "Elf" }, dm)
+
+    expect(result).toMatchObject({ ok: false, code: "validation" })
+    expect(result.ok === false && result.fieldErrors?.name).toBeDefined()
+    expect(rpc).not.toHaveBeenCalled()
+  })
+
+  it("writes a global entity for a DM and assigns the actor as owner", async () => {
+    rpc.mockResolvedValue({ error: null })
+
+    const result = await createEntity("characters", { name: "Gideon" }, dm)
+
+    expect(result.ok).toBe(true)
+    expect(rpc).toHaveBeenCalledWith(
+      "write_entity",
+      expect.objectContaining({
+        p_model: "characters",
+        p_actor: "u-dm",
+        p_base_updated_at: null,
+        p_payload: expect.objectContaining({
+          name: "Gideon",
+          owner_id: "u-dm",
+        }),
+      })
+    )
+  })
+
+  it("surfaces a unique violation as a name field error", async () => {
+    rpc.mockResolvedValue({ error: { code: "23505", message: "duplicate" } })
+
+    const result = await createEntity("characters", { name: "Gideon" }, dm)
+
+    expect(result).toMatchObject({ ok: false, code: "constraint" })
+    expect(result.ok === false && result.fieldErrors?.name).toBeDefined()
+  })
+})
+
+describe("updateEntity", () => {
+  it("returns not_found when the row is gone", async () => {
+    from.mockReturnValue(selectChain({ data: null, error: null }))
+
+    const result = await updateEntity(
+      "characters",
+      "abc",
+      { name: "X" },
+      null,
+      dm
+    )
+
+    expect(result).toMatchObject({ ok: false, code: "not_found" })
+    expect(rpc).not.toHaveBeenCalled()
+  })
+
+  it("forbids a DM who does not run the entity's campaign", async () => {
+    from.mockImplementation((table: string) => {
+      if (table === "characters") {
+        return selectChain({
+          data: {
+            id: "abc",
+            campaign_id: "c1",
+            owner_id: "u-other",
+            visibility: "private",
+            updated_at: "2026-01-01T00:00:00Z",
+          },
+          error: null,
+        })
+      }
+      if (table === "campaigns") {
+        return selectChain({ data: { owner_id: "u-other" }, error: null })
+      }
+      return selectChain({ data: null, error: null })
+    })
+
+    const result = await updateEntity(
+      "characters",
+      "abc",
+      { name: "X" },
+      null,
+      dm
+    )
+
+    expect(result).toMatchObject({ ok: false, code: "forbidden" })
+    expect(rpc).not.toHaveBeenCalled()
+  })
+
+  it("writes when the viewer runs the campaign", async () => {
+    from.mockImplementation((table: string) => {
+      if (table === "characters") {
+        return selectChain({
+          data: {
+            id: "abc",
+            campaign_id: "c1",
+            owner_id: "u-dm",
+            visibility: "private",
+            updated_at: "2026-01-01T00:00:00Z",
+          },
+          error: null,
+        })
+      }
+      if (table === "campaigns") {
+        return selectChain({ data: { owner_id: "u-dm" }, error: null })
+      }
+      return selectChain({ data: null, error: null })
+    })
+    rpc.mockResolvedValue({ error: null })
+
+    const result = await updateEntity(
+      "characters",
+      "abc",
+      { alignment: "Lawful Good" },
+      "2026-01-01T00:00:00Z",
+      dm
+    )
+
+    expect(result).toMatchObject({ ok: true, id: "abc" })
+    expect(rpc).toHaveBeenCalledWith(
+      "write_entity",
+      expect.objectContaining({
+        p_id: "abc",
+        p_base_updated_at: "2026-01-01T00:00:00Z",
+      })
+    )
+  })
+
+  it("maps PT409 to a conflict", async () => {
+    from.mockImplementation((table: string) => {
+      if (table === "characters") {
+        return selectChain({
+          data: {
+            id: "abc",
+            campaign_id: null,
+            owner_id: "u-dm",
+            visibility: "private",
+            updated_at: "2026-01-01T00:00:00Z",
+          },
+          error: null,
+        })
+      }
+      return selectChain({ data: null, error: null })
+    })
+    rpc.mockResolvedValue({ error: { code: "PT409", message: "stale" } })
+
+    const result = await updateEntity(
+      "characters",
+      "abc",
+      { name: "X" },
+      "old",
+      dm
+    )
+
+    expect(result).toMatchObject({ ok: false, code: "conflict" })
+  })
+})
+
+describe("deleteEntity", () => {
   it("rejects a player without touching the database", async () => {
     await expect(
       deleteEntity("players", "abc", { role: "PLAYER", userId: "u" })

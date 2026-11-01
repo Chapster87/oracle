@@ -1,6 +1,7 @@
 import React from "react"
 
 import Heading from "@components/heading"
+import Link from "@components/link"
 import Text from "@components/text"
 
 import EntityDirectory from "@/components/entity-directory"
@@ -26,6 +27,11 @@ export default async function CharactersPage({ searchParams }: PageProps) {
         <Text style={{ color: "var(--muted-foreground)", marginTop: "8px" }}>
           Browse the people — allies, villains, and everyone in between.
         </Text>
+        <div style={{ marginTop: "16px" }}>
+          <Link href="/characters/new" buttonStyle>
+            New Character
+          </Link>
+        </div>
       </header>
 
       <EntityDirectory items={items} />

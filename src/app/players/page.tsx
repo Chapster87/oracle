@@ -1,6 +1,7 @@
 import React from "react"
 
 import Heading from "@components/heading"
+import Link from "@components/link"
 import Text from "@components/text"
 
 import EntityDirectory from "@/components/entity-directory"
@@ -26,6 +27,11 @@ export default async function PlayersPage({ searchParams }: PageProps) {
         <Text style={{ color: "var(--muted-foreground)", marginTop: "8px" }}>
           The party — the heroes around the table.
         </Text>
+        <div style={{ marginTop: "16px" }}>
+          <Link href="/players/new" buttonStyle>
+            New Player
+          </Link>
+        </div>
       </header>
 
       <EntityDirectory items={items} />

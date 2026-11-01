@@ -6,6 +6,7 @@ import Heading from "@components/heading"
 import Text from "@components/text"
 
 import Button from "@components/button"
+import Link from "@components/link"
 
 import type { Character, EntityDetailData, Visibility } from "@/types"
 import { entitySubtitle } from "@/utils/entity"
@@ -81,6 +82,13 @@ export default function EntityHeader({
 
       {isDM && (
         <div className={s.headerActions}>
+          <Link
+            href={`/${type}/${entity.id}/edit`}
+            buttonStyle
+            variant="outline"
+          >
+            Edit
+          </Link>
           <DeleteDialog type={type} id={entity.id} name={entity.name}>
             <Button variant="ghost">Delete</Button>
           </DeleteDialog>
