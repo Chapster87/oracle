@@ -44,6 +44,11 @@ const demos = [
     href: "/components/form-controls",
     description: "Field, Input, Textarea, Select, and Checkbox",
   },
+  {
+    name: "Search Select",
+    href: "/components/search-select",
+    description: "Searchable single-select for any option list",
+  },
 ]
 
 const tokens = [

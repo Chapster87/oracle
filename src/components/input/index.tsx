@@ -11,9 +11,12 @@ type InputProps = {
  * Single-line text input. An optional leading icon is rendered inside the
  * field without overlapping the text.
  */
-export default function Input({ icon, className, ...props }: InputProps) {
+const Input = React.forwardRef<HTMLInputElement, InputProps>(function Input(
+  { icon, className, ...props },
+  ref
+) {
   if (!icon) {
-    return <input className={clsx(s.input, className)} {...props} />
+    return <input ref={ref} className={clsx(s.input, className)} {...props} />
   }
 
   return (
@@ -21,7 +24,13 @@ export default function Input({ icon, className, ...props }: InputProps) {
       <span className={s.icon} aria-hidden="true">
         {icon}
       </span>
-      <input className={clsx(s.input, s.withIcon, className)} {...props} />
+      <input
+        ref={ref}
+        className={clsx(s.input, s.withIcon, className)}
+        {...props}
+      />
     </div>
   )
-}
+})
+
+export default Input

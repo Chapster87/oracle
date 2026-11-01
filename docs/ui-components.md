@@ -16,16 +16,17 @@ Application code must render controls through the shared components. Do not
 write raw `<button>`, `<input>`, `<select>`, or `<textarea>` outside
 `src/components/`.
 
-| Need                          | Use                                |
-| ----------------------------- | ---------------------------------- |
-| Buttons and triggers          | `@components/button`               |
-| Single-line text              | `@components/input`                |
-| Multi-line text               | `@components/textarea`             |
-| Selects                       | `@components/select`               |
-| Checkboxes                    | `@components/checkbox`             |
-| Label, help, and error wiring | `@components/field`                |
-| Unordered tag sets            | `@components/tag-input`            |
-| Ordered text rows             | `@components/repeatable-text-list` |
+| Need                           | Use                                |
+| ------------------------------ | ---------------------------------- |
+| Buttons and triggers           | `@components/button`               |
+| Single-line text               | `@components/input`                |
+| Multi-line text                | `@components/textarea`             |
+| Selects                        | `@components/select`               |
+| Checkboxes                     | `@components/checkbox`             |
+| Label, help, and error wiring  | `@components/field`                |
+| Unordered tag sets             | `@components/tag-input`            |
+| Ordered text rows              | `@components/repeatable-text-list` |
+| Picking one option from a list | `@components/search-select`        |
 
 The only exception is `type="hidden"` inputs, which carry form data and have no
 visual or interactive surface.
@@ -123,6 +124,21 @@ import {
     </DropdownMenuContent>
   </DropdownMenuPortal>
 </DropdownMenu>
+```
+
+## Search Select
+
+Single-select, searchable listbox, generic over any `{ id, label }` list. Options are supplied by the caller — the control never queries anything — and `filterOption` narrows them without the control knowing the domain. Built on Radix Popover because Select has no search.
+
+```tsx
+import SearchSelect from "@components/search-select"
+
+;<SearchSelect
+  options={entities}
+  value={selectedId}
+  onChange={setSelectedId}
+  filterOption={(entity) => entity.type === "locations"}
+/>
 ```
 
 ## Workbench
