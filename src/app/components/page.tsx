@@ -46,6 +46,19 @@ const demos = [
   },
 ]
 
+const tokens = [
+  { name: "--primary", description: "Primary actions and focus rings" },
+  { name: "--foreground", description: "Default text" },
+  { name: "--muted-foreground", description: "Secondary text" },
+  { name: "--background", description: "Page background" },
+  { name: "--card", description: "Card surfaces" },
+  { name: "--muted", description: "Subtle fills" },
+  { name: "--border", description: "Borders and dividers" },
+  { name: "--destructive", description: "Errors and destructive actions" },
+  { name: "--dm-accent", description: "DM-only accents" },
+  { name: "--player-accent", description: "Player accents" },
+]
+
 export default function ComponentsPage() {
   return (
     <div className={s.container}>
@@ -63,6 +76,32 @@ export default function ComponentsPage() {
           </Link>
         ))}
       </div>
+
+      <section className={s.tokens}>
+        <Heading level="h3" display="h5">
+          Design tokens
+        </Heading>
+        <Text size="sm" className={s.tokensIntro}>
+          Every component consumes these tokens. See docs/design-tokens.md for
+          the full list.
+        </Text>
+        <div className={s.tokenGrid}>
+          {tokens.map((token) => (
+            <div key={token.name} className={s.token}>
+              <span
+                className={s.swatch}
+                style={{ background: `var(${token.name})` }}
+              />
+              <div>
+                <div className={s.tokenName}>{token.name}</div>
+                <Text size="sm" className={s.tokenDescription}>
+                  {token.description}
+                </Text>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   )
 }

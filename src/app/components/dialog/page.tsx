@@ -1,5 +1,8 @@
 import Button from "@components/button"
 import Heading from "@components/heading"
+import Field from "@components/field"
+import Input from "@components/input"
+import Textarea from "@components/textarea"
 import {
   Dialog,
   DialogTrigger,
@@ -41,24 +44,12 @@ export default function DialogDemoPage() {
                   marginTop: "16px",
                 }}
               >
-                <input
-                  placeholder="Episode title"
-                  style={{
-                    padding: "8px 12px",
-                    borderRadius: "4px",
-                    border: "1px solid var(--border)",
-                  }}
-                />
-                <textarea
-                  placeholder="Summary"
-                  rows={3}
-                  style={{
-                    padding: "8px 12px",
-                    borderRadius: "4px",
-                    border: "1px solid var(--border)",
-                    fontFamily: "inherit",
-                  }}
-                />
+                <Field label="Episode title">
+                  <Input placeholder="Episode title" />
+                </Field>
+                <Field label="Summary">
+                  <Textarea placeholder="Summary" rows={3} />
+                </Field>
                 <div
                   style={{
                     display: "flex",

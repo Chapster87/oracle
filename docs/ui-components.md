@@ -10,6 +10,26 @@ Global wrappers around Radix UI primitives that apply the Oracle design system (
 - Styling uses CSS Modules with the `s` import alias and tokens from `src/styles/variables.css` (`--primary`, `--border`, `--muted`, `--radius`, `--box-shadow`, ...).
 - Use the global `Button` component (`@components/button`) for all buttons, including Radix `asChild` children (triggers, close buttons, dialog actions).
 
+## Convention: use the component layer
+
+Application code must render controls through the shared components. Do not
+write raw `<button>`, `<input>`, `<select>`, or `<textarea>` outside
+`src/components/`.
+
+| Need                          | Use                                |
+| ----------------------------- | ---------------------------------- |
+| Buttons and triggers          | `@components/button`               |
+| Single-line text              | `@components/input`                |
+| Multi-line text               | `@components/textarea`             |
+| Selects                       | `@components/select`               |
+| Checkboxes                    | `@components/checkbox`             |
+| Label, help, and error wiring | `@components/field`                |
+| Unordered tag sets            | `@components/tag-input`            |
+| Ordered text rows             | `@components/repeatable-text-list` |
+
+The only exception is `type="hidden"` inputs, which carry form data and have no
+visual or interactive surface.
+
 ## Tabs
 
 Parts: `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent`. Style: underline with a primary-colored active indicator. Used for the 'Layered Detail' entity views (Research #10).
@@ -17,7 +37,7 @@ Parts: `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent`. Style: underline with a
 ```tsx
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@components/tabs"
 
-<Tabs defaultValue="overview">
+;<Tabs defaultValue="overview">
   <TabsList>
     <TabsTrigger value="overview">Overview</TabsTrigger>
     <TabsTrigger value="lore">Lore</TabsTrigger>
@@ -36,11 +56,17 @@ Follow the `schema-modal` pattern: form container `display: flex; flex-direction
 ```tsx
 import Button from "@components/button"
 import {
-  Dialog, DialogTrigger, DialogPortal, DialogOverlay, DialogContent,
-  DialogTitle, DialogDescription, DialogClose,
+  Dialog,
+  DialogTrigger,
+  DialogPortal,
+  DialogOverlay,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
 } from "@components/dialog"
 
-<Dialog>
+;<Dialog>
   <DialogTrigger asChild>
     <Button>Open</Button>
   </DialogTrigger>
@@ -54,7 +80,9 @@ import {
       <DialogDescription>Description</DialogDescription>
       <form style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
         {/* fields */}
-        <div style={{ display: "flex", justifyContent: "flex-end", gap: "12px" }}>
+        <div
+          style={{ display: "flex", justifyContent: "flex-end", gap: "12px" }}
+        >
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
           </DialogClose>
@@ -73,11 +101,16 @@ Parts: `DropdownMenu`, `DropdownMenuTrigger`, `DropdownMenuPortal`, `DropdownMen
 ```tsx
 import Button from "@components/button"
 import {
-  DropdownMenu, DropdownMenuTrigger, DropdownMenuPortal, DropdownMenuContent,
-  DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuPortal,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
 } from "@components/dropdown-menu"
 
-<DropdownMenu>
+;<DropdownMenu>
   <DropdownMenuTrigger asChild>
     <Button variant="outline">Actions</Button>
   </DropdownMenuTrigger>

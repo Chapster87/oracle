@@ -14,6 +14,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@components/dialog"
+import Field from "@components/field"
+import Input from "@components/input"
 
 import type { EntityType } from "@/types"
 import {
@@ -75,21 +77,18 @@ export default function ConnectDialog({
             <input type="hidden" name="type" value={type} />
             <input type="hidden" name="id" value={id} />
 
-            <label className={s.field}>
-              <span className={s.label}>D&amp;D Beyond URL</span>
-              <input
-                className={s.input}
+            <Field
+              label="D&amp;D Beyond URL"
+              error={state?.fieldErrors?.ddb_url}
+            >
+              <Input
                 name="ddb_url"
                 type="url"
                 required
                 defaultValue={initialUrl ?? ""}
                 placeholder="https://www.dndbeyond.com/characters/12345678"
-                aria-invalid={state?.fieldErrors?.ddb_url ? true : undefined}
               />
-              {state?.fieldErrors?.ddb_url && (
-                <span className={s.error}>{state.fieldErrors.ddb_url}</span>
-              )}
-            </label>
+            </Field>
 
             {state?.formError && (
               <span className={s.error}>{state.formError}</span>

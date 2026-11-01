@@ -7,6 +7,7 @@ import { WorldLore } from "@/types"
 import s from "./style.module.css"
 import Button from "@components/button"
 import Heading from "@components/heading"
+import Input from "@components/input"
 
 interface KnowledgeBaseProps {
   entries: WorldLore[]
@@ -57,16 +58,14 @@ export default function KnowledgeBase({ entries, isDM }: KnowledgeBaseProps) {
     <div className={s.container}>
       {/* Sidebar Navigation */}
       <aside className={s.sidebar}>
-        <div className={s.searchContainer}>
-          <Search className={s.searchIcon} size={18} />
-          <input
-            type="text"
-            placeholder="Search lore..."
-            className={s.searchInput}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
+        <Input
+          icon={<Search size={18} />}
+          type="text"
+          placeholder="Search lore..."
+          aria-label="Search lore"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
 
         <div className={s.categoryList}>
           <Button

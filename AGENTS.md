@@ -43,4 +43,4 @@ Follow the global standards in `~/.agents/rules/`:
 - **Styling**: `~/.agents/rules/component-styling.md`
 - **Folder organization**: `~/.agents/rules/folder-organization.md`
 
-Project-specific UI patterns (Radix wrappers, Button, Dialog) live in `docs/ui-components.md`.
+Project-specific UI patterns (Radix wrappers, Button, Dialog) live in `docs/ui-components.md`. Application code must use the component layer — never raw `<button>`, `<input>`, `<select>`, or `<textarea>` (except `type="hidden"`). See the convention section there.
