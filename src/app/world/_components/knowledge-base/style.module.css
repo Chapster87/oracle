@@ -153,11 +153,6 @@
   color: var(--dm-accent);
 }
 
-.secretBadge {
-  background: var(--color-yellow-100);
-  color: var(--color-yellow-800);
-}
-
 @media (max-width: 768px) {
   .container {
     flex-direction: column;

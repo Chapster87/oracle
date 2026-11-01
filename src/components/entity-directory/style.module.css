@@ -66,11 +66,6 @@
   color: var(--dm-accent);
 }
 
-.visibilitySecret {
-  background: var(--color-yellow-100);
-  color: var(--color-yellow-800);
-}
-
 .tags {
   display: flex;
   flex-wrap: wrap;

@@ -13,7 +13,9 @@ import {
   entitySubtitle,
   isEntityType,
 } from "@/utils/entity"
+import { filterSlots, overlaySlots } from "@/utils/secrets"
 
+import { loadSlots, loadSlotsFor } from "./secrets"
 import { supabaseAdmin as supabase } from "./supabase"
 
 /** Tables consulted when resolving a related entity id back to a name. */
@@ -59,7 +61,7 @@ interface Viewer {
 
 /**
  * Resolves a batch of entity ids to their names and owning table. Entries the
- * viewer may not see (private/secret and not owned) are omitted, so a player
+ * viewer may not see (private and not owned) are omitted, so a player
  * cannot learn the names of hidden entities through the relationships tab.
  */
 async function resolveNames(
@@ -182,18 +184,28 @@ export async function getEntity(
   const visible = isDM ? entity : stripSecrets(type, entity)
   const viewer: Viewer = { isDM, userId }
 
-  const [related, region] = await Promise.all([
+  const [allSlots, related, region] = await Promise.all([
+    loadSlots(id),
     getRelatedEntities(id, viewer),
     type === "locations"
       ? getRegion((entity as Location).region_id)
       : Promise.resolve(null),
   ])
 
+  const slots = filterSlots(allSlots, {
+    isDM,
+    userId,
+    ownerId: entity.owner_id ?? null,
+  })
+
+  // Strip first, then overlay: a slot the viewer may see is restored after the
+  // blanket DM-field strip, so an `owner` slot survives for its owner.
   return {
     type,
-    entity: visible,
+    entity: overlaySlots(visible, slots),
     related,
     region,
+    slots,
   }
 }
 
@@ -221,17 +233,30 @@ export async function getEntities(
 
   const isDM = role === "DM"
 
-  return (data as Entity[])
-    .filter(
-      (entity) =>
-        isDM || entity.visibility === "public" || entity.owner_id === userId
-    )
-    .map((entity) => ({
-      id: entity.id,
-      name: entity.name,
+  const visibleRows = (data as Entity[]).filter(
+    (entity) =>
+      isDM || entity.visibility === "public" || entity.owner_id === userId
+  )
+
+  const slotsByEntity = await loadSlotsFor(visibleRows.map((row) => row.id))
+
+  return visibleRows.map((entity) => {
+    const slots = filterSlots(slotsByEntity.get(entity.id) ?? [], {
+      isDM,
+      userId,
+      ownerId: entity.owner_id ?? null,
+    })
+    const overlaid = overlaySlots(entity, slots)
+
+    return {
+      id: overlaid.id,
+      name: overlaid.name,
       type,
-      visibility: entity.visibility,
-      subtitle: entitySubtitle(type, entity),
-      tags: entity.tags ?? [],
-    }))
+      visibility: overlaid.visibility,
+      // Derived from the filtered payload, so a hidden value never leaks into
+      // the subtitle or the listing.
+      subtitle: entitySubtitle(type, overlaid),
+      tags: overlaid.tags ?? [],
+    }
+  })
 }

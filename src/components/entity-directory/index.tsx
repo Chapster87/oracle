@@ -3,7 +3,7 @@ import Link from "@components/link"
 import Heading from "@components/heading"
 import Text from "@components/text"
 import clsx from "clsx"
-import { EyeOff, Globe, Lock } from "lucide-react"
+import { Globe, Lock } from "lucide-react"
 
 import type { EntitySummary, Visibility } from "@/types"
 import { entityPath } from "@/utils/entity"
@@ -16,7 +16,6 @@ const VISIBILITY: Record<
 > = {
   public: { label: "Public", icon: Globe, className: s.visibilityPublic },
   private: { label: "Private", icon: Lock, className: s.visibilityPrivate },
-  secret: { label: "Secret", icon: EyeOff, className: s.visibilitySecret },
 }
 
 /**

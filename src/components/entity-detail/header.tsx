@@ -1,6 +1,6 @@
 import React from "react"
 import clsx from "clsx"
-import { EyeOff, Globe, Lock, User } from "lucide-react"
+import { Globe, Lock, User } from "lucide-react"
 
 import Heading from "@components/heading"
 import Text from "@components/text"
@@ -19,7 +19,6 @@ const VISIBILITY: Record<
 > = {
   public: { label: "Public", icon: Globe, className: s.visibilityPublic },
   private: { label: "Private", icon: Lock, className: s.visibilityPrivate },
-  secret: { label: "Secret", icon: EyeOff, className: s.visibilitySecret },
 }
 
 /**

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useMemo } from "react"
-import { Search, Tag, Globe, Lock, EyeOff } from "lucide-react"
+import { Search, Tag, Globe, Lock } from "lucide-react"
 import clsx from "clsx"
 import { WorldLore } from "@/types"
 import s from "./style.module.css"
@@ -112,12 +112,6 @@ export default function KnowledgeBase({ entries, isDM }: KnowledgeBaseProps) {
                     <span className={clsx(s.badge, s.privateBadge)}>
                       <Lock size={10} style={{ marginRight: "4px" }} />
                       Private
-                    </span>
-                  )}
-                  {entry.visibility === "secret" && (
-                    <span className={clsx(s.badge, s.secretBadge)}>
-                      <EyeOff size={10} style={{ marginRight: "4px" }} />
-                      Secret
                     </span>
                   )}
                 </div>

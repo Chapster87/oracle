@@ -90,11 +90,6 @@
   color: var(--dm-accent);
 }
 
-.visibilitySecret {
-  background: var(--color-yellow-100);
-  color: var(--color-yellow-800);
-}
-
 .aliveBadge {
   background: var(--color-green-100);
   color: var(--color-green-800);

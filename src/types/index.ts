@@ -2,7 +2,24 @@
  * Core entity types for the Oracle campaign manager.
  */
 
-export type Visibility = "public" | "private" | "secret"
+export type Visibility = "public" | "private"
+
+/** Who may receive a secret slot's value. */
+export type SecretAudience = "dm" | "owner" | "public"
+
+/**
+ * A value withheld from some viewers. `slot` is either a markable column name
+ * (overlaid back onto the entity) or `secret_N` (free-standing content).
+ */
+export interface SecretSlot {
+  id: string
+  entity_id: string
+  slot: string
+  value: unknown
+  audience: SecretAudience
+  revealed_at: string | null
+  position: number
+}
 
 export interface WorldLore {
   id: string
@@ -122,6 +139,8 @@ export interface EntityDetailData {
   entity: Entity
   related: RelatedEntity[]
   region: EntityLink | null
+  /** Slots the viewer may see, already audience-filtered. */
+  slots: SecretSlot[]
 }
 
 /** Lightweight row rendered by the browse/directory landing pages. */
