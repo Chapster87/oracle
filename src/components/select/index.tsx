@@ -11,6 +11,7 @@ type SelectProps = React.ComponentProps<typeof SelectPrimitive.Root> & {
   id?: string
   placeholder?: string
   className?: string
+  "aria-label"?: string
   "aria-describedby"?: string
   "aria-invalid"?: boolean
 }
@@ -24,6 +25,7 @@ export function Select({
   placeholder,
   className,
   children,
+  "aria-label": ariaLabel,
   "aria-describedby": ariaDescribedBy,
   "aria-invalid": ariaInvalid,
   ...rootProps
@@ -33,6 +35,7 @@ export function Select({
       <SelectPrimitive.Trigger
         id={id}
         className={clsx(s.trigger, className)}
+        aria-label={ariaLabel}
         aria-describedby={ariaDescribedBy}
         aria-invalid={ariaInvalid}
       >

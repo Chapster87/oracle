@@ -249,12 +249,30 @@
   background: var(--color-red-50);
 }
 
+.privateLogShared {
+  border-color: var(--color-yellow-800);
+  background: var(--color-yellow-100);
+}
+
+.privateLogRevealed {
+  border-color: var(--color-green-800);
+  background: var(--color-green-100);
+}
+
 .privateLogHeader {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 8px;
   color: var(--color-burgundy);
+}
+
+.privateLogShared .privateLogHeader {
+  color: var(--color-yellow-800);
+}
+
+.privateLogRevealed .privateLogHeader {
+  color: var(--color-green-800);
 }
 
 .privateLogLabel {

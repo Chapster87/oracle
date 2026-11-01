@@ -8,13 +8,14 @@ export type Visibility = "public" | "private"
 export type SecretAudience = "dm" | "owner" | "public"
 
 /**
- * A value withheld from some viewers. `slot` is either a markable column name
- * (overlaid back onto the entity) or `secret_N` (free-standing content).
+ * A value withheld from some viewers. `slot` is always a numbered `secret_N`
+ * name; `source_column` records the column it was marked from, if any.
  */
 export interface SecretSlot {
   id: string
   entity_id: string
   slot: string
+  source_column: string | null
   value: unknown
   audience: SecretAudience
   revealed_at: string | null

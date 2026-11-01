@@ -59,9 +59,9 @@ export function filterSlots(
 }
 
 /**
- * Writes visible column-named slots back onto the entity, so a DM receives the
+ * Writes visible marked-field slots back onto the entity, so a DM receives the
  * full record and a player receives the same shape minus what they may not see.
- * `secret_N` slots are not columns and are left for the caller to render.
+ * Free-standing slots have no `source_column` and are left for the caller.
  */
 export function overlaySlots<T extends Entity>(
   entity: T,
@@ -70,10 +70,20 @@ export function overlaySlots<T extends Entity>(
   const next = { ...entity } as Record<string, unknown>
 
   for (const slot of slots) {
-    if (isSecretSlotName(slot.slot)) continue
-    if (NON_MARKABLE.has(slot.slot)) continue
-    next[slot.slot] = slot.value
+    if (!slot.source_column) continue
+    if (NON_MARKABLE.has(slot.source_column)) continue
+    next[slot.source_column] = slot.value
   }
 
   return next as T
+}
+
+/** The next free `secret_N` name, so a removed slot's name is not reused. */
+export function nextSecretSlotName(slots: { slot: string }[]): string {
+  const used = slots
+    .map((slot) => /^secret_(\d+)$/.exec(slot.slot)?.[1])
+    .filter((value): value is string => Boolean(value))
+    .map(Number)
+
+  return `secret_${used.length > 0 ? Math.max(...used) + 1 : 1}`
 }

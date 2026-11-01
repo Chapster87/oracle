@@ -1,4 +1,4 @@
-import type { EntityType, WriteErrorCode, WriteResult } from "@/types"
+import type { EntityType, Visibility, WriteResult } from "@/types"
 import { isEntityType } from "@/utils/entity"
 
 import { ENTITY_SCHEMAS } from "@/schemas/registry"
@@ -8,11 +8,57 @@ import { canWrite } from "../rbac"
 import type { Session } from "../session"
 import { supabaseAdmin } from "../supabase"
 
-export type { WriteErrorCode, WriteResult }
+export type { WriteResult }
 
 interface DbError {
   code?: string
   message: string
+}
+
+/** The scope columns every entity row carries, plus its concurrency token. */
+export interface EntityScopeRow {
+  id: string
+  campaign_id: string | null
+  owner_id: string | null
+  visibility: Visibility
+  updated_at: string
+}
+
+/** Loads the columns needed to authorize a write against an entity. */
+export async function loadEntityScope(
+  type: EntityType,
+  id: string
+): Promise<EntityScopeRow | null> {
+  const { data, error } = await supabaseAdmin
+    .from(type)
+    .select("id, campaign_id, owner_id, visibility, updated_at")
+    .eq("id", id)
+    .maybeSingle()
+
+  if (error) throw error
+  return (data as EntityScopeRow | null) ?? null
+}
+
+/** Whether the viewer may write this entity, per the canonical predicate. */
+export async function canWriteEntity(
+  type: EntityType,
+  id: string,
+  viewer: Viewer
+): Promise<boolean> {
+  const scope = await loadEntityScope(type, id)
+  if (!scope) return false
+
+  const roles = await campaignRoles(viewer.userId, scope.campaign_id)
+
+  return canWrite(
+    viewer,
+    {
+      campaignId: scope.campaign_id,
+      ownerId: scope.owner_id,
+      visibility: scope.visibility,
+    },
+    () => roles.dm
+  )
 }
 
 /** Whether the viewer runs a campaign, and whether they belong to it at all. */
@@ -154,13 +200,7 @@ export async function updateEntity(
 
   const data = parsed.data as Record<string, unknown>
 
-  const { data: existing, error } = await supabaseAdmin
-    .from(type)
-    .select("id, campaign_id, owner_id, visibility, updated_at")
-    .eq("id", id)
-    .maybeSingle()
-
-  if (error) throw error
+  const existing = await loadEntityScope(type, id)
 
   if (!existing) {
     return {

@@ -2,22 +2,16 @@
 
 import React from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/tabs"
+import Text from "@components/text"
 
-import type { EntityDetailData } from "@/types"
-import { ENTITY_META } from "@/utils/entity"
-import { isSecretSlotName } from "@/utils/secrets"
+import type { EntityDetailData, SecretAudience, SecretSlot } from "@/types"
 
 import EntityHeader from "./header"
 import { LAYOUTS } from "./layouts"
-import PrivateLog from "./private-log"
+import PrivateLog, { type PrivateLogTone } from "./private-log"
 import Relationships from "./relationships"
 import s from "./style.module.css"
 
-/**
- * Renders the type-specific secret payload inside the Private Log treatment.
- * Uses the type's `secretField` when it has one, otherwise `metadata.dm_notes`,
- * then appends any free-standing `secret_N` slots the viewer may see.
- */
 function renderSlotValue(value: unknown): React.ReactNode {
   if (Array.isArray(value)) {
     return (
@@ -32,30 +26,44 @@ function renderSlotValue(value: unknown): React.ReactNode {
   return String(value ?? "")
 }
 
+function secretTitle(slot: SecretSlot, isDM: boolean): string {
+  const number = slot.slot.replace(/^secret_/, "")
+  const source = slot.source_column ? ` — from ${slot.source_column}` : ""
+  const audience = isDM ? ` (${slot.audience})` : ""
+
+  return `Secret ${number}${source}${audience}`
+}
+
+/**
+ * The DM-only scratchpad. Deliberately separate from secrets: this is prose the
+ * DM keeps about the entity, not a value withheld from a player.
+ */
 function DmNotes({ data }: { data: EntityDetailData }) {
-  const secretField = ENTITY_META[data.type].secretField
   const record = data.entity as Record<string, any>
-  const notes = secretField ? record[secretField] : record.metadata?.dm_notes
-  const extraSlots = data.slots.filter((slot) => isSecretSlotName(slot.slot))
+
+  return <PrivateLog>{record.metadata?.dm_notes}</PrivateLog>
+}
+
+function toneFor(audience: SecretAudience): PrivateLogTone {
+  if (audience === "public") return "revealed"
+  if (audience === "owner") return "shared"
+  return "hidden"
+}
+
+/** Every secret the viewer may see, each in its own Private Log. */
+function Secrets({ data, isDM }: { data: EntityDetailData; isDM: boolean }) {
+  if (data.slots.length === 0) {
+    return <Text>No secrets recorded.</Text>
+  }
 
   return (
     <>
-      <PrivateLog>
-        {Array.isArray(notes) ? (
-          notes.length > 0 ? (
-            <ul className={s.list}>
-              {notes.map((note, index) => (
-                <li key={index}>{note}</li>
-              ))}
-            </ul>
-          ) : null
-        ) : (
-          notes
-        )}
-      </PrivateLog>
-
-      {extraSlots.map((slot) => (
-        <PrivateLog key={slot.id} title={`Secret slot: ${slot.slot}`}>
+      {data.slots.map((slot) => (
+        <PrivateLog
+          key={slot.id}
+          title={secretTitle(slot, isDM)}
+          tone={toneFor(slot.audience)}
+        >
           {renderSlotValue(slot.value)}
         </PrivateLog>
       ))}
@@ -70,8 +78,9 @@ interface EntityDetailProps {
 
 /**
  * The Layered Detail view (Research #10): a public identity header, tabbed
- * content layers, and a DM-only "DM Notes" tab rendered with the Private Log
- * treatment. Type-specific content is delegated via the layout registry.
+ * content layers, and DM-only "DM Notes" and "Secrets" tabs rendered with the
+ * Private Log treatment. Type-specific content is delegated via the layout
+ * registry.
  */
 export default function EntityDetail({ data, isDM }: EntityDetailProps) {
   const Layout = LAYOUTS[data.type]
@@ -86,6 +95,9 @@ export default function EntityDetail({ data, isDM }: EntityDetailProps) {
           <TabsTrigger value="details">Details</TabsTrigger>
           <TabsTrigger value="relationships">Relationships</TabsTrigger>
           {isDM && <TabsTrigger value="dm-notes">DM Notes</TabsTrigger>}
+          {data.slots.length > 0 && (
+            <TabsTrigger value="secrets">Secrets</TabsTrigger>
+          )}
         </TabsList>
 
         <Layout data={data} isDM={isDM} />
@@ -97,6 +109,12 @@ export default function EntityDetail({ data, isDM }: EntityDetailProps) {
         {isDM && (
           <TabsContent value="dm-notes">
             <DmNotes data={data} />
+          </TabsContent>
+        )}
+
+        {data.slots.length > 0 && (
+          <TabsContent value="secrets">
+            <Secrets data={data} isDM={isDM} />
           </TabsContent>
         )}
       </Tabs>

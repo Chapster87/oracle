@@ -3,7 +3,7 @@ import type { SecretSlot } from "@/types"
 import { supabaseAdmin } from "./supabase"
 
 const SLOT_COLUMNS =
-  "id, entity_id, slot, value, audience, revealed_at, position"
+  "id, entity_id, slot, source_column, value, audience, revealed_at, position"
 
 /** Loads every slot for one entity, in display order. */
 export async function loadSlots(entityId: string): Promise<SecretSlot[]> {

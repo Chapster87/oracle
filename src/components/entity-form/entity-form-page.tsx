@@ -14,6 +14,7 @@ import type { EntityType } from "@/types"
 import { ENTITY_META } from "@/utils/entity"
 
 import EntityForm from "./index"
+import SecretSlotsPanel from "@components/secret-slots/secret-slots-panel"
 import s from "./style.module.css"
 
 async function loadOptions() {
@@ -23,8 +24,14 @@ async function loadOptions() {
   ])
 
   return {
-    locations: (locations ?? []).map((row) => ({ id: row.id, label: row.name })),
-    campaigns: (campaigns ?? []).map((row) => ({ id: row.id, label: row.name })),
+    locations: (locations ?? []).map((row) => ({
+      id: row.id,
+      label: row.name,
+    })),
+    campaigns: (campaigns ?? []).map((row) => ({
+      id: row.id,
+      label: row.name,
+    })),
   }
 }
 
@@ -100,6 +107,10 @@ export default async function EntityFormPage({
         options={options}
         action={mode === "edit" ? updateEntityAction : createEntityAction}
       />
+
+      {mode === "edit" && id && (role === "DM" || role === "ADMIN") && (
+        <SecretSlotsPanel type={type} entityId={id} />
+      )}
     </div>
   )
 }

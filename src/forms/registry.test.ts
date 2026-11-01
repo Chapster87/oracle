@@ -47,7 +47,8 @@ describe("fieldSpecsFor", () => {
     )
 
     const character = fieldSpecsFor("characters")
-    expect(character.some((s) => s.name.startsWith("metadata."))).toBe(false)
+    expect(character.find((s) => s.name === "metadata.dm_notes")).toBeDefined()
+    expect(character.find((s) => s.name === "metadata.ddb_url")).toBeUndefined()
   })
 
   it("covers the location list and map fields", () => {

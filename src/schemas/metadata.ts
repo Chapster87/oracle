@@ -46,7 +46,14 @@ export const METADATA_KEYS: MetadataKeySpec[] = [
     label: "DM Notes",
     help: "Private notes, visible only to DMs.",
     authority: "dm",
-    appliesTo: ["factions", "players", "items", "religions"],
+    appliesTo: [
+      "characters",
+      "locations",
+      "factions",
+      "players",
+      "items",
+      "religions",
+    ],
     schema: z.string().max(20_000),
   },
 ]

@@ -9,7 +9,9 @@ describe("create schemas", () => {
   it("requires a non-blank name", () => {
     expect(characterCreateSchema.safeParse({}).success).toBe(false)
     expect(characterCreateSchema.safeParse({ name: "   " }).success).toBe(false)
-    expect(characterCreateSchema.safeParse({ name: "Gideon" }).success).toBe(true)
+    expect(characterCreateSchema.safeParse({ name: "Gideon" }).success).toBe(
+      true
+    )
   })
 
   it("rejects unknown keys", () => {
@@ -73,7 +75,7 @@ describe("metadata keys follow the registry", () => {
     ).toBe(false)
   })
 
-  it("allows dm_notes on factions but not characters", () => {
+  it("allows dm_notes on every type", () => {
     expect(
       factionCreateSchema.safeParse({
         name: "F",
@@ -85,7 +87,7 @@ describe("metadata keys follow the registry", () => {
         name: "C",
         metadata: { dm_notes: "secret" },
       }).success
-    ).toBe(false)
+    ).toBe(true)
   })
 
   it("rejects an unlisted metadata key", () => {

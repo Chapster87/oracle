@@ -25,7 +25,8 @@ function slot(overrides: Partial<SecretSlot> = {}): SecretSlot {
   return {
     id: "s1",
     entity_id: "e1",
-    slot: "alignment",
+    slot: "secret_1",
+    source_column: null,
     value: "Lawful Good",
     audience: "dm",
     revealed_at: null,
@@ -100,24 +101,24 @@ describe("audience filtering", () => {
 })
 
 describe("overlay", () => {
-  it("restores a column-named slot onto the entity", () => {
-    const overlaid = overlaySlots(entity, [slot({ slot: "alignment" })])
+  it("restores a marked secret onto its source column", () => {
+    const overlaid = overlaySlots(entity, [
+      slot({ source_column: "alignment" }),
+    ])
     expect((overlaid as unknown as Record<string, unknown>).alignment).toBe(
       "Lawful Good"
     )
   })
 
-  it("leaves secret_N slots off the entity shape", () => {
-    const overlaid = overlaySlots(entity, [
-      slot({ slot: "secret_1", value: "A true name" }),
-    ])
+  it("leaves free-standing secrets off the entity shape", () => {
+    const overlaid = overlaySlots(entity, [slot({ source_column: null })])
     expect(overlaid).not.toHaveProperty("secret_1")
   })
 
   it("never overwrites identity or scope columns", () => {
     const overlaid = overlaySlots(entity, [
-      slot({ slot: "name", value: "Impostor" }),
-      slot({ slot: "visibility", value: "public" }),
+      slot({ source_column: "name", value: "Impostor" }),
+      slot({ source_column: "visibility", value: "public" }),
     ])
     expect(overlaid.name).toBe("Test Entity")
     expect(overlaid.visibility).toBe("private")
