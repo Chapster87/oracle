@@ -12,6 +12,7 @@
     "start": "next start",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:rls": "node scripts/run-rls-tests.mjs",
     "test:e2e": "playwright test"
   },
   "repository": {
