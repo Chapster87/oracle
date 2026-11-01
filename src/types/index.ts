@@ -35,7 +35,7 @@ export interface WorldLore {
   updated_at: string
 }
 
-export type Role = "DM" | "PLAYER"
+export type Role = "ADMIN" | "DM" | "PLAYER"
 
 /**
  * Fields shared by every content entity that supports the Layered Detail view.

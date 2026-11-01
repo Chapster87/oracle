@@ -23,9 +23,12 @@ import Button from "@components/button"
 import Heading from "@components/heading"
 import Text from "@components/text"
 
+import type { Role } from "@/types"
+
 import s from "./style.module.css"
 
-type Role = "DM" | "PLAYER"
+/** Prototype role cycle. ADMIN sees everything a DM does. */
+const ROLE_CYCLE: Role[] = ["DM", "PLAYER", "ADMIN"]
 
 /**
  * The interactive app shell: sidebar, role toggle, and main content frame.
@@ -39,19 +42,21 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
 
   useEffect(() => {
-    const savedRole = localStorage.getItem("oracle_prototype_role") as Role
-    if (savedRole) {
-      setRole(savedRole)
+    const savedRole = localStorage.getItem("oracle_prototype_role")
+    if (savedRole && ROLE_CYCLE.includes(savedRole as Role)) {
+      setRole(savedRole as Role)
     }
   }, [])
 
+  const nextRole =
+    ROLE_CYCLE[(ROLE_CYCLE.indexOf(role) + 1) % ROLE_CYCLE.length]
+
   const toggleRole = () => {
-    const newRole = role === "DM" ? "PLAYER" : "DM"
-    setRole(newRole)
-    localStorage.setItem("oracle_prototype_role", newRole)
+    setRole(nextRole)
+    localStorage.setItem("oracle_prototype_role", nextRole)
   }
 
-  const isDM = role === "DM"
+  const isDM = role === "DM" || role === "ADMIN"
 
   const navigation = [
     { name: "Home", href: "/", icon: Shield, color: "var(--muted-foreground)" },
@@ -179,7 +184,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               </span>
             </div>
             <Button variant="outline" size="small" onClick={toggleRole}>
-              Switch to {isDM ? "Player" : "DM"}
+              Switch to {nextRole}
             </Button>
           </div>
         </div>
