@@ -4,12 +4,12 @@ import "../styles/globals.css"
 
 import BreakpointIndicator from "@components/breakpoint-indicator"
 
-import AppShell from "./app-shell"
-
 /**
  * Root layout. Stays a server component so Next.js owns the `<html>`/`<body>`
- * and its streaming script injection; the interactive shell lives in
- * `AppShell`.
+ * and its streaming script injection.
+ *
+ * The app shell and the auth gate live in `(app)/layout.tsx`; `/login` and
+ * `/auth/*` render outside it.
  */
 export default function RootLayout({
   children,
@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <BreakpointIndicator />
-        <AppShell>{children}</AppShell>
+        {children}
       </body>
     </html>
   )

@@ -1,5 +1,6 @@
 import type { StoryLogEntry } from "@/types"
 
+import { isDmRole } from "./rbac"
 import { supabaseAdmin as supabase } from "./supabase"
 
 /**
@@ -17,7 +18,7 @@ export async function getStoryLog(
 
   if (error || !data) return []
 
-  const isDM = role === "DM"
+  const isDM = isDmRole(role)
 
   return data
     .filter(

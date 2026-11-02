@@ -5,7 +5,6 @@ import { ENTITY_SCHEMAS } from "@/schemas/registry"
 
 import type { Viewer } from "../rbac"
 import { canWrite } from "../rbac"
-import type { Session } from "../session"
 import { supabaseAdmin } from "../supabase"
 
 export type { WriteResult }
@@ -273,7 +272,7 @@ export async function updateEntityMetadata(
   type: EntityType,
   id: string,
   patch: Record<string, string | null>,
-  viewer: Session
+  viewer: Viewer
 ): Promise<void> {
   if (viewer.role !== "DM" && viewer.role !== "ADMIN") {
     throw new Error("Only a DM may edit entity metadata")
@@ -315,7 +314,7 @@ export async function updateEntityMetadata(
 export async function deleteEntity(
   type: EntityType,
   id: string,
-  viewer: Session
+  viewer: Viewer
 ): Promise<void> {
   if (viewer.role !== "DM" && viewer.role !== "ADMIN") {
     throw new Error("Only a DM may delete an entity")

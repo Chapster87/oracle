@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test"
 
+import { signInAs } from "./auth"
+
 /**
  * Create → edit → delete round-trip through the shared form. Guarded so it only
  * runs where writes are acceptable, and it cleans up after itself.
@@ -10,6 +12,8 @@ test.describe("entity form", () => {
   test.skip(!allowWrites, "Needs a writable database (E2E_ALLOW_WRITES=1)")
 
   test("creates, edits, and deletes a character", async ({ page }) => {
+    await signInAs(page, "dm@oracle.local")
+
     const name = `E2E Character ${Date.now()}`
 
     await page.goto("/characters/new")

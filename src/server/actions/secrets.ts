@@ -10,7 +10,7 @@ import {
   unmarkField,
   updateSlotValue,
 } from "@/server/cms/secrets"
-import { requireDmSession } from "@/server/session"
+import { requireDmViewer } from "@/server/auth"
 import type { SecretAudience, WriteResult } from "@/types"
 import { isEntityType } from "@/utils/entity"
 
@@ -35,7 +35,7 @@ function revalidate(type: string, id: string) {
 
 /** Moves a field's value into a slot named after it. */
 export async function markSecretFieldAction(formData: FormData): Promise<void> {
-  const viewer = requireDmSession()
+  const viewer = await requireDmViewer()
   const { type, id } = readTarget(formData)
   const column = String(formData.get("column") ?? "")
 
@@ -44,8 +44,10 @@ export async function markSecretFieldAction(formData: FormData): Promise<void> {
 }
 
 /** Copies a slot's value back onto its column and removes the slot. */
-export async function unmarkSecretFieldAction(formData: FormData): Promise<void> {
-  const viewer = requireDmSession()
+export async function unmarkSecretFieldAction(
+  formData: FormData
+): Promise<void> {
+  const viewer = await requireDmViewer()
   const { type, id } = readTarget(formData)
   const column = String(formData.get("column") ?? "")
 
@@ -55,7 +57,7 @@ export async function unmarkSecretFieldAction(formData: FormData): Promise<void>
 
 /** Adds a free-standing `secret_N` slot. */
 export async function addSecretSlotAction(formData: FormData): Promise<void> {
-  const viewer = requireDmSession()
+  const viewer = await requireDmViewer()
   const { type, id } = readTarget(formData)
   const slot = String(formData.get("slot") ?? "")
   const value = String(formData.get("value") ?? "")
@@ -66,7 +68,7 @@ export async function addSecretSlotAction(formData: FormData): Promise<void> {
 
 /** Replaces a slot's content without touching its audience. */
 export async function saveSecretSlotAction(formData: FormData): Promise<void> {
-  const viewer = requireDmSession()
+  const viewer = await requireDmViewer()
   const { type, id } = readTarget(formData)
   const slot = String(formData.get("slot") ?? "")
   const value = String(formData.get("value") ?? "")
@@ -76,8 +78,10 @@ export async function saveSecretSlotAction(formData: FormData): Promise<void> {
 }
 
 /** Raises or lowers a slot's audience. */
-export async function setSecretAudienceAction(formData: FormData): Promise<void> {
-  const viewer = requireDmSession()
+export async function setSecretAudienceAction(
+  formData: FormData
+): Promise<void> {
+  const viewer = await requireDmViewer()
   const { type, id } = readTarget(formData)
   const slot = String(formData.get("slot") ?? "")
   const audience = String(formData.get("audience") ?? "dm") as SecretAudience
@@ -87,8 +91,10 @@ export async function setSecretAudienceAction(formData: FormData): Promise<void>
 }
 
 /** Removes a free-standing `secret_N` slot. */
-export async function deleteSecretSlotAction(formData: FormData): Promise<void> {
-  const viewer = requireDmSession()
+export async function deleteSecretSlotAction(
+  formData: FormData
+): Promise<void> {
+  const viewer = await requireDmViewer()
   const { type, id } = readTarget(formData)
   const slot = String(formData.get("slot") ?? "")
 

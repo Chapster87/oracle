@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 
 import type { EntityScope } from "./rbac"
-import { canRead, canWrite, type Viewer } from "./rbac"
+import { canRead, canWrite, isDmRole, type Viewer } from "./rbac"
 
 const admin: Viewer = { userId: "u-admin", role: "ADMIN" }
 const dm: Viewer = { userId: "u-dm", role: "DM" }
@@ -31,6 +31,14 @@ const campaignPrivate: EntityScope = {
 const runsC1 = (id: string) => id === "c1"
 const memberOfC1 = (id: string) => id === "c1"
 const noCampaigns = () => false
+
+describe("isDmRole", () => {
+  it("treats ADMIN as a DM", () => {
+    expect(isDmRole("ADMIN")).toBe(true)
+    expect(isDmRole("DM")).toBe(true)
+    expect(isDmRole("PLAYER")).toBe(false)
+  })
+})
 
 describe("canWrite", () => {
   it("authorizes ADMIN everywhere", () => {

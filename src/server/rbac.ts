@@ -1,9 +1,16 @@
 import type { Role, Visibility } from "@/types"
 
+/** Whether a role may see DM-only content. ADMIN sees everything a DM does. */
+export function isDmRole(role: Role | string): boolean {
+  return role === "DM" || role === "ADMIN"
+}
+
 /** Who is asking. `role` is the profile role, not a campaign membership role. */
 export interface Viewer {
   userId: string
   role: Role
+  /** The account's real role, before any "viewing as player" preview. */
+  actualRole?: Role
 }
 
 /** The scope columns every entity row carries. */

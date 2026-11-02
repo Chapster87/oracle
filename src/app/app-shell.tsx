@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React, { useTransition } from "react"
 import Link from "@components/link"
 import { usePathname } from "next/navigation"
 import {
@@ -15,6 +15,7 @@ import {
   Church,
   BookOpen,
   Settings,
+  LayoutGrid,
   ChevronRight,
   Plus,
 } from "lucide-react"
@@ -24,12 +25,12 @@ import Heading from "@components/heading"
 import { Select, SelectItem } from "@components/select"
 import Text from "@components/text"
 
+import { setActiveCampaignAction } from "@/server/actions/campaigns"
+import { setViewAsPlayerAction, signOutAction } from "@/server/actions/auth"
+import type { CampaignSummary } from "@/server/campaigns"
 import type { Role } from "@/types"
 
 import s from "./style.module.css"
-
-/** Prototype roles. ADMIN sees everything a DM does. */
-const ROLES: Role[] = ["DM", "PLAYER", "ADMIN"]
 
 /**
  * The interactive app shell: sidebar, role toggle, and main content frame.
@@ -38,32 +39,28 @@ const ROLES: Role[] = ["DM", "PLAYER", "ADMIN"]
  * a client root layout that returns `<html>`/`<body>` breaks hydration because
  * Next.js injects its streaming script into the body.
  */
-export default function AppShell({ children }: { children: React.ReactNode }) {
-  const [role, setRole] = useState<Role>("PLAYER")
+export default function AppShell({
+  role,
+  actualRole,
+  campaigns,
+  activeCampaignId,
+  children,
+}: {
+  role: Role
+  actualRole: Role
+  campaigns: CampaignSummary[]
+  activeCampaignId: string | null
+  children: React.ReactNode
+}) {
   const pathname = usePathname()
-
-  useEffect(() => {
-    const savedRole = localStorage.getItem("oracle_prototype_role")
-    if (savedRole && ROLES.includes(savedRole as Role)) {
-      setRole(savedRole as Role)
-    }
-  }, [])
-
-  const changeRole = (next: Role) => {
-    setRole(next)
-    localStorage.setItem("oracle_prototype_role", next)
-  }
+  const [, startTransition] = useTransition()
 
   const isDM = role === "DM" || role === "ADMIN"
+  const canPreview = actualRole === "DM" || actualRole === "ADMIN"
+  const previewing = canPreview && role === "PLAYER"
 
   const navigation = [
     { name: "Home", href: "/", icon: Shield, color: "var(--muted-foreground)" },
-    {
-      name: "Dashboard",
-      href: "/dashboard",
-      icon: Shield,
-      color: "var(--color-blue)",
-    },
     {
       name: "World",
       href: "/world",
@@ -112,6 +109,16 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       icon: Church,
       color: "var(--color-blue)",
     },
+    ...(isDM
+      ? [
+          {
+            name: "Workbench",
+            href: "/components",
+            icon: LayoutGrid,
+            color: "var(--color-blue)",
+          },
+        ]
+      : []),
     {
       name: "Settings",
       href: "#",
@@ -181,27 +188,73 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 {role} View
               </span>
             </div>
+            <form action={signOutAction}>
+              <Button type="submit" variant="outline" size="small">
+                Sign out
+              </Button>
+            </form>
           </div>
-          <div style={{ marginTop: "8px" }}>
-            <Select
-              value={role}
-              onValueChange={(value) => changeRole(value as Role)}
-              aria-label="Prototype role"
-            >
-              <SelectItem value="DM">DM</SelectItem>
-              <SelectItem value="PLAYER">Player</SelectItem>
-              <SelectItem value="ADMIN">Admin</SelectItem>
-            </Select>
-          </div>
+
+          {canPreview && (
+            <form action={setViewAsPlayerAction} style={{ marginTop: "8px" }}>
+              <input
+                type="hidden"
+                name="enabled"
+                value={previewing ? "false" : "true"}
+              />
+              <Button
+                type="submit"
+                variant={previewing ? "dm" : "outline"}
+                size="small"
+                style={{ width: "100%" }}
+              >
+                {previewing ? "Stop viewing as player" : "View as player"}
+              </Button>
+            </form>
+          )}
         </div>
       </aside>
 
       {/* Main Content Area */}
       <main className={s.main}>
         <header className={s.header}>
-          <Heading level="h2" display="h6">
-            Active Campaign: The Shattered Isles
-          </Heading>
+          {campaigns.length > 0 ? (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+                width: "340px",
+              }}
+            >
+              <Text
+                size="sm"
+                style={{
+                  color: "var(--muted-foreground)",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Active campaign
+              </Text>
+              <Select
+                value={activeCampaignId ?? undefined}
+                onValueChange={(value) =>
+                  startTransition(() => setActiveCampaignAction(value))
+                }
+                aria-label="Active campaign"
+              >
+                {campaigns.map((campaign) => (
+                  <SelectItem key={campaign.id} value={campaign.id}>
+                    {campaign.name}
+                  </SelectItem>
+                ))}
+              </Select>
+            </div>
+          ) : (
+            <Heading level="h2" display="h6">
+              No campaign yet
+            </Heading>
+          )}
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             <span
               className={s.badge}
@@ -218,33 +271,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
         <section className={s.contentSection}>{children}</section>
       </main>
-
-      {/* Floating UI Variant Bar (Prototype Control) */}
-      <div className={s.floatingBarContainer}>
-        <div className={s.floatingBar}>
-          <span
-            style={{
-              fontWeight: "bold",
-              fontSize: "12px",
-              color: "var(--color-black)",
-            }}
-          >
-            PROTOTYPE: App Shell UI
-          </span>
-          <div className={s.separator} />
-          <div style={{ width: "160px" }}>
-            <Select
-              value={role}
-              onValueChange={(value) => changeRole(value as Role)}
-              aria-label="Prototype role"
-            >
-              <SelectItem value="DM">DM</SelectItem>
-              <SelectItem value="PLAYER">Player</SelectItem>
-              <SelectItem value="ADMIN">Admin</SelectItem>
-            </Select>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }

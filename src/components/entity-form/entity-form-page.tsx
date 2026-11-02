@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 
 import Heading from "@components/heading"
+import Link from "@components/link"
 
 import { allowedFields, fieldSpecsFor } from "@/forms/registry"
 import {
@@ -8,7 +9,8 @@ import {
   updateEntityAction,
 } from "@/server/actions/entities"
 import { getEntity } from "@/server/entities"
-import { getSession } from "@/server/session"
+import { requireDmViewer } from "@/server/auth"
+import { getCampaignContext } from "@/server/campaigns"
 import { supabaseAdmin } from "@/server/supabase"
 import type { EntityType } from "@/types"
 import { ENTITY_META } from "@/utils/entity"
@@ -69,8 +71,8 @@ export default async function EntityFormPage({
   mode: "create" | "edit"
   id?: string
 }) {
-  const { role, userId } = getSession()
-  const viewer = { userId, role }
+  const viewer = await requireDmViewer()
+  const { active } = await getCampaignContext()
 
   const specs = allowedFields(fieldSpecsFor(type), viewer)
   const options = await loadOptions()
@@ -81,7 +83,13 @@ export default async function EntityFormPage({
   if (mode === "edit") {
     if (!id) notFound()
 
-    const data = await getEntity(type, id, role, userId)
+    const data = await getEntity(
+      type,
+      id,
+      viewer.role,
+      viewer.userId,
+      active?.id ?? null
+    )
     if (!data) notFound()
 
     const entity = data.entity as unknown as Record<string, unknown>
@@ -90,9 +98,18 @@ export default async function EntityFormPage({
   }
 
   const label = ENTITY_META[type].singular
+  const backHref = mode === "edit" && id ? `/${type}/${id}` : `/${type}`
+  const backLabel =
+    mode === "edit" && initial.name
+      ? String(initial.name)
+      : ENTITY_META[type].label
 
   return (
     <div className={s.page}>
+      <Link href={backHref} className={s.back}>
+        ← Back to {backLabel}
+      </Link>
+
       <Heading level="h1" style={{ marginBottom: "24px" }}>
         {mode === "edit" ? `Edit ${label}` : `New ${label}`}
       </Heading>
@@ -108,9 +125,11 @@ export default async function EntityFormPage({
         action={mode === "edit" ? updateEntityAction : createEntityAction}
       />
 
-      {mode === "edit" && id && (role === "DM" || role === "ADMIN") && (
-        <SecretSlotsPanel type={type} entityId={id} />
-      )}
+      {mode === "edit" &&
+        id &&
+        (viewer.role === "DM" || viewer.role === "ADMIN") && (
+          <SecretSlotsPanel type={type} entityId={id} />
+        )}
     </div>
   )
 }

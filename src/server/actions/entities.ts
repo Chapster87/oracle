@@ -12,7 +12,7 @@ import {
   updateEntity,
   updateEntityMetadata,
 } from "@/server/cms/entities"
-import { requireDmSession } from "@/server/session"
+import { requireDmViewer } from "@/server/auth"
 import type { WriteResult } from "@/types"
 import { isEntityType } from "@/utils/entity"
 
@@ -32,7 +32,7 @@ export async function connectDndBeyondAction(
   _prev: ActionResult | null,
   formData: FormData
 ): Promise<ActionResult> {
-  const viewer = requireDmSession()
+  const viewer = await requireDmViewer()
 
   const type = String(formData.get("type") ?? "")
   const id = String(formData.get("id") ?? "")
@@ -89,7 +89,7 @@ export async function createEntityAction(
   _prev: WriteResult | null,
   formData: FormData
 ): Promise<WriteResult> {
-  const viewer = requireDmSession()
+  const viewer = await requireDmViewer()
 
   const type = String(formData.get("type") ?? "")
   if (!isEntityType(type)) {
@@ -114,7 +114,7 @@ export async function updateEntityAction(
   _prev: WriteResult | null,
   formData: FormData
 ): Promise<WriteResult> {
-  const viewer = requireDmSession()
+  const viewer = await requireDmViewer()
 
   const type = String(formData.get("type") ?? "")
   const id = String(formData.get("id") ?? "")
@@ -142,7 +142,7 @@ export async function deleteEntityAction(
   _prev: ActionResult | null,
   formData: FormData
 ): Promise<ActionResult> {
-  const viewer = requireDmSession()
+  const viewer = await requireDmViewer()
 
   const type = String(formData.get("type") ?? "")
   const id = String(formData.get("id") ?? "")

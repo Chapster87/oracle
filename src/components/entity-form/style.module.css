@@ -9,6 +9,18 @@
   max-width: 720px;
 }
 
+.back {
+  display: inline-block;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: var(--muted-foreground);
+  text-decoration: none;
+}
+
+.back:hover {
+  color: var(--foreground);
+}
+
 .formError {
   color: var(--destructive);
 }

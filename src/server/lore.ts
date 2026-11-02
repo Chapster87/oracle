@@ -1,10 +1,11 @@
-import { createClient } from "@supabase/supabase-js";
-import { WorldLore } from "../types";
+import { createClient } from "@supabase/supabase-js"
+import { WorldLore } from "../types"
+import { isDmRole } from "./rbac"
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 /**
  * Fetches all world lore entries accessible to the current user.
@@ -15,24 +16,24 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
  */
 export async function getLoreEntries(
   role: string,
-  userId: string,
+  userId: string
 ): Promise<WorldLore[]> {
   let query = supabase
     .from("world_lore")
     .select("*")
-    .order("name", { ascending: true });
+    .order("name", { ascending: true })
 
-  if (role !== "DM") {
+  if (!isDmRole(role)) {
     // Players see public lore OR lore they own
-    query = query.or(`visibility.eq.public,owner_id.eq.${userId}`);
+    query = query.or(`visibility.eq.public,owner_id.eq.${userId}`)
   }
 
-  const { data, error } = await query;
+  const { data, error } = await query
 
   if (error) {
-    console.error("Error fetching lore entries:", error);
-    return [];
+    console.error("Error fetching lore entries:", error)
+    return []
   }
 
-  return data as WorldLore[];
+  return data as WorldLore[]
 }

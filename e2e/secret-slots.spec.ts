@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test"
 
+import { signInAs } from "./auth"
+
 /**
  * Secret-slot controls round-trip, including the player's view of a revealed
  * secret. Guarded so it only runs where writes are acceptable, and it cleans up
@@ -13,6 +15,8 @@ test.describe("secret slots", () => {
   test("marks a field secret, reveals it to players, and unmarks it", async ({
     page,
   }) => {
+    await signInAs(page, "dm@oracle.local")
+
     const name = `E2E Secret ${Date.now()}`
 
     await page.goto("/characters/new")
@@ -50,12 +54,16 @@ test.describe("secret slots", () => {
     ).toContainText("Public")
 
     // A player sees the revealed secret, and no DM Notes tab.
-    await page.goto(`/characters/${id}?role=PLAYER`)
+    await page.context().clearCookies()
+    await signInAs(page, "player@oracle.local")
+    await page.goto(`/characters/${id}`)
     await expect(page.getByRole("tab", { name: "DM Notes" })).toHaveCount(0)
     await page.getByRole("tab", { name: "Secrets" }).click()
     await expect(page.getByText("Lawful Good")).toBeVisible()
 
-    // Back to the editor to unmark.
+    // Back as the DM to unmark and clean up.
+    await page.context().clearCookies()
+    await signInAs(page, "dm@oracle.local")
     await page.goto(`/characters/${id}/edit`)
     await page.getByRole("button", { name: "Unmark Alignment secret" }).click()
     await expect(

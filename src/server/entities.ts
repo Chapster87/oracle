@@ -15,6 +15,7 @@ import {
 } from "@/utils/entity"
 import { filterSlots, overlaySlots } from "@/utils/secrets"
 
+import { isDmRole } from "./rbac"
 import { loadSlots, loadSlotsFor } from "./secrets"
 import { supabaseAdmin as supabase } from "./supabase"
 
@@ -161,7 +162,8 @@ export async function getEntity(
   type: EntityType,
   id: string,
   role: string,
-  userId: string
+  userId: string,
+  campaignId: string | null
 ): Promise<EntityDetailData | null> {
   if (!isEntityType(type)) return null
   if (!UUID_RE.test(id)) return null
@@ -175,7 +177,11 @@ export async function getEntity(
   if (error || !data) return null
 
   const entity = data as Entity
-  const isDM = role === "DM"
+  const isDM = isDmRole(role)
+
+  // The active campaign is the outer scope: a row from another campaign is not
+  // part of this view, even for a DM. Global rows belong to every campaign.
+  if (entity.campaign_id && entity.campaign_id !== campaignId) return null
 
   const isVisibleToPlayer =
     entity.visibility === "public" || entity.owner_id === userId
@@ -220,7 +226,8 @@ export async function getEntity(
 export async function getEntities(
   type: EntityType,
   role: string,
-  userId: string
+  userId: string,
+  campaignId: string | null
 ): Promise<EntitySummary[]> {
   if (!isEntityType(type)) return []
 
@@ -231,11 +238,12 @@ export async function getEntities(
 
   if (error || !data) return []
 
-  const isDM = role === "DM"
+  const isDM = isDmRole(role)
 
   const visibleRows = (data as Entity[]).filter(
     (entity) =>
-      isDM || entity.visibility === "public" || entity.owner_id === userId
+      (!entity.campaign_id || entity.campaign_id === campaignId) &&
+      (isDM || entity.visibility === "public" || entity.owner_id === userId)
   )
 
   const slotsByEntity = await loadSlotsFor(visibleRows.map((row) => row.id))
