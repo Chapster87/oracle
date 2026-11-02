@@ -1,3 +1,5 @@
+export const metadata = { title: "Tabs" }
+
 import Heading from "@components/heading"
 import Text from "@components/text"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@components/tabs"

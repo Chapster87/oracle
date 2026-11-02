@@ -1,3 +1,5 @@
+export const metadata = { title: "Dialog" }
+
 import Button from "@components/button"
 import Heading from "@components/heading"
 import Field from "@components/field"

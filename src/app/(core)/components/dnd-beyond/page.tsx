@@ -1,3 +1,5 @@
+export const metadata = { title: "D&D Beyond" }
+
 import Heading from "@components/heading"
 import DndBeyondLink from "@components/dnd-beyond"
 

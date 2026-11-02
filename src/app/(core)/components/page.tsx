@@ -1,3 +1,5 @@
+export const metadata = { title: "Workbench" }
+
 import Heading from "@components/heading"
 import Link from "@components/link"
 import Text from "@components/text"

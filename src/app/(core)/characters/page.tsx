@@ -1,3 +1,5 @@
+export const metadata = { title: "Characters" }
+
 import React from "react"
 
 import Heading from "@components/heading"

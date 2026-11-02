@@ -1,3 +1,5 @@
+export const metadata = { title: "Dropdown Menu" }
+
 import Button from "@components/button"
 import Heading from "@components/heading"
 import {

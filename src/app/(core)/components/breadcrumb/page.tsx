@@ -1,3 +1,5 @@
+export const metadata = { title: "Breadcrumb" }
+
 import Breadcrumb from "@components/breadcrumb"
 import Heading from "@components/heading"
 import Text from "@components/text"

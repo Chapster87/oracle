@@ -1,3 +1,5 @@
+export const metadata = { title: "Religions" }
+
 import React from "react"
 
 import Heading from "@components/heading"

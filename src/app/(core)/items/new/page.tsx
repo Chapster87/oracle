@@ -1,3 +1,5 @@
+export const metadata = { title: "New Item" }
+
 import EntityFormPage from "@/components/entity-form/entity-form-page"
 
 export default function NewItemPage() {

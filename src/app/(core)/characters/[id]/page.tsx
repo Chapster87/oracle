@@ -1,3 +1,5 @@
+export const metadata = { title: "Character" }
+
 import React from "react"
 
 import EntityDetailPage from "@/components/entity-detail/entity-page"

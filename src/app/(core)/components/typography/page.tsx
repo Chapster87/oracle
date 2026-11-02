@@ -1,3 +1,5 @@
+export const metadata = { title: "Typography" }
+
 import Heading from "@components/heading"
 import Text from "@components/text"
 

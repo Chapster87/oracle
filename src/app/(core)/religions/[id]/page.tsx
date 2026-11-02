@@ -1,3 +1,5 @@
+export const metadata = { title: "Religion" }
+
 import React from "react"
 
 import EntityDetailPage from "@/components/entity-detail/entity-page"

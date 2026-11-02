@@ -1,3 +1,5 @@
+export const metadata = { title: "Edit Character" }
+
 import EntityFormPage from "@/components/entity-form/entity-form-page"
 
 interface PageProps {
