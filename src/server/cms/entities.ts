@@ -68,6 +68,21 @@ export async function loadEntityScope(
   return (data as EntityScopeRow | null) ?? null
 }
 
+/** Whether the viewer may write entities in a scope, per the canonical predicate. */
+export async function canWriteScope(
+  campaignId: string | null,
+  viewer: Viewer
+): Promise<boolean> {
+  const db = await createSupabaseServerClient()
+  const roles = await campaignRoles(db, viewer.userId, campaignId)
+
+  return canWrite(
+    viewer,
+    { campaignId, ownerId: viewer.userId, visibility: "private" },
+    () => roles.dm
+  )
+}
+
 /** Whether the viewer may write this entity, per the canonical predicate. */
 export async function canWriteEntity(
   type: EntityType,

@@ -163,7 +163,12 @@ export interface StoryLogEntry {
 }
 
 export type WriteErrorCode =
-  "validation" | "conflict" | "forbidden" | "not_found" | "constraint"
+  | "validation"
+  | "conflict"
+  | "forbidden"
+  | "not_found"
+  | "constraint"
+  | "dependency"
 
 /**
  * The result of a write. Expected failures are returned; unexpected ones are
@@ -177,3 +182,52 @@ export type WriteResult =
       fieldErrors?: Record<string, string[]>
       formError?: string
     }
+
+/** A proposed entity change staged for DM review. */
+export type DraftKind = "create" | "update" | "delete"
+
+export type DraftStatus = "pending" | "promoted" | "discarded"
+
+/** One secret-slot operation carried by a draft. */
+export interface SlotOp {
+  op: "upsert" | "delete"
+  slot: string
+  source_column?: string | null
+  value?: unknown
+  audience?: SecretAudience
+  revealed_at?: string | null
+  position?: number
+}
+
+export interface Draft {
+  id: string
+  kind: DraftKind
+  model: EntityType
+  target_id: string
+  campaign_id: string | null
+  payload: Record<string, unknown>
+  slot_ops: SlotOp[]
+  base_updated_at: string | null
+  status: DraftStatus
+  reason: string | null
+  lane: string | null
+  created_by: string
+  decided_by: string | null
+  decided_at: string | null
+  dm_edited_at: string | null
+  supersedes_id: string | null
+  batch_id: string
+  created_at: string
+  updated_at: string
+}
+
+export interface DraftBatch {
+  id: string
+  campaign_id: string | null
+  created_by: string
+  status: "open" | "closed"
+  plan_id: string | null
+  created_at: string
+  updated_at: string
+  decided_at: string | null
+}
