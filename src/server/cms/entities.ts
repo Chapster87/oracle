@@ -3,11 +3,13 @@ import { isEntityType } from "@/utils/entity"
 
 import { ENTITY_SCHEMAS } from "@/schemas/registry"
 
+import { createSupabaseServerClient } from "../auth"
 import type { Viewer } from "../rbac"
 import { canWrite } from "../rbac"
-import { supabaseAdmin } from "../supabase"
 
 export type { WriteResult }
+
+type Db = Awaited<ReturnType<typeof createSupabaseServerClient>>
 
 interface DbError {
   code?: string
@@ -23,12 +25,40 @@ export interface EntityScopeRow {
   updated_at: string
 }
 
+/** Whether the viewer runs a campaign, and whether they belong to it at all. */
+async function campaignRoles(
+  db: Db,
+  userId: string,
+  campaignId: string | null
+): Promise<{ dm: boolean; member: boolean }> {
+  if (!campaignId) return { dm: false, member: false }
+
+  const [{ data: campaign }, { data: membership }] = await Promise.all([
+    db.from("campaigns").select("owner_id").eq("id", campaignId).maybeSingle(),
+    db
+      .from("campaign_members")
+      .select("role")
+      .eq("campaign_id", campaignId)
+      .eq("user_id", userId)
+      .maybeSingle(),
+  ])
+
+  const isOwner = campaign?.owner_id === userId
+
+  return {
+    dm: isOwner || membership?.role === "DM",
+    member: isOwner || membership !== null,
+  }
+}
+
 /** Loads the columns needed to authorize a write against an entity. */
 export async function loadEntityScope(
   type: EntityType,
   id: string
 ): Promise<EntityScopeRow | null> {
-  const { data, error } = await supabaseAdmin
+  const db = await createSupabaseServerClient()
+
+  const { data, error } = await db
     .from(type)
     .select("id, campaign_id, owner_id, visibility, updated_at")
     .eq("id", id)
@@ -47,7 +77,8 @@ export async function canWriteEntity(
   const scope = await loadEntityScope(type, id)
   if (!scope) return false
 
-  const roles = await campaignRoles(viewer.userId, scope.campaign_id)
+  const db = await createSupabaseServerClient()
+  const roles = await campaignRoles(db, viewer.userId, scope.campaign_id)
 
   return canWrite(
     viewer,
@@ -58,35 +89,6 @@ export async function canWriteEntity(
     },
     () => roles.dm
   )
-}
-
-/** Whether the viewer runs a campaign, and whether they belong to it at all. */
-async function campaignRoles(
-  userId: string,
-  campaignId: string | null
-): Promise<{ dm: boolean; member: boolean }> {
-  if (!campaignId) return { dm: false, member: false }
-
-  const [{ data: campaign }, { data: membership }] = await Promise.all([
-    supabaseAdmin
-      .from("campaigns")
-      .select("owner_id")
-      .eq("id", campaignId)
-      .maybeSingle(),
-    supabaseAdmin
-      .from("campaign_members")
-      .select("role")
-      .eq("campaign_id", campaignId)
-      .eq("user_id", userId)
-      .maybeSingle(),
-  ])
-
-  const isOwner = campaign?.owner_id === userId
-
-  return {
-    dm: isOwner || membership?.role === "DM",
-    member: isOwner || membership !== null,
-  }
 }
 
 function validationResult(error: {
@@ -150,7 +152,8 @@ export async function createEntity(
   const data = parsed.data as Record<string, unknown>
   const campaignId = (data.campaign_id as string | null | undefined) ?? null
 
-  const roles = await campaignRoles(viewer.userId, campaignId)
+  const db = await createSupabaseServerClient()
+  const roles = await campaignRoles(db, viewer.userId, campaignId)
   const allowed = canWrite(
     viewer,
     { campaignId, ownerId: viewer.userId, visibility: "private" },
@@ -167,7 +170,7 @@ export async function createEntity(
 
   const id = crypto.randomUUID()
 
-  const { error } = await supabaseAdmin.rpc("write_entity", {
+  const { error } = await db.rpc("write_entity", {
     p_model: type,
     p_id: id,
     p_payload: { ...data, owner_id: viewer.userId },
@@ -209,7 +212,8 @@ export async function updateEntity(
     }
   }
 
-  const source = await campaignRoles(viewer.userId, existing.campaign_id)
+  const db = await createSupabaseServerClient()
+  const source = await campaignRoles(db, viewer.userId, existing.campaign_id)
   const canEditSource = canWrite(
     viewer,
     {
@@ -230,7 +234,7 @@ export async function updateEntity(
 
   if ("campaign_id" in data) {
     const destinationId = (data.campaign_id as string | null) ?? null
-    const destination = await campaignRoles(viewer.userId, destinationId)
+    const destination = await campaignRoles(db, viewer.userId, destinationId)
     const canEditDestination = canWrite(
       viewer,
       {
@@ -250,7 +254,7 @@ export async function updateEntity(
     }
   }
 
-  const { error: writeError } = await supabaseAdmin.rpc("write_entity", {
+  const { error: writeError } = await db.rpc("write_entity", {
     p_model: type,
     p_id: id,
     p_payload: data,
@@ -281,7 +285,9 @@ export async function updateEntityMetadata(
     throw new Error(`Unknown entity type: ${type}`)
   }
 
-  const { data, error } = await supabaseAdmin
+  const db = await createSupabaseServerClient()
+
+  const { data, error } = await db
     .from(type)
     .select("metadata")
     .eq("id", id)
@@ -298,7 +304,7 @@ export async function updateEntityMetadata(
     else next[key] = value
   }
 
-  const { error: updateError } = await supabaseAdmin
+  const { error: updateError } = await db
     .from(type)
     .update({ metadata: next })
     .eq("id", id)
@@ -323,9 +329,8 @@ export async function deleteEntity(
     throw new Error(`Unknown entity type: ${type}`)
   }
 
-  const { error } = await supabaseAdmin.rpc("delete_entity", {
-    p_entity_id: id,
-  })
+  const db = await createSupabaseServerClient()
+  const { error } = await db.rpc("delete_entity", { p_entity_id: id })
 
   if (error) throw error
 }

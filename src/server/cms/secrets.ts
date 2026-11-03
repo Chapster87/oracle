@@ -6,9 +6,9 @@ import {
   nextSecretSlotName,
 } from "@/utils/secrets"
 
+import { createSupabaseServerClient } from "../auth"
 import type { Viewer } from "../rbac"
 import { loadSlots } from "../secrets"
-import { supabaseAdmin } from "../supabase"
 import { canWriteEntity } from "./entities"
 
 const AUDIENCES: SecretAudience[] = ["dm", "owner", "public"]
@@ -50,7 +50,9 @@ export async function markField(
   const denied = await authorize(type, entityId, viewer)
   if (denied) return denied
 
-  const { data: row, error } = await supabaseAdmin
+  const db = await createSupabaseServerClient()
+
+  const { data: row, error } = await db
     .from(type)
     .select("*")
     .eq("id", entityId)
@@ -82,23 +84,21 @@ export async function markField(
 
   const value = (row as Record<string, unknown>)[column] ?? null
 
-  const { error: slotError } = await supabaseAdmin
-    .from("entity_secret_slots")
-    .upsert(
-      {
-        entity_id: entityId,
-        slot: nextSecretSlotName(slots),
-        source_column: column,
-        value,
-        audience: "dm",
-        revealed_at: null,
-      },
-      { onConflict: "entity_id,slot" }
-    )
+  const { error: slotError } = await db.from("entity_secret_slots").upsert(
+    {
+      entity_id: entityId,
+      slot: nextSecretSlotName(slots),
+      source_column: column,
+      value,
+      audience: "dm",
+      revealed_at: null,
+    },
+    { onConflict: "entity_id,slot" }
+  )
 
   if (slotError) throw slotError
 
-  const { error: clearError } = await supabaseAdmin
+  const { error: clearError } = await db
     .from(type)
     .update({ [column]: null })
     .eq("id", entityId)
@@ -121,7 +121,9 @@ export async function unmarkField(
   const denied = await authorize(type, entityId, viewer)
   if (denied) return denied
 
-  const { data: slot, error } = await supabaseAdmin
+  const db = await createSupabaseServerClient()
+
+  const { data: slot, error } = await db
     .from("entity_secret_slots")
     .select("id, value")
     .eq("entity_id", entityId)
@@ -137,14 +139,14 @@ export async function unmarkField(
     }
   }
 
-  const { error: writeError } = await supabaseAdmin
+  const { error: writeError } = await db
     .from(type)
     .update({ [column]: slot.value })
     .eq("id", entityId)
 
   if (writeError) throw writeError
 
-  const { error: deleteError } = await supabaseAdmin
+  const { error: deleteError } = await db
     .from("entity_secret_slots")
     .delete()
     .eq("id", slot.id)
@@ -173,7 +175,9 @@ export async function createSlot(
     }
   }
 
-  const { error } = await supabaseAdmin.from("entity_secret_slots").upsert(
+  const db = await createSupabaseServerClient()
+
+  const { error } = await db.from("entity_secret_slots").upsert(
     {
       entity_id: entityId,
       slot: slotName,
@@ -200,7 +204,9 @@ export async function updateSlotValue(
   const denied = await authorize(type, entityId, viewer)
   if (denied) return denied
 
-  const { error } = await supabaseAdmin
+  const db = await createSupabaseServerClient()
+
+  const { error } = await db
     .from("entity_secret_slots")
     .update({ value })
     .eq("entity_id", entityId)
@@ -228,7 +234,9 @@ export async function setAudience(
     return { ok: false, code: "validation", formError: "Unknown audience." }
   }
 
-  const { error } = await supabaseAdmin
+  const db = await createSupabaseServerClient()
+
+  const { error } = await db
     .from("entity_secret_slots")
     .update({
       audience,
@@ -254,7 +262,9 @@ export async function deleteSlot(
   const denied = await authorize(type, entityId, viewer)
   if (denied) return denied
 
-  const { data: slot, error } = await supabaseAdmin
+  const db = await createSupabaseServerClient()
+
+  const { data: slot, error } = await db
     .from("entity_secret_slots")
     .select("id, source_column")
     .eq("entity_id", entityId)
@@ -278,7 +288,7 @@ export async function deleteSlot(
     }
   }
 
-  const { error: deleteError } = await supabaseAdmin
+  const { error: deleteError } = await db
     .from("entity_secret_slots")
     .delete()
     .eq("id", slot.id)

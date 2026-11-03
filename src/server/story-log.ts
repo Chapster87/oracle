@@ -1,7 +1,7 @@
 import type { StoryLogEntry } from "@/types"
 
+import { createSupabaseServerClient } from "./auth"
 import { isDmRole } from "./rbac"
-import { supabaseAdmin as supabase } from "./supabase"
 
 /**
  * Fetches Story Log entries visible to the viewer, newest first. Applies the
@@ -11,6 +11,8 @@ export async function getStoryLog(
   role: string,
   userId: string
 ): Promise<StoryLogEntry[]> {
+  const supabase = await createSupabaseServerClient()
+
   const { data, error } = await supabase
     .from("campaign_logs")
     .select("id, name, content, created_at, visibility, owner_id")

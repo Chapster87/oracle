@@ -1,13 +1,21 @@
 import type { SecretSlot } from "@/types"
 
-import { supabaseAdmin } from "./supabase"
+import { createSupabaseServerClient } from "./auth"
 
 const SLOT_COLUMNS =
   "id, entity_id, slot, source_column, value, audience, revealed_at, position"
 
-/** Loads every slot for one entity, in display order. */
+/**
+ * Loads every slot for one entity, in display order.
+ *
+ * Runs as the signed-in user, so the slot policy decides what comes back: a DM
+ * sees every slot on an entity they can write, an owner sees `owner` and
+ * `public`, anyone else `public` only.
+ */
 export async function loadSlots(entityId: string): Promise<SecretSlot[]> {
-  const { data, error } = await supabaseAdmin
+  const supabase = await createSupabaseServerClient()
+
+  const { data, error } = await supabase
     .from("entity_secret_slots")
     .select(SLOT_COLUMNS)
     .eq("entity_id", entityId)
@@ -27,7 +35,9 @@ export async function loadSlotsFor(
   const byEntity = new Map<string, SecretSlot[]>()
   if (entityIds.length === 0) return byEntity
 
-  const { data, error } = await supabaseAdmin
+  const supabase = await createSupabaseServerClient()
+
+  const { data, error } = await supabase
     .from("entity_secret_slots")
     .select(SLOT_COLUMNS)
     .in("entity_id", entityIds)

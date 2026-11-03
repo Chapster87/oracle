@@ -15,9 +15,11 @@ import {
 } from "@/utils/entity"
 import { filterSlots, overlaySlots } from "@/utils/secrets"
 
+import { createSupabaseServerClient } from "./auth"
 import { isDmRole } from "./rbac"
 import { loadSlots, loadSlotsFor } from "./secrets"
-import { supabaseAdmin as supabase } from "./supabase"
+
+type Db = Awaited<ReturnType<typeof createSupabaseServerClient>>
 
 /** Tables consulted when resolving a related entity id back to a name. */
 const RESOLVABLE_TABLES: (EntityType | "world_lore")[] = [
@@ -66,6 +68,7 @@ interface Viewer {
  * cannot learn the names of hidden entities through the relationships tab.
  */
 async function resolveNames(
+  db: Db,
   ids: string[],
   viewer: Viewer
 ): Promise<Map<string, { name: string; type: RelatedEntity["type"] }>> {
@@ -78,7 +81,7 @@ async function resolveNames(
 
   await Promise.all(
     RESOLVABLE_TABLES.map(async (table) => {
-      const { data, error } = await supabase
+      const { data, error } = await db
         .from(table)
         .select("id, name, visibility, owner_id")
         .in("id", ids)
@@ -96,10 +99,11 @@ async function resolveNames(
 
 /** Loads every relation touching the entity, resolved to display names. */
 async function getRelatedEntities(
+  db: Db,
   entityId: string,
   viewer: Viewer
 ): Promise<RelatedEntity[]> {
-  const { data, error } = await supabase
+  const { data, error } = await db
     .from("entity_relations")
     .select("source_id, target_id, relation_type")
     .or(`source_id.eq.${entityId},target_id.eq.${entityId}`)
@@ -109,7 +113,7 @@ async function getRelatedEntities(
   const otherIds = data.map((rel) =>
     rel.source_id === entityId ? rel.target_id : rel.source_id
   )
-  const resolved = await resolveNames(otherIds, viewer)
+  const resolved = await resolveNames(db, otherIds, viewer)
 
   // The seed data stores each relationship in both directions; collapse the two
   // rows into a single entry per related entity.
@@ -133,11 +137,12 @@ async function getRelatedEntities(
 
 /** Resolves a location's parent region to a minimal link. */
 async function getRegion(
+  db: Db,
   regionId?: string | null
 ): Promise<{ id: string; name: string } | null> {
   if (!regionId) return null
 
-  const { data } = await supabase
+  const { data } = await db
     .from("locations")
     .select("id, name")
     .eq("id", regionId)
@@ -168,7 +173,9 @@ export async function getEntity(
   if (!isEntityType(type)) return null
   if (!UUID_RE.test(id)) return null
 
-  const { data, error } = await supabase
+  const db = await createSupabaseServerClient()
+
+  const { data, error } = await db
     .from(type)
     .select("*")
     .eq("id", id)
@@ -192,9 +199,9 @@ export async function getEntity(
 
   const [allSlots, related, region] = await Promise.all([
     loadSlots(id),
-    getRelatedEntities(id, viewer),
+    getRelatedEntities(db, id, viewer),
     type === "locations"
-      ? getRegion((entity as Location).region_id)
+      ? getRegion(db, (entity as Location).region_id)
       : Promise.resolve(null),
   ])
 
@@ -231,7 +238,9 @@ export async function getEntities(
 ): Promise<EntitySummary[]> {
   if (!isEntityType(type)) return []
 
-  const { data, error } = await supabase
+  const db = await createSupabaseServerClient()
+
+  const { data, error } = await db
     .from(type)
     .select("*")
     .order("name", { ascending: true })

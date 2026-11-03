@@ -3,7 +3,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 const { from } = vi.hoisted(() => ({ from: vi.fn() }))
 const { canWriteEntity } = vi.hoisted(() => ({ canWriteEntity: vi.fn() }))
 
-vi.mock("../supabase", () => ({ supabaseAdmin: { from } }))
+vi.mock("../auth", () => ({
+  createSupabaseServerClient: async () => ({ from }),
+}))
 vi.mock("./entities", () => ({ canWriteEntity }))
 
 import type { Viewer } from "../rbac"

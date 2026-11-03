@@ -1,30 +1,26 @@
-import { createClient } from "@supabase/supabase-js"
-import { WorldLore } from "../types"
+import type { WorldLore } from "@/types"
+
+import { createSupabaseServerClient } from "./auth"
 import { isDmRole } from "./rbac"
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-
-const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 /**
  * Fetches all world lore entries accessible to the current user.
  *
- * @param role - The current user's role (DM or PLAYER).
- * @param userId - The current user's ID.
- * @returns A promise resolving to an array of WorldLore entries.
+ * Runs as the signed-in user, so RLS is the outer gate; the explicit filter
+ * keeps the TypeScript predicate and the policy in step.
  */
 export async function getLoreEntries(
   role: string,
   userId: string
 ): Promise<WorldLore[]> {
+  const supabase = await createSupabaseServerClient()
+
   let query = supabase
     .from("world_lore")
     .select("*")
     .order("name", { ascending: true })
 
   if (!isDmRole(role)) {
-    // Players see public lore OR lore they own
     query = query.or(`visibility.eq.public,owner_id.eq.${userId}`)
   }
 

@@ -2,8 +2,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 
 const { rpc, from } = vi.hoisted(() => ({ rpc: vi.fn(), from: vi.fn() }))
 
-vi.mock("../supabase", () => ({
-  supabaseAdmin: { rpc, from },
+vi.mock("../auth", () => ({
+  createSupabaseServerClient: async () => ({ rpc, from }),
 }))
 
 import type { Viewer } from "../rbac"
