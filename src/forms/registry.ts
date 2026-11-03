@@ -13,6 +13,7 @@ export type FieldWidget =
   | "list"
   | "select"
   | "entity"
+  | "json"
 
 export interface FieldSpec {
   /** The payload key. Dotted for nested fields, e.g. `metadata.ddb_url`. */
@@ -183,6 +184,37 @@ const CONTENT_SPECS: Record<EntityType, FieldSpec[]> = {
       label: "Role in Campaign",
       widget: "textarea",
       rows: 3,
+    },
+    tags,
+  ],
+  story_arcs: [
+    name,
+    {
+      name: "status",
+      label: "Status",
+      widget: "select",
+      options: [
+        { value: "planned", label: "Planned" },
+        { value: "active", label: "Active" },
+        { value: "completed", label: "Completed" },
+      ],
+    },
+    { name: "target_level", label: "Target Level", widget: "text" },
+    { name: "session_count", label: "Sessions", widget: "number" },
+    { name: "overview", label: "Overview", widget: "textarea", rows: 4 },
+    {
+      name: "content",
+      label: "Plan",
+      widget: "textarea",
+      rows: 12,
+      help: "The full plan document, including the session breakdown.",
+    },
+    {
+      name: "needed_resources",
+      label: "Needed Resources",
+      widget: "json",
+      rows: 6,
+      help: "JSON: { major: [{ id, name, type }], minor: [{ name, type }] }.",
     },
     tags,
   ],

@@ -107,6 +107,7 @@ describe("registry", () => {
       "locations",
       "players",
       "religions",
+      "story_arcs",
     ])
   })
 })

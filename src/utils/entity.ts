@@ -7,6 +7,7 @@ import type {
   Location,
   Player,
   Religion,
+  StoryArc,
 } from "@/types"
 
 interface EntityTypeMeta {
@@ -64,6 +65,12 @@ export const ENTITY_META: Record<EntityType, EntityTypeMeta> = {
     singular: "Religion",
     secretField: null,
   },
+  story_arcs: {
+    path: "story-arcs",
+    label: "Story Arcs",
+    singular: "Story Arc",
+    secretField: null,
+  },
 }
 
 export const ENTITY_TYPES = Object.keys(ENTITY_META) as EntityType[]
@@ -114,5 +121,9 @@ export function entitySubtitle(type: EntityType, entity: Entity): string {
       return (entity as Religion).type ?? ""
     case "factions":
       return (entity as Faction).alignment ?? ""
+    case "story_arcs": {
+      const arc = entity as StoryArc
+      return [arc.status, arc.target_level].filter(Boolean).join(" • ")
+    }
   }
 }

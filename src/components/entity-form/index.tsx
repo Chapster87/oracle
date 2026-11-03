@@ -198,6 +198,22 @@ export default function EntityForm({
           </React.Fragment>
         )
 
+      case "json":
+        return (
+          <Field
+            key={spec.name}
+            label={spec.label}
+            help={spec.help}
+            error={error}
+          >
+            <Textarea
+              name={spec.name}
+              rows={spec.rows ?? 6}
+              defaultValue={asString(value)}
+            />
+          </Field>
+        )
+
       default:
         return (
           <Field
@@ -234,7 +250,9 @@ export default function EntityForm({
 
       <div className={s.actions}>
         <Link
-          href={mode === "edit" && entityId ? `/${type}/${entityId}` : `/${type}`}
+          href={
+            mode === "edit" && entityId ? `/${type}/${entityId}` : `/${type}`
+          }
           buttonStyle
           variant="outline"
         >

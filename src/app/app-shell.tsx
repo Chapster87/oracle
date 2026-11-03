@@ -14,6 +14,7 @@ import {
   Gem,
   Church,
   BookOpen,
+  ScrollText,
   Settings,
   LayoutGrid,
   ChevronRight,
@@ -71,6 +72,12 @@ export default function AppShell({
       name: "Story Log",
       href: "/story",
       icon: BookOpen,
+      color: "var(--color-blue)",
+    },
+    {
+      name: "Story Arcs",
+      href: "/story-arcs",
+      icon: ScrollText,
       color: "var(--color-blue)",
     },
     {

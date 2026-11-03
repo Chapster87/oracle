@@ -115,11 +115,33 @@ export interface Religion extends BaseEntity {
   role_in_campaign?: string | null
 }
 
+export type StoryArcStatus = "planned" | "active" | "completed"
+
+/** A planning document that bridges sessions and references its resources. */
+export interface StoryArc extends BaseEntity {
+  status: StoryArcStatus
+  target_level?: string | null
+  session_count?: number | null
+  overview?: string | null
+  content?: string | null
+  needed_resources?: {
+    major?: { id?: string; name: string; type: string }[]
+    minor?: { id?: string; name: string; type: string }[]
+  } | null
+}
+
 /** URL segment / table name for each entity supported by the detail view. */
 export type EntityType =
-  "characters" | "locations" | "factions" | "players" | "items" | "religions"
+  | "characters"
+  | "locations"
+  | "factions"
+  | "players"
+  | "items"
+  | "religions"
+  | "story_arcs"
 
-export type Entity = Character | Location | Faction | Player | Item | Religion
+export type Entity =
+  Character | Location | Faction | Player | Item | Religion | StoryArc
 
 /** A single link between two entities, resolved to a display name. */
 export interface RelatedEntity {

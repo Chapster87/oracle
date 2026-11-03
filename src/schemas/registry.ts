@@ -8,6 +8,7 @@ import { itemCreateSchema, itemUpdateSchema } from "./item"
 import { locationCreateSchema, locationUpdateSchema } from "./location"
 import { playerCreateSchema, playerUpdateSchema } from "./player"
 import { religionCreateSchema, religionUpdateSchema } from "./religion"
+import { storyArcCreateSchema, storyArcUpdateSchema } from "./story-arc"
 
 export interface EntitySchemaPair {
   create: ZodType
@@ -25,4 +26,5 @@ export const ENTITY_SCHEMAS: Record<EntityType, EntitySchemaPair> = {
   players: { create: playerCreateSchema, update: playerUpdateSchema },
   items: { create: itemCreateSchema, update: itemUpdateSchema },
   religions: { create: religionCreateSchema, update: religionUpdateSchema },
+  story_arcs: { create: storyArcCreateSchema, update: storyArcUpdateSchema },
 }

@@ -17,6 +17,7 @@ describe("fieldSpecsFor", () => {
       "players",
       "items",
       "religions",
+      "story_arcs",
     ] as const) {
       const name = fieldSpecsFor(type).find((spec) => spec.name === "name")
       expect(name?.required).toBe(true)

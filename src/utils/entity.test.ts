@@ -55,6 +55,15 @@ describe("entitySubtitle", () => {
     )
   })
 
+  it("joins status and target level for story arcs", () => {
+    expect(
+      entitySubtitle(
+        "story_arcs",
+        entity({ status: "active", target_level: "3–5" })
+      )
+    ).toBe("active • 3–5")
+  })
+
   it("drops missing parts rather than printing separators", () => {
     expect(entitySubtitle("characters", entity({ species: "Elf" }))).toBe("Elf")
     expect(entitySubtitle("characters", entity({}))).toBe("")

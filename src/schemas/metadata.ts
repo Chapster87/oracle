@@ -57,6 +57,7 @@ export const METADATA_KEYS: MetadataKeySpec[] = [
       "players",
       "items",
       "religions",
+      "story_arcs",
     ],
     schema: z.string().max(20_000),
   },

@@ -50,7 +50,11 @@ function initialValues(
       const key = spec.name.slice("metadata.".length)
       values[spec.name] = metadata[key] ?? ""
     } else {
-      values[spec.name] = entity[spec.name] ?? ""
+      const value = entity[spec.name]
+      values[spec.name] =
+        spec.widget === "json" && value != null
+          ? JSON.stringify(value, null, 2)
+          : (value ?? "")
     }
   }
 

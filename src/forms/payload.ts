@@ -57,6 +57,20 @@ export function formToPayload(
         break
       }
 
+      case "json": {
+        const text = String(raw ?? "").trim()
+        if (text === "") {
+          payload[spec.name] = null
+          break
+        }
+        try {
+          payload[spec.name] = JSON.parse(text)
+        } catch {
+          payload[spec.name] = null
+        }
+        break
+      }
+
       default: {
         const text = String(raw ?? "")
         payload[spec.name] = text.trim() === "" ? null : text
