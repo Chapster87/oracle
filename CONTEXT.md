@@ -11,6 +11,7 @@ Oracle is a TTRPG (Tabletop Role-Playing Game) campaign management system design
 - **World**: High-level world-building data (`Campaign/World.md`).
 - **Episodes**: Recorded sessions and chronological logs (`Campaign/_Episodes/`, `Campaign/_StoryLog.md`).
 - **Planning**: Future story arcs and session planning (`Campaign/Planning/`).
+- **Story Arc**: A planning document that bridges sessions into a narrative and references the resources it manifests. A first-class entity with a status (`planned`, `active`, `completed`) and a `needed_resources` list.
 
 ### Content Entities
 
@@ -35,6 +36,15 @@ Agents in this repository act as **DM Assistants**, helping to generate content 
 - **Chronicle Story**: Updates session logs and world state.
 - **Forge Content**: Specialized skills for creating NPCs, Locations, and Religions.
 - **Wayfinder**: Used for planning large strokes and spec-ing out project direction.
+
+### Lanes
+
+A **lane** is a named capability scope for the in-app chat agent. A lane binds one or more repo skills to a fixed set of proposal capabilities, so selecting a lane both loads its rules and limits what it may propose. Lanes are declared in code and selected per message; the editor agent is not lane-scoped.
+
+### Drafts
+
+- **Draft**: A proposed entity change staged for DM review. A draft is never player-visible and reaches the live entity tables only through explicit promotion.
+- **Draft fork**: A sibling draft created when the agent re-proposes a draft the DM has already edited. The DM's draft stays pending; the agent's proposal is linked by `supersedes_id`, and promoting one supersedes the others.
 
 ## Architecture
 
