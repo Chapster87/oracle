@@ -8,7 +8,12 @@ vi.mock("../auth", () => ({
 
 import type { Viewer } from "../rbac"
 
-import { createEntity, deleteEntity, updateEntity } from "./entities"
+import {
+  createEntity,
+  deleteEntity,
+  updateEntity,
+  updateEntityMetadata,
+} from "./entities"
 
 const dm: Viewer = { userId: "u-dm", role: "DM" }
 const player: Viewer = { userId: "u-player", role: "PLAYER" }
@@ -188,6 +193,50 @@ describe("updateEntity", () => {
     )
 
     expect(result).toMatchObject({ ok: false, code: "conflict" })
+  })
+})
+
+describe("updateEntityMetadata", () => {
+  function metadataChain(metadata: Record<string, unknown> | null) {
+    const chain: Record<string, unknown> = {}
+    chain.select = vi.fn(() => chain)
+    chain.eq = vi.fn(() => chain)
+    chain.maybeSingle = vi.fn(async () => ({
+      data: metadata ? { metadata } : null,
+      error: null,
+    }))
+    chain.update = vi.fn(() => chain)
+    return chain
+  }
+
+  it("leaves absent keys untouched and preserves unlisted ones", async () => {
+    const chain = metadataChain({ ddb_url: "https://www.dndbeyond.com/x" })
+    from.mockReturnValue(chain)
+
+    await updateEntityMetadata("players", "abc", { dm_notes: "secret" }, dm)
+
+    expect(chain.update).toHaveBeenCalledWith({
+      metadata: {
+        ddb_url: "https://www.dndbeyond.com/x",
+        dm_notes: "secret",
+      },
+    })
+  })
+
+  it("removes a key when the patch value is null", async () => {
+    const chain = metadataChain({ ddb_url: "x", dm_notes: "y" })
+    from.mockReturnValue(chain)
+
+    await updateEntityMetadata("players", "abc", { ddb_url: null }, dm)
+
+    expect(chain.update).toHaveBeenCalledWith({ metadata: { dm_notes: "y" } })
+  })
+
+  it("rejects a player without touching the database", async () => {
+    await expect(
+      updateEntityMetadata("players", "abc", { dm_notes: "x" }, player)
+    ).rejects.toThrow(/Only a DM/)
+    expect(from).not.toHaveBeenCalled()
   })
 })
 

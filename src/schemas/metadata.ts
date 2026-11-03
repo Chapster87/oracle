@@ -12,8 +12,12 @@ export const ddbUrlSchema = z
   .url({ message: "Enter a valid URL" })
   .refine(
     (value) => {
-      const host = new URL(value).hostname.toLowerCase()
-      return host === "dndbeyond.com" || host.endsWith(".dndbeyond.com")
+      try {
+        const host = new URL(value).hostname.toLowerCase()
+        return host === "dndbeyond.com" || host.endsWith(".dndbeyond.com")
+      } catch {
+        return false
+      }
     },
     { message: "Must be a dndbeyond.com URL" }
   )
