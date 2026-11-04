@@ -19,8 +19,7 @@ function ResourceList({ resources }: { resources?: ResourceRef[] }) {
     <ul className={s.list}>
       {resources.map((resource) => (
         <li key={resource.id ?? resource.name}>
-          {resource.name}{" "}
-          <span className={s.empty}>({resource.type})</span>
+          {resource.name} <span className={s.empty}>({resource.type})</span>
         </li>
       ))}
     </ul>
@@ -45,6 +44,9 @@ export default function StoryArcLayout({ data }: { data: EntityDetailData }) {
             <ResourceList resources={needed.minor} />
           </InfoCard>
         </div>
+        <div className={s.planSection}>
+          <InfoCard title="Plan Document">{arc.content}</InfoCard>
+        </div>
       </TabsContent>
 
       <TabsContent value="details">
@@ -59,7 +61,6 @@ export default function StoryArcLayout({ data }: { data: EntityDetailData }) {
               />
             </dl>
           </InfoCard>
-          <InfoCard title="Plan Document">{arc.content}</InfoCard>
         </div>
       </TabsContent>
     </>

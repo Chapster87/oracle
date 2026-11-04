@@ -14,6 +14,7 @@ import {
   Gem,
   Church,
   BookOpen,
+  MessageSquare,
   ScrollText,
   Settings,
   LayoutGrid,
@@ -62,6 +63,12 @@ export default function AppShell({
 
   const navigation = [
     { name: "Home", href: "/", icon: Shield, color: "var(--muted-foreground)" },
+    {
+      name: "Chat",
+      href: "/chat",
+      icon: MessageSquare,
+      color: "var(--color-blue)",
+    },
     {
       name: "World",
       href: "/world",
