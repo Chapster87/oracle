@@ -2,6 +2,7 @@
 
 import Button from "@components/button"
 import Heading from "@components/heading"
+import Markdown from "@components/markdown"
 import Text from "@components/text"
 
 import type { Draft } from "@/types"
@@ -130,7 +131,7 @@ export default function PlanPanel({
             <Heading level="h3" display="h6">
               Plan document
             </Heading>
-            <pre className={s.planContent}>{content}</pre>
+            <Markdown>{content}</Markdown>
           </section>
         )}
       </div>

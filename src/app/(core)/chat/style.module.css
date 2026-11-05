@@ -1,5 +1,12 @@
 .page {
-  padding-bottom: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+  /* The review tray is fixed to the viewport bottom; the shell padding covers
+     most of it, and this clears the rest so the composer stays visible. */
+  padding-bottom: 24px;
 }
 
 .eyebrow {
@@ -25,7 +32,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--card);
-  margin-bottom: 16px;
+  flex-shrink: 0;
 }
 
 .progress {
@@ -46,6 +53,8 @@
   grid-template-columns: minmax(0, 1.4fr) minmax(320px, 1fr);
   gap: 16px;
   align-items: stretch;
+  flex: 1;
+  min-height: 0;
 }
 
 .chatPane,
@@ -53,7 +62,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--background);
-  min-height: 560px;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -215,15 +224,6 @@
   gap: 16px;
 }
 
-.planContent {
-  margin: 0;
-  white-space: pre-wrap;
-  font-family: monospace;
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--foreground);
-}
-
 .planResources {
   display: flex;
   flex-direction: column;
@@ -358,8 +358,21 @@
 }
 
 @media (max-width: 900px) {
+  /* Stacked panes need their natural height; the content area scrolls. */
+  .page {
+    flex: none;
+    min-height: 100%;
+    padding-bottom: 160px;
+  }
+
   .split {
     grid-template-columns: 1fr;
+    flex: none;
+  }
+
+  .chatPane,
+  .previewPane {
+    min-height: 480px;
   }
 
   .trayFixed {
@@ -368,9 +381,5 @@
 
   .trayDetail {
     max-height: 70vh;
-  }
-
-  .page {
-    padding-bottom: 160px;
   }
 }

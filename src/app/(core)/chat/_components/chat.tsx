@@ -6,6 +6,7 @@ import { DefaultChatTransport } from "ai"
 
 import Button from "@components/button"
 import Heading from "@components/heading"
+import Markdown from "@components/markdown"
 import { Select, SelectItem } from "@components/select"
 import Text from "@components/text"
 import Textarea from "@components/textarea"
@@ -189,7 +190,9 @@ export default function Chat({
                 >
                   {message.parts.map((part, index) => {
                     if (part.type === "text") {
-                      return (
+                      return message.role === "assistant" ? (
+                        <Markdown key={index}>{part.text}</Markdown>
+                      ) : (
                         <Text key={index} size="sm">
                           {part.text}
                         </Text>

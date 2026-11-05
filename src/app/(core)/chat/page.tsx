@@ -15,7 +15,7 @@ export default async function ChatPage() {
   const { active } = await getCampaignContext()
 
   return (
-    <div className={s.card}>
+    <div className={`${s.card} ${s.chatCard}`}>
       <Chat
         lanes={LANES.map(({ id, label, description }) => ({
           id,

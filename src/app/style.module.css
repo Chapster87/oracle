@@ -1,6 +1,8 @@
 .container {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
   background: var(--background);
   color: var(--foreground);
   font-family: sans-serif;
@@ -127,6 +129,8 @@
 
 .main {
   flex-grow: 1;
+  min-width: 0;
+  min-height: 0;
   display: flex;
   flex-direction: column;
 }
@@ -151,6 +155,8 @@
 .contentSection {
   padding: 24px;
   flex-grow: 1;
+  min-height: 0;
+  overflow-y: auto;
   background-color: var(--muted);
 }
 
@@ -159,8 +165,33 @@
   padding: 32px;
   border-radius: 8px;
   border: 1px solid var(--border);
-  height: 100%;
+  min-height: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/*
+ * The chat surface owns the full content height and scrolls internally, so it
+ * must not grow past the frame the way a document card does.
+ */
+.chatCard {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+ * Below the chat breakpoint the panes stack, so the surface needs its natural
+ * height and the content area scrolls. Keeping the card clipped here would
+ * hide the preview pane with no way to reach it.
+ */
+@media (max-width: 900px) {
+  .chatCard {
+    height: auto;
+    min-height: 100%;
+    overflow: visible;
+  }
 }
 
 .grid {
